@@ -9,9 +9,9 @@ class S3Client:
         self.client = boto3.client("s3")
 
 
-    def upload_file(self, file_name, bucket, object_name=None):
+    def upload_file(self, file_obj, bucket="uw-nexus-contents", key=None):
         try:
-            response = self.client.upload_file(file_name, bucket, object_name)
+            response = self.client.upload_fileobj(file_obj, bucket, key)
         except ClientError as e:
             logging.error(e)
             return False
