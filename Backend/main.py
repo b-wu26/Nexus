@@ -1,7 +1,7 @@
 import uuid
 import boto3
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from client.s3_client import S3Client
 
 app = Flask(__name__)
@@ -10,22 +10,20 @@ app = Flask(__name__)
 # def hello():
 #     return '<h1>Hello, World!</h1>'
 
-@app.route("/upload", methods=["GET", "POST"])
-def upload():
+@app.route("/api/<user_id>/feed_post/<course_id>", methods=["POST"])
+def upload(user_id, course_id):
     if request.method == "POST":
-        file_to_upload = request.files["file-to-save"]
-
+        
+        post_id = uuid.uuid4().hex
+        file_to_upload = request.files["upload-file"]
+        
         new_filename = uuid.uuid4().hex + '.' + file_to_upload.filename.rsplit('.', 1)[1].lower()
 
-        bucket_name = "uw-nexus-contents"
+        # Commented out for now, since we know it already works. Dont wanna waste random calls
+        # s3_client = S3Client()
+        # print(s3_client.upload_file(file_obj = file_to_upload, key = f"posts/{new_filename}"))
 
-        # s3 = boto3.resource("s3")
-        # s3.Bucket(bucket_name).upload_fileobj(uploaded_file, new_filename)
-
-        s3_client = S3Client()
-        print(s3_client.upload_file(file_obj = file_to_upload, key = f"posts/{new_filename}"))
-        
-    return render_template("index.html")
+        return jsonify({"success": True})
 
 
 # @api.route('/feed/<user_id>')
