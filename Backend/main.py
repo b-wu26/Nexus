@@ -16,14 +16,22 @@ def upload(user_id, course_id):
         
         post_id = uuid.uuid4().hex
         file_to_upload = request.files["upload-file"]
-        
+
         new_filename = uuid.uuid4().hex + '.' + file_to_upload.filename.rsplit('.', 1)[1].lower()
+
+        #put posting info in database
 
         # Commented out for now, since we know it already works. Dont wanna waste random calls
         # s3_client = S3Client()
         # print(s3_client.upload_file(file_obj = file_to_upload, key = f"posts/{new_filename}"))
-
-        return jsonify({"success": True})
+        response = {
+            "success": True,
+            "user_id": user_id,
+            "post_id": post_id,
+            "course_id": course_id,
+            "file_name": new_filename
+        }
+        return jsonify(response)
 
 
 # @api.route('/feed/<user_id>')
