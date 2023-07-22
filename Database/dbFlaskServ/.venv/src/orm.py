@@ -18,3 +18,8 @@ class student_profile(db.Model):
     def __repr__(self):
         return f'<student_profile {self.f_name}>'
 
+    def __init__(self, waterloo_id,f_name,l_name):
+        waterloo_id = waterloo_id
+        f_name = f_name
+        l_name = l_name
+
