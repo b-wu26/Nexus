@@ -51,9 +51,16 @@ def upload(user_id, course_id):
         return jsonify(response)
 
 
-# @api.route('/feed/<user_id>')
-# def feed(user_id):
-#     pass
+@app.route("/feed/<user_id>", methods=["GET"])
+def feed(user_id):
+    
+    #TODO: get list of all courses that this person is taking
+
+    #TODO: get top X posts from each course
+
+    #TODO: compile them into lists of posts with data that client(frontend) can use to generate feed
+
+    pass
 
 # @api.route('/post/<post_id>')
 # def show_post(post_id):
