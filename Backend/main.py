@@ -1,9 +1,10 @@
 import uuid
 
 from flask import request, jsonify
-from . import app, s3_client
 
-from .models.student_profile import *
+from . import app, s3_client, db
+
+from .models.student_profile import student_profile
 
 
 @app.route("/api/new_user", methods=["POST"])
@@ -18,12 +19,6 @@ def new_user():
                 l_name=request.form["l_name"],
                 validated=eval(request.form["validated"]),
             )
-            print(new_user.idstudent_profile)
-            print(new_user.waterloo_id)
-            print(new_user.account_password)
-            print(new_user.f_name)
-            print(new_user.l_name)
-            print(new_user.validated)
 
             db.session.add(new_user)
             db.session.commit()
