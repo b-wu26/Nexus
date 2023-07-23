@@ -1,17 +1,10 @@
 import uuid
-import boto3
 
-from flask import Flask, request, render_template, jsonify
-from client.s3_client import S3Client
-
-#s3_client = S3Client()
-
-app = Flask(__name__)
+from flask import request, jsonify
+from . import app, s3_client
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/nexus'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
 
 
 @app.route("/api/<user_id>/feed_post/<course_id>", methods=["POST"])
@@ -34,7 +27,7 @@ def upload(user_id, course_id):
             
             if (type := request.form['type']) != "":
                 file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                #s3_client.upload_file(file_obj = file_to_upload, key = file_key)
+                s3_client.upload_file(file_obj = file_to_upload, key = file_key)
             else:
                 return jsonify({"message": "Error: undefined post type"})
 
