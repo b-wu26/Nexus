@@ -37,10 +37,10 @@ CREATE TABLE `class_profile` (
 -- Table structure for table `messages`
 --
 
-DROP TABLE IF EXISTS `messages`;
+DROP TABLE IF EXISTS `message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `messages` (
+CREATE TABLE `message` (
   `idmessages` int NOT NULL,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
@@ -80,10 +80,10 @@ CREATE TABLE `notes_and_more` (
 -- Table structure for table `questions`
 --
 
-DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS `post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `posts` (
+CREATE TABLE `post` (
   `idquestions` int NOT NULL,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
