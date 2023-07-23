@@ -4,7 +4,7 @@ import boto3
 from flask import Flask, request, render_template, jsonify
 from client.s3_client import S3Client
 
-s3_client = S3Client()
+#s3_client = S3Client()
 
 app = Flask(__name__)
 
@@ -17,8 +17,14 @@ def upload(user_id, course_id):
     if request.method == "POST":
 
         post_id = uuid.uuid4().hex        
-        file_key = None
+        
+        #TODO: where to store text content
+        if (text := request.form["text_content"]) != "":
+            pass
+        else:
+            return jsonify({"message": "Can not have empty text content"})
 
+        file_key = None
         if request.files:
             print(f"User {user_id} attached a file with the post for {course_id}")
             file_to_upload = request.files["upload_file"]
@@ -26,10 +32,10 @@ def upload(user_id, course_id):
             
             if (type := request.form['type']) != "":
                 file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                s3_client.upload_file(file_obj = file_to_upload, key = file_key)
+                #s3_client.upload_file(file_obj = file_to_upload, key = file_key)
             else:
-                print("Error: undefined post type")
-                return jsonify({"message": "fail"})
+                return jsonify({"message": "Error: undefined post type"})
+
 
         #TODO: put posting info in database
 
