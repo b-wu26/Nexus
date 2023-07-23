@@ -80,10 +80,10 @@ CREATE TABLE `notes_and_more` (
 -- Table structure for table `questions`
 --
 
-DROP TABLE IF EXISTS `questions`;
+DROP TABLE IF EXISTS `posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `questions` (
+CREATE TABLE `posts` (
   `idquestions` int NOT NULL,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
