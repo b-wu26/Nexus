@@ -1,26 +1,40 @@
 import uuid
-import boto3
 
-from flask import Flask, request, render_template, jsonify
-from client.s3_client import S3Client
+from flask import request, jsonify
 
-#s3_client = S3Client()
+from . import app, s3_client, db
 
-app = Flask(__name__)
+from .models.student_profile import student_profile
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/nexus'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+@app.route("/api/new_user", methods=["POST"])
+def new_user():
+    if request.method == "POST":
+        try:
+            new_user = student_profile(
+                idstudent_profile=eval(request.form["idstudent_profile"]),
+                waterloo_id=request.form["waterloo_id"],
+                account_password=request.form["account_password"],
+                f_name=request.form["f_name"],
+                l_name=request.form["l_name"],
+                validated=eval(request.form["validated"]),
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
+            print(f"new user: {request.form['waterloo_id']} was added to Nexus")
+            return jsonify({"message": "success"})
+        except Exception as e:
+            print(f"Failed to create new user: {e}")
+            return jsonify({"message": "failed"})
 
 
 @app.route("/api/<user_id>/feed_post/<course_id>", methods=["POST"])
 def upload(user_id, course_id):
     if request.method == "POST":
+        post_id = uuid.uuid4().hex
 
-        post_id = uuid.uuid4().hex        
-        
-        #TODO: where to store text content
+        # TODO: where to store text content
         if (text := request.form["text_content"]) != "":
             pass
         else:
@@ -30,24 +44,26 @@ def upload(user_id, course_id):
         if request.files:
             print(f"User {user_id} attached a file with the post for {course_id}")
             file_to_upload = request.files["upload_file"]
-            new_filename = uuid.uuid4().hex + '.' + file_to_upload.filename.rsplit('.', 1)[1].lower()
-            
-            if (type := request.form['type']) != "":
+            new_filename = (
+                uuid.uuid4().hex
+                + "."
+                + file_to_upload.filename.rsplit(".", 1)[1].lower()
+            )
+
+            if (type := request.form["type"]) != "":
                 file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                #s3_client.upload_file(file_obj = file_to_upload, key = file_key)
+                s3_client.upload_file(file_obj=file_to_upload, key=file_key)
             else:
                 return jsonify({"message": "Error: undefined post type"})
 
+        # TODO: put posting info in database
 
-        #TODO: put posting info in database
-
-    
         response = {
             "message": "success",
             "user_id": user_id,
             "post_id": post_id,
             "course_id": course_id,
-            "file_key": file_key
+            "file_key": file_key,
         }
 
         return jsonify(response)
@@ -55,14 +71,14 @@ def upload(user_id, course_id):
 
 @app.route("/feed/<user_id>", methods=["GET"])
 def feed(user_id):
-    
-    #TODO: get list of all courses that this person is taking
+    # TODO: get list of all courses that this person is taking
 
-    #TODO: get top X posts from each course
+    # TODO: get top X posts from each course
 
-    #TODO: compile them into lists of posts with data that client(frontend) can use to generate feed
+    # TODO: compile them into lists of posts with data that client(frontend) can use to generate feed
 
     pass
+
 
 # @api.route('/post/<post_id>')
 # def show_post(post_id):

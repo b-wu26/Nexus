@@ -1,0 +1,71 @@
+body {
+  background-color: #171717;
+}
+
+.login {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.login-form {
+  display : block;
+}
+
+.h5 {
+  color: #ffffff;
+}
+
+.h6 {
+  color: #b2b2b2;
+  padding-top: 0.5rem;
+}
+
+.h7 {
+  color: white;
+  font-size: 0.8rem;
+}
+
+.navbar-brand {
+  color: #3067ff;
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+.col-md-3 .card {
+  background-color: #3e3e3e;
+}
+
+.col-md-3 .card li {
+  background-color: #3e3e3e;
+}
+
+.gedf-wrapper {
+  margin-top: 0.97rem;
+}
+
+@media (min-width: 992px) {
+  .gedf-main {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  .gedf-card {
+    background-color: #292929;
+    margin-bottom: 2.77rem;
+  }
+}
+
+.card-title {
+  color: #ffffff;
+}
+
+.card-body {
+  color: #e6e6e6;
+}
+
+.dropdown-toggle::after {
+  content: none;
+  display: none;
+}
