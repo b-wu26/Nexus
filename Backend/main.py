@@ -4,6 +4,8 @@ import boto3
 from flask import Flask, request, render_template, jsonify
 from client.s3_client import S3Client
 
+s3_client = S3Client()
+
 app = Flask(__name__)
 
 # @app.route('/')
@@ -13,24 +15,33 @@ app = Flask(__name__)
 @app.route("/api/<user_id>/feed_post/<course_id>", methods=["POST"])
 def upload(user_id, course_id):
     if request.method == "POST":
-        
-        post_id = uuid.uuid4().hex
-        file_to_upload = request.files["upload-file"]
 
-        new_filename = uuid.uuid4().hex + '.' + file_to_upload.filename.rsplit('.', 1)[1].lower()
+        post_id = uuid.uuid4().hex        
+        file_key = None
 
-        #put posting info in database
+        if request.files:
+            print(f"User {user_id} attached a file with the post for {course_id}")
+            file_to_upload = request.files["upload_file"]
+            new_filename = uuid.uuid4().hex + '.' + file_to_upload.filename.rsplit('.', 1)[1].lower()
+            
+            if (type := request.form['type']) != "":
+                file_key = f"{type.lower()}/{course_id}/{new_filename}"
+                s3_client.upload_file(file_obj = file_to_upload, key = file_key)
+            else:
+                print("Error: undefined post type")
+                return jsonify({"message": "fail"})
 
-        # Commented out for now, since we know it already works. Dont wanna waste random calls
-        # s3_client = S3Client()
-        # print(s3_client.upload_file(file_obj = file_to_upload, key = f"posts/{new_filename}"))
+        #TODO: put posting info in database
+
+    
         response = {
-            "success": True,
+            "message": "success",
             "user_id": user_id,
             "post_id": post_id,
             "course_id": course_id,
-            "file_name": new_filename
+            "file_key": file_key
         }
+
         return jsonify(response)
 
 
