@@ -8,9 +8,11 @@ from client.s3_client import S3Client
 
 app = Flask(__name__)
 
-# @app.route('/')
-# def hello():
-#     return '<h1>Hello, World!</h1>'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/nexus'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
 
 @app.route("/api/<user_id>/feed_post/<course_id>", methods=["POST"])
 def upload(user_id, course_id):
