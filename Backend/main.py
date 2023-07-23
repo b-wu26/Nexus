@@ -5,6 +5,7 @@ from flask import request, jsonify
 from . import app, s3_client, db
 
 from .models.student_profile import student_profile
+from .models.class_profile import class_profile
 
 
 @app.route("/api/new_user", methods=["POST"])
@@ -69,7 +70,7 @@ def upload(user_id, course_id):
         return jsonify(response)
 
 
-@app.route("/feed/<user_id>", methods=["GET"])
+@app.route("/api/feed/<user_id>", methods=["GET"])
 def feed(user_id):
     # TODO: get list of all courses that this person is taking
 
@@ -78,6 +79,25 @@ def feed(user_id):
     # TODO: compile them into lists of posts with data that client(frontend) can use to generate feed
 
     pass
+
+
+@app.route("/api/courses", defaults={"faculty": None}, methods=["GET"])
+@app.route("/api/courses/<faculty>", methods=["GET"])
+def courses(faculty):
+    if request.method == "GET":
+        courses = class_profile.query.filter_by(faculty=faculty)
+        response = []
+        for course in courses:
+            response.append(
+                {
+                    "idclass_profile": course.idclass_profile,
+                    "class_name": course.class_name,
+                    "course_code": course.course_code,
+                    "faculty": course.faculty,
+                }
+            )
+
+        return jsonify({"courses": response})
 
 
 # @api.route('/post/<post_id>')
