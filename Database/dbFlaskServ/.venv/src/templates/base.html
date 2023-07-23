@@ -1,58 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - FlaskApp</title>
-    <style>
-        .title {
-            margin: 5px;
-        }
-
-        .content {
-            margin: 5px;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        .student {
-            flex: 20%;
-            padding: 10px;
-            margin: 5px;
-            background-color: #f3f3f3;
-            inline-size: 100%;
-        }
-
-        .bio {
-            padding: 10px;
-            margin: 5px;
-            background-color: #ffffff;
-            color: #004835;
-        }
-
-        .name a {
-            color: #00a36f;
-            text-decoration: none;
-        }
-
-        nav a {
-            color: #d64161;
-            font-size: 3em;
-            margin-left: 50px;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <nav>
-        <a href="{{ url_for('index') }}">FlaskApp</a>
-        <a href="#">Create</a>
-        <a href="#">About</a>
-    </nav>
-    <hr>
-    <div class="content">
-        {% block content %} {% endblock %}
-    </div>
-</body>
+<html lang = "en">
+   <head></head>
+   <body>
+      
+      <h3>
+         <a href = "{{ url_for('base') }}">Comments - Flask 
+            SQLAlchemy example</a>
+      </h3>
+      
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+		
+      <h3>Student_profiles (<a href = "{{ url_for('new') }}">Add Student_profile
+         </a>)</h3>
+      
+      <table>
+         <thead>
+            <tr>
+               <th>idstudent_profile</th>
+               <th>waterloo_id</th>
+               <th>account_password</th>
+               <th>f_name</th>
+               <th>l_name</th>
+               <th>validated</th>
+            </tr>
+         </thead>
+         
+         <tbody>
+            {% for student_profile in student_profiles %}
+               <tr>
+                  <td>{{ student_profile.idstudent_profile }}</td>
+                  <td>{{ student_profile.waterloo_id }}</td>
+                  <td>{{ student_profile.account_password }}</td>
+                  <td>{{ student_profile.f_name }}</td>
+                  <td>{{ student_profile.l_name }}</td>
+                  <td>{{ student_profile.validated }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      
+   </body>
 </html>
