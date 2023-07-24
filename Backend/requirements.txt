@@ -1,8 +1,10 @@
+bidict==0.22.1
 blinker==1.6.2
 boto3==1.28.8
 botocore==1.31.8
 click==8.1.6
 Flask==2.3.2
+Flask-SocketIO==5.3.4
 Flask-SQLAlchemy==3.0.5
 greenlet==2.0.2
 importlib-metadata==6.8.0
@@ -14,6 +16,8 @@ mysql-connector-python==8.1.0
 mysqlclient==2.2.0
 protobuf==4.21.12
 python-dateutil==2.8.2
+python-engineio==4.5.1
+python-socketio==5.8.0
 s3transfer==0.6.1
 six==1.16.0
 SQLAlchemy==2.0.19

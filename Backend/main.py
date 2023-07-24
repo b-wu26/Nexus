@@ -1,11 +1,24 @@
 import uuid
 
-from flask import request, jsonify
+from flask import request, jsonify, Flask, render_template, session, redirect
 
-from . import app, s3_client, db
+from flask_socketio import SocketIO, send, join_room, leave_room 
 
-from .models.student_profile import student_profile
-from .models.class_profile import class_profile
+from models.student_profile import student_profile
+from models.class_profile import class_profile
+from client.s3_client import S3Client
+from models import db
+
+from models.student_profile import student_profile
+
+app = Flask(__name__)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = "bananapants"
+db.init_app(app=app)
+
+socketio = SocketIO(app) 
 
 
 @app.route("/api/new_user", methods=["POST"])
@@ -53,7 +66,7 @@ def upload(user_id, course_id):
 
             if (type := request.form["type"]) != "":
                 file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                s3_client.upload_file(file_obj=file_to_upload, key=file_key)
+                #s3_client.upload_file(file_obj=file_to_upload, key=file_key)
             else:
                 return jsonify({"message": "Error: undefined post type"})
 
@@ -115,3 +128,6 @@ def courses(faculty):
 #     if request.method == 'POST':
 
 #     if request.method == 'DELETE':
+
+if __name__ == "__main__": 
+    socketio.run(app, debug=True)
