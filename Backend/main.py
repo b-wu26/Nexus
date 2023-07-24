@@ -10,10 +10,11 @@ from client.s3_client import S3Client
 from models import db
 
 from models.student_profile import student_profile
+from models.schedule import schedule
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
 db.init_app(app=app)
@@ -119,7 +120,7 @@ def courses(faculty):
     methods=["GET"],
 )
 @app.route(
-    "/api/schedule/<idstudent_profile>/<idclass_profile>",
+    "/api/schedule/<idstudent_profile>/<Term_year>",
     methods=["GET"],
 )
 @app.route(
@@ -137,14 +138,14 @@ def student_schedule(idstudent_profile, Term_year=None, idclass_profile=None):
 
         schedules = schedule.query.filter_by(**filters).all()
         reponse = []
-        for schedule in schedules:
+        for s in schedules:
             reponse.append(
                 {
-                    "idstudent_profile": schedule.idstudent_profile,
-                    "idclass_profile": schedule.idclass_profile,
-                    "Term_year": schedule.Term_year,
-                    "current_term": schedule.current_term,
-                    "prof": schedule.prof,
+                    "idstudent_profile": s.idstudent_profile,
+                    "idclass_profile": s.idclass_profile,
+                    "Term_year": s.Term_year,
+                    "current_term": s.current_term,
+                    "prof": s.prof,
                 }
             )
         return jsonify({"schedules": reponse})
