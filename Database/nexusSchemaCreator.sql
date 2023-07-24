@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `class_profile`;
 CREATE TABLE `class_profile` (
   `idclass_profile` int NOT NULL AUTO_INCREMENT,
   `class_name` varchar(200) NOT NULL,
-  `course_code` varchar(15) NOT NULL,
+  `course_code` varchar(30) NOT NULL,
   `faculty` varchar(45) NOT NULL,
   PRIMARY KEY (`idclass_profile`),
   UNIQUE KEY `course_code_UNIQUE` (`course_code`)
@@ -112,7 +112,7 @@ CREATE TABLE `schedule` (
   `idclass_profile` int NOT NULL,
   `Term_year` varchar(45) NOT NULL,
   `current_term` tinyint NOT NULL,
-  `prof` varchar(45) DEFAULT NULL,
+  `prof` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idstudent_profile`,`idclass_profile`,`Term_year`),
   KEY `idclass_profile_idx` (`idclass_profile`),
   CONSTRAINT `idclass_profile` FOREIGN KEY (`idclass_profile`) REFERENCES `class_profile` (`idclass_profile`),
