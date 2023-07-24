@@ -84,14 +84,14 @@ DROP TABLE IF EXISTS `post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `post` (
-  `idquestions` int NOT NULL,
+  `idposts` int NOT NULL,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
-  `questions` longtext NOT NULL,
+  `text_content` longtext NOT NULL,
   `date_sent` date NOT NULL,
   `upvote` int DEFAULT '0',
   `response_id` int DEFAULT NULL,
-  PRIMARY KEY (`idquestions`),
+  PRIMARY KEY (`idposts`),
   KEY `idclass_profile2_idx` (`idclass_profile`),
   KEY `idstudent_profile2_idx` (`idstudent_profile`),
   CONSTRAINT `idclass_profile2` FOREIGN KEY (`idclass_profile`) REFERENCES `class_profile` (`idclass_profile`),
