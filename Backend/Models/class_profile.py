@@ -3,8 +3,8 @@ from . import db
 
 class class_profile(db.Model):
     idclass_profile = db.Column(db.Integer, primary_key=True)
-    class_name = db.Column(db.String(45), nullable=False)
-    course_code = db.Column(db.String(45), nullable=False)
+    class_name = db.Column(db.String(200), nullable=False)
+    course_code = db.Column(db.String(30), nullable=False, unique=True)
     faculty = db.Column(db.String(45), nullable=False)
 
     def __repr__(self):

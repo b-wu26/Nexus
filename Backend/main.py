@@ -2,7 +2,7 @@ import uuid
 
 from flask import request, jsonify, Flask, render_template, session, redirect, url_for
 
-from flask_socketio import SocketIO, send, join_room, leave_room 
+from flask_socketio import SocketIO, send, join_room, leave_room
 
 from models.student_profile import student_profile
 from models.class_profile import class_profile
@@ -10,15 +10,16 @@ from client.s3_client import S3Client
 from models import db
 
 from models.student_profile import student_profile
+from models.schedule import schedule
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
 db.init_app(app=app)
 
-socketio = SocketIO(app) 
+socketio = SocketIO(app)
 
 chat_rooms = {}
 
@@ -67,7 +68,7 @@ def upload(user_id, course_id):
 
             if (type := request.form["type"]) != "":
                 file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                #s3_client.upload_file(file_obj=file_to_upload, key=file_key)
+                # s3_client.upload_file(file_obj=file_to_upload, key=file_key)
             else:
                 return jsonify({"message": "Error: undefined post type"})
 
@@ -95,6 +96,7 @@ def feed(user_id):
     pass
 
 
+# TODO: add more search parameter for courses, not just by faculty
 @app.route("/api/courses", defaults={"faculty": None}, methods=["GET"])
 @app.route("/api/courses/<faculty>", methods=["GET"])
 def courses(faculty):
@@ -199,6 +201,46 @@ def disconnect():
     send({"username": username, "message": "has left the room"}, to=room)
     print(f"{username} has left the room {room}")
 
+@app.route(
+    "/api/schedule/<idstudent_profile>",
+    methods=["GET"],
+)
+@app.route(
+    "/api/schedule/<idstudent_profile>/<Term_year>",
+    methods=["GET"],
+)
+@app.route(
+    "/api/schedule/<idstudent_profile>/<Term_year>/<idclass_profile>/", methods=["GET"]
+)
+def student_schedule(idstudent_profile, Term_year=None, idclass_profile=None):
+    if request.method == "GET":
+        filters = {"idstudent_profile": idstudent_profile}
+
+        if idclass_profile is not None:
+            filters["idclass_profile"] = idclass_profile
+
+        if Term_year is not None:
+            filters["Term_year"] = Term_year
+
+        schedules = schedule.query.filter_by(**filters).all()
+        reponse = []
+        for s in schedules:
+            reponse.append(
+                {
+                    "idstudent_profile": s.idstudent_profile,
+                    "idclass_profile": s.idclass_profile,
+                    "Term_year": s.Term_year,
+                    "current_term": s.current_term,
+                    "prof": s.prof,
+                }
+            )
+        return jsonify({"schedules": reponse})
+
+
+# @app.route("")
+# def
+
+
 # @api.route('/post/<post_id>')
 # def show_post(post_id):
 #     pass
@@ -215,5 +257,5 @@ def disconnect():
 
 #     if request.method == 'DELETE':
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     socketio.run(app, debug=True)

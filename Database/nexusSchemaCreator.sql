@@ -25,11 +25,12 @@ DROP TABLE IF EXISTS `class_profile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `class_profile` (
-  `idclass_profile` int NOT NULL,
-  `class_name` varchar(45) NOT NULL,
-  `course_code` varchar(15) NOT NULL,
+  `idclass_profile` int NOT NULL AUTO_INCREMENT,
+  `class_name` varchar(200) NOT NULL,
+  `course_code` varchar(30) NOT NULL,
   `faculty` varchar(45) NOT NULL,
-  PRIMARY KEY (`idclass_profile`)
+  PRIMARY KEY (`idclass_profile`),
+  UNIQUE KEY `course_code_UNIQUE` (`course_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -41,7 +42,7 @@ DROP TABLE IF EXISTS `message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `message` (
-  `idmessages` int NOT NULL,
+  `idmessages` int NOT NULL AUTO_INCREMENT,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
   `date_sent` date NOT NULL,
@@ -63,7 +64,7 @@ DROP TABLE IF EXISTS `notes_and_more`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notes_and_more` (
-  `objectid` int NOT NULL,
+  `objectid` int NOT NULL AUTO_INCREMENT,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
   `date_poster` date NOT NULL,
@@ -84,14 +85,14 @@ DROP TABLE IF EXISTS `post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `post` (
-  `idquestions` int NOT NULL,
+  `idposts` int NOT NULL AUTO_INCREMENT,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
-  `questions` longtext NOT NULL,
+  `text_content` longtext NOT NULL,
   `date_sent` date NOT NULL,
   `upvote` int DEFAULT '0',
   `response_id` int DEFAULT NULL,
-  PRIMARY KEY (`idquestions`),
+  PRIMARY KEY (`idposts`),
   KEY `idclass_profile2_idx` (`idclass_profile`),
   KEY `idstudent_profile2_idx` (`idstudent_profile`),
   CONSTRAINT `idclass_profile2` FOREIGN KEY (`idclass_profile`) REFERENCES `class_profile` (`idclass_profile`),
@@ -111,7 +112,7 @@ CREATE TABLE `schedule` (
   `idclass_profile` int NOT NULL,
   `Term_year` varchar(45) NOT NULL,
   `current_term` tinyint NOT NULL,
-  `prof` varchar(45) DEFAULT NULL,
+  `prof` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idstudent_profile`,`idclass_profile`,`Term_year`),
   KEY `idclass_profile_idx` (`idclass_profile`),
   CONSTRAINT `idclass_profile` FOREIGN KEY (`idclass_profile`) REFERENCES `class_profile` (`idclass_profile`),
@@ -127,13 +128,14 @@ DROP TABLE IF EXISTS `student_profile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student_profile` (
-  `idstudent_profile` int NOT NULL,
+  `idstudent_profile` INT NOT NULL AUTO_INCREMENT,
   `waterloo_id` varchar(50) NOT NULL,
   `account_password` varchar(50) DEFAULT NULL,
   `f_name` varchar(50) DEFAULT NULL,
   `l_name` varchar(50) DEFAULT NULL,
   `validated` tinyint DEFAULT '0',
-  PRIMARY KEY (`idstudent_profile`)
+  PRIMARY KEY (`idstudent_profile`),
+  UNIQUE KEY `waterloo_id_UNIQUE` (`waterloo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
