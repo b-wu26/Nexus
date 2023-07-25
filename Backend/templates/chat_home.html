@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" class="buttons">
+    <h3>Enter the Chat Room</h3>
+    <div>
+        <label>Name:</label>
+        <input
+          type="text"
+          placeholder="Enter your Username:"
+          name="username"
+          value="{{username}}"
+        />
+        <input
+        type="password"
+        placeholder="Enter your Password:"
+        name="password"
+      />
+      <select name="course" placeholder="Select a course">
+            <option value="ECE150">ECE 150</option>
+            <option value="ECE252">ECE 252</option>
+            <option value="ECE356">ECE 356</option>
+            <option value="ECE358">ECE 358</option>
+            <option value="ECE406">ECE 406</option>
+            <option value="ECE452">ECE 452</option>
+        </select>
+      </div>
+      <div class="join">
+        <button type="submit" name="join">Join a Room</button>
+      </div>
+      {% if error %}
+      <ul>
+        <li>{{error}}</li>
+      </ul>
+      {% endif %}
+</form>
+{% endblock %}

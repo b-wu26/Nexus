@@ -1,6 +1,6 @@
 import uuid
 
-from flask import request, jsonify, Flask, render_template, session, redirect
+from flask import request, jsonify, Flask, render_template, session, redirect, url_for
 
 from flask_socketio import SocketIO, send, join_room, leave_room 
 
@@ -20,6 +20,7 @@ db.init_app(app=app)
 
 socketio = SocketIO(app) 
 
+chat_rooms = {}
 
 @app.route("/api/new_user", methods=["POST"])
 def new_user():
@@ -111,7 +112,92 @@ def courses(faculty):
             )
 
         return jsonify({"courses": response})
+    
+@app.route("/chat", methods=["POST", "GET"])
+def chat(): 
+    session.clear()
+    if request.method == "POST": 
+        username = request.form.get("username")
+        password = request.form.get("password") 
+        course = request.form.get("course") 
+        
+        #bunch of error checking
+        if not username: 
+            return render_template("chat_home.html", error="Please enter a username.")
 
+        if not password: 
+            return render_template("chat_home.html", error="Please enter a password.")
+        
+        if not course: 
+            return render_template("chat_home.html", error="Please select a course.")
+
+        user_info = db.session.query(student_profile).filter_by(waterloo_id=username).first()
+
+        if user_info is None or user_info.account_password != password: 
+            return render_template("chat_home.html", error="The username or password is incorrect.")
+        
+        #valid user, connect to room 
+        room = course 
+        if room not in chat_rooms: 
+            chat_rooms[room] = {"members": 0, "messages": []} 
+
+        session["room"] = room 
+        session["username"] = username
+        return redirect(url_for("room"))
+
+    return render_template("chat_home.html", error="")
+
+@app.route("/room") 
+def room(): 
+
+    room = session.get("room")
+    if room is None or session.get("username") is None or room not in chat_rooms:
+       return redirect(url_for("chat"))
+    
+    return render_template("chat_room.html", course=room)
+
+@socketio.on("message")
+def message(data):
+    room = session.get("room")
+    if room not in chat_rooms:
+        return 
+    
+    content = {
+        "username": session.get("username"),
+        "message": data["data"]
+    }
+    send(content, to=room)
+    chat_rooms[room]["messages"].append(content)
+    print(f"{session.get('username')} said: {data['data']}")
+
+@socketio.on("connect")
+def connect(auth):
+    room = session.get("room")
+    username = session.get("username")
+    if not room or not username:
+        return
+    if room not in chat_rooms:
+        leave_room(room)
+        return
+    
+    join_room(room)
+    send({"username": username, "message": "has entered the room"}, to=room)
+    chat_rooms[room]["members"] += 1
+    print(f"{username} joined room {room}")
+
+@socketio.on("disconnect")
+def disconnect():
+    room = session.get("room")
+    username = session.get("username")
+    leave_room(room)
+
+    if room in chat_rooms:
+        chat_rooms[room]["members"] -= 1
+        if chat_rooms[room]["members"] <= 0:
+            del chat_rooms[room]
+    
+    send({"username": username, "message": "has left the room"}, to=room)
+    print(f"{username} has left the room {room}")
 
 # @api.route('/post/<post_id>')
 # def show_post(post_id):
