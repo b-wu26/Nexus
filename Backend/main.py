@@ -19,7 +19,7 @@ from models.schedule import schedule
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
 app.config['MAIL_SERVER']='smtp.gmail.com'
