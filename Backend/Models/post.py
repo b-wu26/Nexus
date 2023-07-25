@@ -17,7 +17,7 @@ class post(db.Model):
     response_id = db.Column(db.Integer,nullable=True)
 
     def __repr__(self):
-        return f"<schedule {self.idclass_profile}, {self.idclass_profile}, {self.Term_year}>"
+        return f"<post {self.idposts}>"
 
     def __init__(
         self, idstudent_profile, idclass_profile, date_sent, text_content,response_id =-1

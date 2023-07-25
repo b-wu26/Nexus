@@ -6,6 +6,7 @@ from flask_socketio import SocketIO, send, join_room, leave_room
 
 from models.student_profile import student_profile
 from models.class_profile import class_profile
+from models.message import message as dbmessage
 from client.s3_client import S3Client
 from models import db
 
@@ -14,7 +15,7 @@ from models.schedule import schedule
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
 db.init_app(app=app)
@@ -134,6 +135,7 @@ def chat():
             return render_template("chat_home.html", error="Please select a course.")
 
         user_info = db.session.query(student_profile).filter_by(waterloo_id=username).first()
+        course_info = db.session.query(class_profile).filter_by(course_code=course).first() 
 
         if user_info is None or user_info.account_password != password: 
             return render_template("chat_home.html", error="The username or password is incorrect.")
@@ -141,10 +143,20 @@ def chat():
         #valid user, connect to room 
         room = course 
         if room not in chat_rooms: 
-            chat_rooms[room] = {"members": 0, "messages": []} 
+            messageList = dbmessage.query.join(student_profile, dbmessage.idstudent_profile == student_profile.idstudent_profile).add_columns(student_profile.waterloo_id, dbmessage.message, dbmessage.idclass_profile).filter(dbmessage.idclass_profile == course_info.idclass_profile).all()
+            oldMessages = [] 
+            for message in messageList:
+                oldMessages.append({
+                    "username": message[1],
+                    "message": message[2]
+                })
+            chat_rooms[room] = {"members": 0, "messages": oldMessages} 
+            print(chat_rooms)
 
         session["room"] = room 
         session["username"] = username
+        session["user_id"] = user_info.idstudent_profile
+        session["course_id"] = course_info.idclass_profile
         return redirect(url_for("room"))
 
     return render_template("chat_home.html", error="")
@@ -156,11 +168,13 @@ def room():
     if room is None or session.get("username") is None or room not in chat_rooms:
        return redirect(url_for("chat"))
     
-    return render_template("chat_room.html", course=room)
+    return render_template("chat_room.html", course=room, messages=chat_rooms[room]["messages"])
 
 @socketio.on("message")
 def message(data):
     room = session.get("room")
+    user_id = session.get("user_id")
+    course_id = session.get("course_id")
     if room not in chat_rooms:
         return 
     
@@ -170,6 +184,16 @@ def message(data):
     }
     send(content, to=room)
     chat_rooms[room]["messages"].append(content)
+
+    new_message = dbmessage(
+        idstudent_profile = user_id,
+        idclass_profile = course_id,
+        message = data["data"] 
+    )   
+
+    db.session.add(new_message)
+    db.session.commit()
+
     print(f"{session.get('username')} said: {data['data']}")
 
 @socketio.on("connect")
@@ -177,10 +201,17 @@ def connect(auth):
     room = session.get("room")
     username = session.get("username")
     if not room or not username:
+        print("here")
         return
     if room not in chat_rooms:
-        leave_room(room)
-        return
+        messageList = dbmessage.query.join(student_profile, dbmessage.idstudent_profile == student_profile.idstudent_profile).add_columns(student_profile.waterloo_id, dbmessage.message, dbmessage.idclass_profile).filter(dbmessage.idclass_profile == session["course_id"]).all()
+        oldMessages = [] 
+        for message in messageList:
+            oldMessages.append({
+                "username": message[1],
+                "message": message[2]
+            })
+        chat_rooms[room] = {"members": 0, "messages": oldMessages} 
     
     join_room(room)
     send({"username": username, "message": "has entered the room"}, to=room)

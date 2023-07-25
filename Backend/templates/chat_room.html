@@ -18,6 +18,7 @@
     var socketio = io();
   
     const messages = document.getElementById("messages");
+    console.log(messages)
   
     const createMessage = (name, msg) => {
       const content = `
@@ -46,6 +47,6 @@
   </script>
   {% for msg in messages %}
   <script type="text/javascript">
-    createMessage("{{msg.name}}", "{{msg.message}}");
+    createMessage("{{msg.username}}", "{{msg.message}}");
   </script>
   {% endfor %} {% endblock %}

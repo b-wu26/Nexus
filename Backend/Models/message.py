@@ -1,5 +1,5 @@
 from . import db
-
+import datetime
 
 class message(db.Model):
     idmessages = db.Column(
@@ -11,18 +11,17 @@ class message(db.Model):
     idclass_profile = db.Column(
         db.Integer, db.ForeignKey("class_profile.idclass_profile"), nullable=False
     )
-    date_sent = db.Column(db.DateTime, nullable=False)
+    date_sent = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     upvotes = db.Column(db.Integer, nullable=False)
     message = db.Column(db.String(2000), nullable=False)
 
     def __repr__(self):
-        return f"<schedule {self.idclass_profile}, {self.idclass_profile}, {self.Term_year}>"
+        return f"<message {self.idmessages}>"
 
     def __init__(
-        self, idstudent_profile, idclass_profile, date_sent, message
+        self, idstudent_profile, idclass_profile, message
     ):
         self.idstudent_profile = idstudent_profile
         self.idclass_profile = idclass_profile
-        self.date_sent = date_sent
         self.message = message
         self.upvotes = 0

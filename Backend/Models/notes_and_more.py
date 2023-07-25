@@ -15,7 +15,7 @@ class notes_and_more(db.Model):
     s3_endpoint = db.Column(db.String(2000), nullable=False)
 
     def __repr__(self):
-        return f"<schedule {self.idclass_profile}, {self.idclass_profile}, {self.Term_year}>"
+        return f"<notes_and_more {self.objectid}>"
 
     def __init__(
         self, idstudent_profile, idclass_profile, date_poster, s3_endpoint
