@@ -4,6 +4,8 @@ from flask import request, jsonify, Flask, render_template, session, redirect, u
 
 from flask_socketio import SocketIO, send, join_room, leave_room
 
+from flask_mail import Mail, Message 
+
 from models.student_profile import student_profile
 from models.class_profile import class_profile
 from models.message import message as dbmessage
@@ -17,10 +19,18 @@ from models.schedule import schedule
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'contact.nexuscustomerservice@gmail.com'
+app.config['MAIL_PASSWORD'] = 'mfqhszaedigbcrmb'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 db.init_app(app=app)
+mail = Mail(app)
+
 
 socketio = SocketIO(app)
 s3_client = S3Client()
@@ -131,6 +141,34 @@ def courses(faculty):
 
         return jsonify({"courses": response})
     
+@app.route("/api/<user_id>/signup", methods=["POST"]) 
+def signup(user_id): 
+    if request.method == "POST": 
+        msg = Message(subject="Confirm your Nexus Account", sender="contact.nexuscustomerservice@gmail.com", recipients=[request.form["email"]])
+        msg.body = '''Hi there {watid}, welcome to Nexus! To complete your account signup, please click on the below link. 
+
+http://127.0.0.1:5000/verify/{watid}
+
+Thanks!
+-Nexus Team'''.format(watid = request.form["watid"])
+        mail.send(msg) 
+
+        new_user = student_profile(
+            waterloo_id=request.form["watid"],
+            account_password=request.form["password"],
+            f_name=request.form["f_name"],
+            l_name=request.form["l_name"],
+            validated=True,
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"email": "success"}) 
+    
+@app.route("/verify/<watid>") 
+def verify(watid): 
+    return redirect(url_for("chat"))
+
 @app.route("/chat", methods=["POST", "GET"])
 def chat(): 
     session.clear()

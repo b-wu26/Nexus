@@ -14,14 +14,12 @@ class student_profile(db.Model):
 
     def __init__(
         self,
-        idstudent_profile,
         waterloo_id,
         account_password,
         f_name,
         l_name,
         validated,
     ):
-        self.idstudent_profile = idstudent_profile
         self.waterloo_id = waterloo_id
         self.account_password = account_password
         self.f_name = f_name
