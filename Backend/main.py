@@ -7,6 +7,8 @@ from flask_socketio import SocketIO, send, join_room, leave_room
 from models.student_profile import student_profile
 from models.class_profile import class_profile
 from models.message import message as dbmessage
+from models.post import post
+
 from client.s3_client import S3Client
 from models import db
 
@@ -21,8 +23,10 @@ app.config["SECRET_KEY"] = "bananapants"
 db.init_app(app=app)
 
 socketio = SocketIO(app)
+s3_client = S3Client()
 
 chat_rooms = {}
+
 
 @app.route("/api/new_user", methods=["POST"])
 def new_user():
@@ -51,6 +55,8 @@ def upload(idstudent_profile, course_id):
     if request.method == "POST":
         post_id = uuid.uuid4().hex
 
+        # courses = class_profile.query.filter_by(course_id=course_id)
+
         if (text := request.form["text_content"]) != "":
             pass
         else:
@@ -70,11 +76,19 @@ def upload(idstudent_profile, course_id):
 
             if (type := request.form["type"]) != "":
                 file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                # s3_client.upload_file(file_obj=file_to_upload, key=file_key)
+                print(s3_client.upload_file(file_obj=file_to_upload, key=file_key))
             else:
                 return jsonify({"message": "Error: undefined post type"})
 
-        # TODO: put posting info in database
+        # post_to_upload = post(
+        #     idposts=post_id,
+        #     idstudent_profile=idstudent_profile,
+        #     idclass_profile=course_id,
+        #     date_sent="",
+        #     text_content="",
+        #     upvote="",
+        #     response_id=""
+        # ) 
 
         response = {
             "message": "success",
