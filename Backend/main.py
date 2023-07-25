@@ -46,12 +46,11 @@ def new_user():
             return jsonify({"message": "failed"})
 
 
-@app.route("/api/<user_id>/feed_post/<course_id>", methods=["POST"])
-def upload(user_id, course_id):
+@app.route("/api/<idstudent_profile>/feed_post/<course_id>", methods=["POST"])
+def upload(idstudent_profile, course_id):
     if request.method == "POST":
         post_id = uuid.uuid4().hex
 
-        # TODO: where to store text content
         if (text := request.form["text_content"]) != "":
             pass
         else:
@@ -59,7 +58,9 @@ def upload(user_id, course_id):
 
         file_key = None
         if request.files:
-            print(f"User {user_id} attached a file with the post for {course_id}")
+            print(
+                f"User {idstudent_profile} attached a file with the post for {course_id}"
+            )
             file_to_upload = request.files["upload_file"]
             new_filename = (
                 uuid.uuid4().hex
@@ -77,7 +78,7 @@ def upload(user_id, course_id):
 
         response = {
             "message": "success",
-            "user_id": user_id,
+            "user_id": idstudent_profile,
             "post_id": post_id,
             "course_id": course_id,
             "file_key": file_key,
