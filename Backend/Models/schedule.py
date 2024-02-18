@@ -13,7 +13,7 @@ class schedule(db.Model):
     prof = db.Column(db.String(50), nullable=True)
 
     def __repr__(self):
-        return f"<schedule {self.idclass_profile}, {self.idclass_profile}, {self.Term_year}>"
+        return f"<schedule {self.idclass_profile}, {self.idclass_profile}, {self.Term_year}, {self.prof}>"
 
     def __init__(
         self, idstudent_profile, idclass_profile, Term_year, current_term, prof
@@ -23,3 +23,6 @@ class schedule(db.Model):
         self.Term_year = Term_year
         self.current_term = current_term
         self.prof = prof
+
+    def get_courses_by_student_id(idstudent_profile):
+        return schedule.query.filter_by(idstudent_profile=idstudent_profile).all()

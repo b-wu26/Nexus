@@ -25,3 +25,6 @@ class student_profile(db.Model):
         self.f_name = f_name
         self.l_name = l_name
         self.validated = validated
+
+    def get_student_by_id(idstudent_profile):
+        return student_profile.query.filter_by(idstudent_profile=idstudent_profile).first()

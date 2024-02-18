@@ -10,12 +10,13 @@ from models.student_profile import student_profile
 from models.class_profile import class_profile
 from models.message import message as dbmessage
 from models.post import post
+from models.schedule import schedule
+
 
 from client.s3_client import S3Client
 from models import db
 
-from models.student_profile import student_profile
-from models.schedule import schedule
+from posts_helper import create_posts
 
 app = Flask(__name__)
 
@@ -113,13 +114,15 @@ def upload(idstudent_profile, course_id):
 
 @app.route("/api/feed/<user_id>", methods=["GET"])
 def feed(user_id):
-    # TODO: get list of all courses that this person is taking
+    courses = schedule.get_courses_by_student_id(user_id)
+    courses = [ course.idclass_profile for course in courses ]
 
-    # TODO: get top X posts from each course
-
-    # TODO: compile them into lists of posts with data that client(frontend) can use to generate feed
-
-    pass
+    post_list = post.get_posts_by_class_id_ordered_most_recent(courses)
+    posts = create_posts(post_list)
+    
+    response = jsonify(posts)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 200
 
 
 # TODO: add more search parameter for courses, not just by faculty

@@ -15,3 +15,6 @@ class class_profile(db.Model):
         self.class_name = class_name
         self.course_code = course_code
         self.faculty = faculty
+    
+    def get_class_by_id(idclass_profile):
+        return class_profile.query.filter_by(idclass_profile=idclass_profile).first()
