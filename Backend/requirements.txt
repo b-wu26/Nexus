@@ -4,6 +4,7 @@ boto3==1.28.8
 botocore==1.31.8
 click==8.1.6
 Flask==2.3.2
+Flask-Cors==4.0.0
 Flask-Mail==0.9.1
 Flask-SocketIO==5.3.4
 Flask-SQLAlchemy==3.0.5

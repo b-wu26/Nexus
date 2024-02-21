@@ -1,4 +1,6 @@
 import uuid
+from datetime import datetime
+
 
 from flask import request, jsonify, Flask, render_template, session, redirect, url_for
 
@@ -12,13 +14,16 @@ from models.message import message as dbmessage
 from models.post import post
 from models.schedule import schedule
 
-
 from client.s3_client import S3Client
 from models import db
 
 from posts_helper import create_posts
 
+from flask import Flask
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"])
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -64,9 +69,7 @@ def new_user():
 @app.route("/api/<idstudent_profile>/feed_post/<course_id>", methods=["POST"])
 def upload(idstudent_profile, course_id):
     if request.method == "POST":
-        post_id = uuid.uuid4().hex
-
-        # courses = class_profile.query.filter_by(course_id=course_id)
+        # post_id = uuid.uuid4().hex
 
         if (text := request.form["text_content"]) != "":
             pass
@@ -91,27 +94,31 @@ def upload(idstudent_profile, course_id):
             else:
                 return jsonify({"message": "Error: undefined post type"})
 
-        # post_to_upload = post(
-        #     idposts=post_id,
-        #     idstudent_profile=idstudent_profile,
-        #     idclass_profile=course_id,
-        #     date_sent="",
-        #     text_content="",
-        #     upvote="",
-        #     response_id=""
-        # ) 
+        date_sent = datetime.fromisoformat(request.form.get("date_sent").replace("Z", "+00:00"))
+        date_sent = date_sent.strftime('%Y-%m-%d %H:%M:%S')
 
-        response = {
+        post_to_upload = post(
+            # idposts=post_id,
+            idstudent_profile=request.form.get("idstudent_profile"),
+            idclass_profile=request.form.get("idclass_profile"),
+            date_sent=date_sent,
+            text_content=request.form.get("text_content"),
+            # upvote=request.form.get("upvote"),
+            response_id=request.form.get("response_id"),
+        ) 
+
+        db.session.add(post_to_upload)
+        db.session.commit()
+
+        response = jsonify({
             "message": "success",
-            "user_id": idstudent_profile,
-            "post_id": post_id,
-            "course_id": course_id,
-            "file_key": file_key,
-        }
+            # "uploaded_post": post_to_upload
+        })
+        response.headers.add('Access-Control-Allow-Origin', '*')
 
-        return jsonify(response)
+        return response, 200
 
-
+# load feed for a user, display posts from all courses they are enrolled in
 @app.route("/api/feed/<user_id>", methods=["GET"])
 def feed(user_id):
     courses = schedule.get_courses_by_student_id(user_id)
@@ -123,6 +130,25 @@ def feed(user_id):
     response = jsonify(posts)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response, 200
+
+@app.route("/api/enrolled_courses/<user_id>", methods=["GET"])
+def enrolled_courses(user_id):
+    if request.method == "GET":
+        enrolled_classes = schedule.get_courses_by_student_id(user_id)
+        enrolled_courses = [ course.idclass_profile for course in enrolled_classes ]
+        response = []
+        for course in enrolled_courses:
+            class_details = class_profile.get_class_by_id(course)
+            response.append({
+                "idclass_profile": class_details.idclass_profile,
+                "class_name": class_details.class_name,
+                "course_code": class_details.course_code,
+                "faculty": class_details.faculty
+            })
+        response = jsonify({"courses": response})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 200
+            
 
 
 # TODO: add more search parameter for courses, not just by faculty

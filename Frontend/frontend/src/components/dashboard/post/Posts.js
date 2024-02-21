@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from "../../../redux/actions"
 import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 
+const user_id = 1; // Replace with your actual user ID
+
 function Posts() {
     const [posts, setPosts] = useState([]); // initialize posts state
 
     useEffect(() => {
-        axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/1`) // replace 'endpoint' with your actual endpoint
+        axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/${user_id}`) // replace 'endpoint' with your actual endpoint
             .then((response) => {
                 console.log(response);
                 setPosts(response.data); // update posts state with the data from the response
