@@ -19,7 +19,6 @@ s3_client = S3Client()
 @post_endpoints.route("/api/<idstudent_profile>/feed_post/<course_id>", methods=["POST"])
 def upload(idstudent_profile, course_id):
     if request.method == "POST":
-        # post_id = uuid.uuid4().hex
 
         if (text := request.form["text_content"]) != "":
             pass
@@ -60,15 +59,16 @@ def upload(idstudent_profile, course_id):
         db.session.add(post_to_upload)
         db.session.commit()
 
-        uploaded_file = notes_and_more(
-            idposts=post_to_upload.idposts,
-            idstudent_profile=idstudent_profile,
-            idclass_profile=course_id,
-            date_poster=date_sent,
-            s3_endpoint=file_key,
-        )
-        db.session.add(uploaded_file)
-        db.session.commit()
+        if file_key:
+            uploaded_file = notes_and_more(
+                idposts=post_to_upload.idposts,
+                idstudent_profile=idstudent_profile,
+                idclass_profile=course_id,
+                date_poster=date_sent,
+                s3_endpoint=file_key,
+            )
+            db.session.add(uploaded_file)
+            db.session.commit()
         
         response = jsonify({
             "message": "success",

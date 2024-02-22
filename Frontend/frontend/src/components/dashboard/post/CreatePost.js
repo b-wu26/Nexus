@@ -70,7 +70,7 @@ export default function CreatePost({ user, newPost }) {
             }
         }).then((response) => {
             console.log(response.data);
-            // Do something with the response data
+            window.location.reload();
         })
             .catch((error) => {
                 console.error(`Error creating post: ${error}`);
