@@ -60,6 +60,7 @@ export default function CreatePost({ user, newPost }) {
         formData.append('upvotes', 0);
         formData.append('response_id', 0);
         if (postFile) {
+            formData.append('type', "posts");
             formData.append('post_file', postFile);
         }
 

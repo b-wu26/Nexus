@@ -5,6 +5,9 @@ class notes_and_more(db.Model):
     objectid = db.Column(
         db.Integer, primary_key=True
     )
+    idposts = db.Column(
+        db.Integer, db.ForeignKey("post.idposts"), nullable=False
+    )
     idstudent_profile = db.Column(
         db.Integer, db.ForeignKey("student_profile.idstudent_profile"), nullable=False
     )
@@ -18,9 +21,14 @@ class notes_and_more(db.Model):
         return f"<notes_and_more {self.objectid}>"
 
     def __init__(
-        self, idstudent_profile, idclass_profile, date_poster, s3_endpoint
+        self, idposts, idstudent_profile, idclass_profile, date_poster, s3_endpoint
     ):
+        self.idposts = idposts
         self.idstudent_profile = idstudent_profile
         self.idclass_profile = idclass_profile
         self.date_poster = date_poster
         self.s3_endpoint = s3_endpoint
+
+    
+    def get_notes_by_post_id(idposts):
+        return notes_and_more.query.filter_by(idposts=idposts).all()

@@ -15,4 +15,12 @@ class S3Client:
         except ClientError as e:
             logging.error(e)
             return False
-        return True
+        return response
+
+    def get_file(self, bucket="uw-nexus-contents", key=None):
+        try:
+            response = self.client.get_object(Bucket=bucket, Key=key)
+        except ClientError as e:
+            logging.error(e)
+            return False
+        return response

@@ -1,7 +1,3 @@
-import uuid
-from datetime import datetime
-
-
 from flask import request, jsonify, Flask, render_template, session, redirect, url_for
 
 from flask_socketio import SocketIO, send, join_room, leave_room
@@ -11,13 +7,13 @@ from flask_mail import Mail, Message
 from models.student_profile import student_profile
 from models.class_profile import class_profile
 from models.message import message as dbmessage
-from models.post import post
 from models.schedule import schedule
+
+from endpoints.schedule_endpoints import schedule_endpoints
+from endpoints.post_endpoints import post_endpoints
 
 from client.s3_client import S3Client
 from models import db
-
-from posts_helper import create_posts
 
 from flask import Flask
 from flask_cors import CORS
@@ -37,6 +33,8 @@ app.config['MAIL_USE_SSL'] = True
 db.init_app(app=app)
 mail = Mail(app)
 
+app.register_blueprint(schedule_endpoints)
+app.register_blueprint(post_endpoints)
 
 socketio = SocketIO(app)
 s3_client = S3Client()
@@ -64,91 +62,6 @@ def new_user():
         except Exception as e:
             print(f"Failed to create new user: {e}")
             return jsonify({"message": "failed"})
-
-
-@app.route("/api/<idstudent_profile>/feed_post/<course_id>", methods=["POST"])
-def upload(idstudent_profile, course_id):
-    if request.method == "POST":
-        # post_id = uuid.uuid4().hex
-
-        if (text := request.form["text_content"]) != "":
-            pass
-        else:
-            return jsonify({"message": "Can not have empty text content"})
-
-        file_key = None
-        if request.files:
-            print(
-                f"User {idstudent_profile} attached a file with the post for {course_id}"
-            )
-            file_to_upload = request.files["upload_file"]
-            new_filename = (
-                uuid.uuid4().hex
-                + "."
-                + file_to_upload.filename.rsplit(".", 1)[1].lower()
-            )
-
-            if (type := request.form["type"]) != "":
-                file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                print(s3_client.upload_file(file_obj=file_to_upload, key=file_key))
-            else:
-                return jsonify({"message": "Error: undefined post type"})
-
-        date_sent = datetime.fromisoformat(request.form.get("date_sent").replace("Z", "+00:00"))
-        date_sent = date_sent.strftime('%Y-%m-%d %H:%M:%S')
-
-        post_to_upload = post(
-            # idposts=post_id,
-            idstudent_profile=request.form.get("idstudent_profile"),
-            idclass_profile=request.form.get("idclass_profile"),
-            date_sent=date_sent,
-            text_content=request.form.get("text_content"),
-            # upvote=request.form.get("upvote"),
-            response_id=request.form.get("response_id"),
-        ) 
-
-        db.session.add(post_to_upload)
-        db.session.commit()
-
-        response = jsonify({
-            "message": "success",
-            # "uploaded_post": post_to_upload
-        })
-        response.headers.add('Access-Control-Allow-Origin', '*')
-
-        return response, 200
-
-# load feed for a user, display posts from all courses they are enrolled in
-@app.route("/api/feed/<user_id>", methods=["GET"])
-def feed(user_id):
-    courses = schedule.get_courses_by_student_id(user_id)
-    courses = [ course.idclass_profile for course in courses ]
-
-    post_list = post.get_posts_by_class_id_ordered_most_recent(courses)
-    posts = create_posts(post_list)
-    
-    response = jsonify(posts)
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response, 200
-
-@app.route("/api/enrolled_courses/<user_id>", methods=["GET"])
-def enrolled_courses(user_id):
-    if request.method == "GET":
-        enrolled_classes = schedule.get_courses_by_student_id(user_id)
-        enrolled_courses = [ course.idclass_profile for course in enrolled_classes ]
-        response = []
-        for course in enrolled_courses:
-            class_details = class_profile.get_class_by_id(course)
-            response.append({
-                "idclass_profile": class_details.idclass_profile,
-                "class_name": class_details.class_name,
-                "course_code": class_details.course_code,
-                "faculty": class_details.faculty
-            })
-        response = jsonify({"courses": response})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response, 200
-            
 
 
 # TODO: add more search parameter for courses, not just by faculty

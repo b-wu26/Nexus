@@ -65,15 +65,18 @@ DROP TABLE IF EXISTS `notes_and_more`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notes_and_more` (
   `objectid` int NOT NULL AUTO_INCREMENT,
+  `idposts` int NOT NULL,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
   `date_poster` date NOT NULL,
   `s3_endpoint` longtext NOT NULL,
   PRIMARY KEY (`objectid`),
+  KEY `idposts_idx` (`idposts`),
   KEY `idstudent_profile_idx` (`idstudent_profile`),
   KEY `idclass_profile3_idx` (`idclass_profile`),
-  CONSTRAINT `idclass_profile3` FOREIGN KEY (`idclass_profile`) REFERENCES `class_profile` (`idclass_profile`),
-  CONSTRAINT `idstudent_profile3` FOREIGN KEY (`idstudent_profile`) REFERENCES `student_profile` (`idstudent_profile`)
+  CONSTRAINT `idposts3` FOREIGN KEY (`idposts`) REFERENCES `post` (`idposts`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `idclass_profile3` FOREIGN KEY (`idclass_profile`) REFERENCES `class_profile` (`idclass_profile`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `idstudent_profile3` FOREIGN KEY (`idstudent_profile`) REFERENCES `student_profile` (`idstudent_profile`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

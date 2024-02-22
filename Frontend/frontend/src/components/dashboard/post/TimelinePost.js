@@ -76,11 +76,9 @@ const TimelinePost = ({ post }) => {
                     </a>
                 ))) : ""}
             </div>
-            {post.post_image ? (
-                <LazyLoadImage src={post.post_image} className="rounded post-picture" alt="" />
-            ) : (
-                ""
-            )}
+            {post.images && post.images.map((image, index) => (
+                <LazyLoadImage key={index} src={image} className="rounded post-picture" alt="" />
+            ))}
             <div className="d-flex post-actions">
                 <button>
                     <i className="far fa-comment-alt"></i>{(comments) ? (comments.length == 0) ? "No " : comments.length + " " : ""}Comments
