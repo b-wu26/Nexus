@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;500;600;700;900&display=swap");
+
 :root {
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -61,7 +62,7 @@ body {
 *::after,
 *::before {
   -webkit-box-sizing: border-box !important;
-          box-sizing: border-box !important;
+  box-sizing: border-box !important;
   margin: 0;
   padding: 0;
 }
@@ -116,7 +117,7 @@ img {
   line-height: 1.8rem;
   position: relative;
   -webkit-box-shadow: 0 0 0.5rem 0.1rem rgba(var(--rgb-light-accent-darkened), 0.2);
-          box-shadow: 0 0 0.5rem 0.1rem rgba(var(--rgb-light-accent-darkened), 0.2);
+  box-shadow: 0 0 0.5rem 0.1rem rgba(var(--rgb-light-accent-darkened), 0.2);
   border: 0.1rem solid rgba(var(--rgb-grey), 0.3);
   cursor: pointer;
 }
@@ -179,7 +180,7 @@ img {
   border-color: var(--clr-accent);
   outline: 0;
   -webkit-box-shadow: 0;
-          box-shadow: 0;
+  box-shadow: 0;
 }
 
 .dropdown-menu {
@@ -188,7 +189,7 @@ img {
   border: 1px solid rgba(var(--rgb-grey), 0.15);
   border-radius: 0.5rem;
   -webkit-box-shadow: 0 0 0.5rem 0.25rem var(--clr-light-accent);
-          box-shadow: 0 0 0.5rem 0.25rem var(--clr-light-accent);
+  box-shadow: 0 0 0.5rem 0.25rem var(--clr-light-accent);
   min-width: 8rem;
   padding: 0.5rem;
 }
@@ -202,7 +203,8 @@ img {
   border-radius: .5rem;
 }
 
-.dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus {
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
   background-color: rgba(var(--rgb-grey), 0.15);
 }
 
@@ -213,7 +215,7 @@ img {
   margin: 1rem 0 1.5rem 0;
   border: none;
   -webkit-box-shadow: 0 0 5px 1px rgba(var(--rgb-grey), 0.05);
-          box-shadow: 0 0 5px 1px rgba(var(--rgb-grey), 0.05);
+  box-shadow: 0 0 5px 1px rgba(var(--rgb-grey), 0.05);
 }
 
 .card-btn {
@@ -268,7 +270,7 @@ img {
   border-radius: 1rem;
   border: 1px rgba(var(--rgb-accent), 0) solid;
   -webkit-box-shadow: 0 0 100px 20px rgba(var(--rgb-accent), 0.1);
-          box-shadow: 0 0 100px 20px rgba(var(--rgb-accent), 0.1);
+  box-shadow: 0 0 100px 20px rgba(var(--rgb-accent), 0.1);
 }
 
 .error-bg input,
@@ -278,7 +280,7 @@ img {
 
 .btn-light:focus {
   -webkit-box-shadow: 0 0 0 0 #ffffff;
-          box-shadow: 0 0 0 0 #ffffff;
+  box-shadow: 0 0 0 0 #ffffff;
 }
 
 .btn {
@@ -333,6 +335,7 @@ img {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
@@ -344,6 +347,7 @@ img {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
@@ -354,6 +358,7 @@ img {
   0% {
     background-position: left;
   }
+
   100% {
     background-position: right;
   }
@@ -363,6 +368,7 @@ img {
   0% {
     background-position: left;
   }
+
   100% {
     background-position: right;
   }
@@ -380,7 +386,7 @@ img {
   max-width: 2.5rem;
   max-height: 2.5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 0.75rem;
 }
 
@@ -431,7 +437,7 @@ img {
   margin-top: 0.5rem;
   margin-right: 0.75rem;
   -webkit-transform: scale(0.95);
-          transform: scale(0.95);
+  transform: scale(0.95);
   border-radius: 0.5rem;
   padding: 0.175em 0.625em;
   width: -webkit-max-content;
@@ -447,7 +453,7 @@ img {
 
 .bg-social-icons {
   -webkit-box-shadow: inset 0 0 4rem 1rem rgba(var(--rgb-light-accent), 0.7);
-          box-shadow: inset 0 0 4rem 1rem rgba(var(--rgb-light-accent), 0.7);
+  box-shadow: inset 0 0 4rem 1rem rgba(var(--rgb-light-accent), 0.7);
   position: relative;
   background: var(--clr-light-accent);
   background-size: 250px;
@@ -472,7 +478,7 @@ img {
   min-height: 100vh;
   background-color: var(--clr-light-accent);
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
   padding: 0 1rem;
 }
 
@@ -488,7 +494,7 @@ img {
   width: 250px;
   max-width: 75%;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 
 .home .intro-panel .d-flex .th-toggle {
@@ -525,7 +531,7 @@ img {
   margin: auto;
   padding: 0 1rem;
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
 .home .center .logo {
@@ -536,6 +542,7 @@ img {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -545,6 +552,7 @@ img {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -561,12 +569,12 @@ img {
   }
 }
 
-.signup > .card {
+.signup>.card {
   padding: 1.5rem;
 }
 
 @media (max-width: 1200px) {
-  .signup > .card {
+  .signup>.card {
     padding: 1rem;
   }
 }
@@ -626,7 +634,7 @@ img {
   color: var(--clr-grey);
 }
 
-.signup .choose-avatar > i {
+.signup .choose-avatar>i {
   margin-right: 0.5rem;
   color: rgba(var(--rgb-black), 0.7);
   font-size: 1rem;
@@ -647,7 +655,8 @@ img {
   margin: 1rem 0;
 }
 
-.signup .or::before, .signup .or::after {
+.signup .or::before,
+.signup .or::after {
   content: "";
   display: inline-block;
   border-top: 1px rgba(var(--rgb-grey), 0.2) solid;
@@ -660,7 +669,7 @@ img {
   padding: 0 1rem;
   background-color: var(--clr-light-accent);
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
 .login h3 {
@@ -668,31 +677,31 @@ img {
   margin: 0.25em 0 0.5rem;
 }
 
-.login > div {
+.login>div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   line-height: 1.6rem;
   min-height: 100vh;
 }
 
-.login > div .logo {
+.login>div .logo {
   width: 250px;
   padding: 0rem 0.5rem;
   margin: 3rem 0;
 }
 
-.login > div .form-label {
+.login>div .form-label {
   margin-top: 1rem;
 }
 
-.login > div .btn-main {
+.login>div .btn-main {
   width: 100%;
   margin: 1.2rem 0 1.5rem;
   font-weight: bold;
@@ -704,18 +713,18 @@ img {
   background: var(--clr-white);
   border-bottom: 1px rgba(var(--rgb-grey), 0.15) solid;
   -webkit-box-shadow: 0 0 1px 0 rgba(var(--rgb-grey), 0.1);
-          box-shadow: 0 0 1px 0 rgba(var(--rgb-grey), 0.1);
+  box-shadow: 0 0 1px 0 rgba(var(--rgb-grey), 0.1);
   padding: 0.4rem 0;
   position: fixed;
   width: 100%;
   z-index: 1;
 }
 
-.navbar > .container > .row {
+.navbar>.container>.row {
   text-align: start;
 }
 
-.navbar > .container > .row > .nav-brand h6 {
+.navbar>.container>.row>.nav-brand h6 {
   padding: 0 1.5rem;
   font-weight: 800;
   letter-spacing: 0.05rem;
@@ -724,56 +733,56 @@ img {
   width: 85%;
 }
 
-.navbar > .container > .row > .nav-brand h6 > img {
+.navbar>.container>.row>.nav-brand h6>img {
   max-height: 1.6rem;
   background-color: transparent;
 }
 
 @media (max-width: 992px) {
-  .navbar > .container > .row > .nav-brand h6 {
+  .navbar>.container>.row>.nav-brand h6 {
     width: 80%;
   }
 }
 
 @media (max-width: 540px) {
-  .navbar > .container > .row > .nav-brand h6 {
+  .navbar>.container>.row>.nav-brand h6 {
     width: 75%;
   }
 }
 
 @media (max-width: 400px) {
-  .navbar > .container > .row > .nav-brand h6 {
+  .navbar>.container>.row>.nav-brand h6 {
     width: 70%;
   }
 }
 
-.navbar > .container > .row > .nav-brand .navbar-toggler {
+.navbar>.container>.row>.nav-brand .navbar-toggler {
   border: 0px;
   padding: 0.8rem;
   margin-top: 0.3rem;
   color: var(--clr-text);
 }
 
-.navbar > .container > .row > .nav-brand .navbar-toggler .navbar-toggler-icon {
+.navbar>.container>.row>.nav-brand .navbar-toggler .navbar-toggler-icon {
   background-size: 80%;
 }
 
-.navbar > .container > .row > .nav-brand .navbar-toggler:focus {
+.navbar>.container>.row>.nav-brand .navbar-toggler:focus {
   -webkit-box-shadow: 0 0 0 0;
-          box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
   outline: 0;
 }
 
-.navbar > .container > .row .row > div:last-child {
+.navbar>.container>.row .row>div:last-child {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
-.navbar > .container > .row .row > div > form {
+.navbar>.container>.row .row>div>form {
   border: 1px rgba(var(--rgb-grey), 0.1) solid;
   border-radius: 0.5rem;
   background-color: var(--clr-light-accent);
@@ -783,13 +792,13 @@ img {
 }
 
 @media (max-width: 992px) {
-  .navbar > .container > .row .row > div > form {
+  .navbar>.container>.row .row>div>form {
     margin-top: 1rem;
     font-size: .95rem;
   }
 }
 
-.navbar > .container > .row .row > div > form input {
+.navbar>.container>.row .row>div>form input {
   border: 0px;
   background: transparent;
   color: var(--clr-black);
@@ -799,12 +808,12 @@ img {
   transition: background-color ease-out 250ms;
 }
 
-.navbar > .container > .row .row > div > form input:focus {
+.navbar>.container>.row .row>div>form input:focus {
   outline: 0;
   background-color: rgba(var(--rgb-grey), 0.05);
 }
 
-.navbar > .container > .row .row > div > form button {
+.navbar>.container>.row .row>div>form button {
   border: 0px;
   background-color: transparent;
   padding: 0 0.7rem;
@@ -817,16 +826,17 @@ img {
   border-bottom-right-radius: 0.5rem;
 }
 
-.navbar > .container > .row .row > div > form button:focus, .navbar > .container > .row .row > div > form button:hover {
+.navbar>.container>.row .row>div>form button:focus,
+.navbar>.container>.row .row>div>form button:hover {
   outline: 0;
   color: var(--clr-black);
 }
 
-.navbar > .container > .row .row > div > form button:focus {
+.navbar>.container>.row .row>div>form button:focus {
   background-color: rgba(var(--rgb-black), 0.08);
 }
 
-.navbar > .container > .row .row > div > form .searchResults {
+.navbar>.container>.row .row>div>form .searchResults {
   position: absolute;
   margin-top: 2rem;
   background: var(--clr-white);
@@ -840,32 +850,33 @@ img {
   z-index: 1;
 }
 
-.navbar > .container > .row .row > div > form .searchResults a {
+.navbar>.container>.row .row>div>form .searchResults a {
   padding-left: .5rem;
   padding-right: .5rem;
   display: block;
 }
 
-.navbar > .container > .row .row > div > form .searchResults a:hover, .navbar > .container > .row .row > div > form .searchResults a:focus {
+.navbar>.container>.row .row>div>form .searchResults a:hover,
+.navbar>.container>.row .row>div>form .searchResults a:focus {
   background: var(--clr-light-accent);
   text-decoration: none;
 }
 
-.navbar > .container > .row .row > div > form .searchResults a + a {
+.navbar>.container>.row .row>div>form .searchResults a+a {
   border-top: 1px rgba(var(--rgb-grey), 0.1) solid;
 }
 
-.navbar > .container > .row .row > div > form .searchResults h6 {
+.navbar>.container>.row .row>div>form .searchResults h6 {
   color: var(--clr-text);
 }
 
-.navbar > .container > .row .row > div .collapse {
+.navbar>.container>.row .row>div .collapse {
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
-.navbar > .container > .row .row > div ul > li {
+.navbar>.container>.row .row>div ul>li {
   font-size: 0.9rem;
   padding: 0 0.5rem;
   margin: auto 0.5rem;
@@ -873,23 +884,23 @@ img {
   line-height: 0;
 }
 
-.navbar > .container > .row .row > div ul > li > button,
-.navbar > .container > .row .row > div ul > li a {
+.navbar>.container>.row .row>div ul>li>button,
+.navbar>.container>.row .row>div ul>li a {
   color: var(--clr-text);
   position: relative;
   background-color: transparent;
   border: none;
 }
 
-.navbar > .container > .row .row > div ul > li > button i,
-.navbar > .container > .row .row > div ul > li a i {
+.navbar>.container>.row .row>div ul>li>button i,
+.navbar>.container>.row .row>div ul>li a i {
   margin-left: 0.25rem;
   font-size: 1rem;
   width: 1rem;
 }
 
-.navbar > .container > .row .row > div ul > li > button::after,
-.navbar > .container > .row .row > div ul > li a::after {
+.navbar>.container>.row .row>div ul>li>button::after,
+.navbar>.container>.row .row>div ul>li a::after {
   content: "";
   display: block;
   height: 1px;
@@ -903,40 +914,43 @@ img {
   transition: width ease-in-out 250ms, background-color ease-in-out 250ms;
 }
 
-.navbar > .container > .row .row > div ul > li > button:hover, .navbar > .container > .row .row > div ul > li > button:focus,
-.navbar > .container > .row .row > div ul > li a:hover,
-.navbar > .container > .row .row > div ul > li a:focus {
+.navbar>.container>.row .row>div ul>li>button:hover,
+.navbar>.container>.row .row>div ul>li>button:focus,
+.navbar>.container>.row .row>div ul>li a:hover,
+.navbar>.container>.row .row>div ul>li a:focus {
   color: var(--clr-black);
   text-decoration: none;
 }
 
-.navbar > .container > .row .row > div ul > li > button:hover::after, .navbar > .container > .row .row > div ul > li > button:focus::after,
-.navbar > .container > .row .row > div ul > li a:hover::after,
-.navbar > .container > .row .row > div ul > li a:focus::after {
+.navbar>.container>.row .row>div ul>li>button:hover::after,
+.navbar>.container>.row .row>div ul>li>button:focus::after,
+.navbar>.container>.row .row>div ul>li a:hover::after,
+.navbar>.container>.row .row>div ul>li a:focus::after {
   background-color: var(--clr-black);
   width: 100%;
 }
 
-.navbar > .container > .row .row > div ul > li .nav-theme-toggler {
+.navbar>.container>.row .row>div ul>li .nav-theme-toggler {
   display: inline-block;
   line-height: 0;
   -webkit-transform: scale(0.8);
-          transform: scale(0.8);
+  transform: scale(0.8);
   margin-right: 1rem;
 }
 
 @media (max-width: 1200px) {
-  .navbar > .container > .row .row > div ul li {
+  .navbar>.container>.row .row>div ul li {
     padding: 0;
     margin: 0.5rem;
   }
 }
 
 @media (max-width: 992px) {
-  .navbar > .container > .row .row > div ul {
+  .navbar>.container>.row .row>div ul {
     width: 100%;
   }
-  .navbar > .container > .row .row > div ul li {
+
+  .navbar>.container>.row .row>div ul li {
     text-align: start;
     padding: 0.5rem 1rem;
     margin: 0.5rem;
@@ -963,7 +977,7 @@ img {
   position: absolute;
   background: var(--clr-white);
   -webkit-box-shadow: 10px 7px 15px -1px var(--clr-light-accent-darkened);
-          box-shadow: 10px 7px 15px -1px var(--clr-light-accent-darkened);
+  box-shadow: 10px 7px 15px -1px var(--clr-light-accent-darkened);
   border: 1px rgba(var(--rgb-grey), 0.3) solid;
   border-radius: 0.5rem;
   top: 2.5rem;
@@ -1025,11 +1039,13 @@ img {
   border-radius: 0.25rem;
 }
 
-.navbar .notifications button:hover, .navbar .notifications button:focus {
+.navbar .notifications button:hover,
+.navbar .notifications button:focus {
   background-color: rgba(var(--rgb-grey), 0.3) !important;
 }
 
-.navbar .notifications button:hover::after, .navbar .notifications button:focus::after {
+.navbar .notifications button:hover::after,
+.navbar .notifications button:focus::after {
   display: none !important;
 }
 
@@ -1054,49 +1070,51 @@ img {
   border-top-right-radius: 0.5rem;
 }
 
-.navbar .notifications .notif > div {
+.navbar .notifications .notif>div {
   width: 22rem;
   line-height: 1.4rem;
   font-size: 0.9rem;
 }
 
-.navbar .notifications .notif > div > i {
+.navbar .notifications .notif>div>i {
   margin-right: 0.5rem;
 }
 
-.navbar .notifications .notif > div .uname {
+.navbar .notifications .notif>div .uname {
   color: var(--clr-black);
   font-weight: bold;
 }
 
-.navbar .notifications .notif > div .when {
+.navbar .notifications .notif>div .when {
   color: var(--clr-grey);
   font-size: 0.75rem;
 }
 
 @media (max-width: 992px) {
-  .navbar .notifications .notif > div {
+  .navbar .notifications .notif>div {
     width: 25rem;
   }
 }
 
 @media (max-width: 540px) {
-  .navbar .notifications .notif > div {
+  .navbar .notifications .notif>div {
     width: 20rem;
   }
 }
 
 @media (max-width: 400px) {
-  .navbar .notifications .notif > div {
+  .navbar .notifications .notif>div {
     width: 15rem;
   }
 }
 
-.navbar .notifications .notif:hover, .navbar .notifications .notif:focus {
+.navbar .notifications .notif:hover,
+.navbar .notifications .notif:focus {
   background: rgba(var(--rgb-grey), 0.15) !important;
 }
 
-.navbar .notifications .notif:hover::after, .navbar .notifications .notif:focus::after {
+.navbar .notifications .notif:hover::after,
+.navbar .notifications .notif:focus::after {
   display: none !important;
 }
 
@@ -1150,7 +1168,7 @@ img {
   max-width: 2rem;
   max-height: 2rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .leftsidebar .user div {
@@ -1189,12 +1207,12 @@ img {
   line-height: 1.2rem;
 }
 
-.leftsidebar > .navigation {
+.leftsidebar>.navigation {
   margin: 1rem 0;
 }
 
-.leftsidebar > .navigation > button,
-.leftsidebar > .navigation a {
+.leftsidebar>.navigation>button,
+.leftsidebar>.navigation a {
   display: inline-block;
   background-color: transparent;
   border: none;
@@ -1209,11 +1227,11 @@ img {
   padding: 0.2rem 1rem;
   margin: 0.4rem 0;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.leftsidebar > .navigation > button > i,
-.leftsidebar > .navigation a > i {
+.leftsidebar>.navigation>button>i,
+.leftsidebar>.navigation a>i {
   margin-right: 1rem;
   color: var(--clr-grey);
   font-size: 1.2rem;
@@ -1223,37 +1241,37 @@ img {
   transition: color ease-in-out 250ms;
 }
 
-.leftsidebar > .navigation > button:hover,
-.leftsidebar > .navigation a:hover {
+.leftsidebar>.navigation>button:hover,
+.leftsidebar>.navigation a:hover {
   color: var(--clr-accent);
 }
 
-.leftsidebar > .navigation > button:hover > i,
-.leftsidebar > .navigation a:hover > i {
+.leftsidebar>.navigation>button:hover>i,
+.leftsidebar>.navigation a:hover>i {
   color: var(--clr-accent);
 }
 
-.leftsidebar > .navigation > button:focus,
-.leftsidebar > .navigation a:focus {
+.leftsidebar>.navigation>button:focus,
+.leftsidebar>.navigation a:focus {
   background-color: rgba(var(--rgb-grey), 0.08);
 }
 
-.leftsidebar > .navigation > .active {
+.leftsidebar>.navigation>.active {
   color: var(--clr-accent) !important;
   -webkit-box-shadow: 10px 7px 30px -1px rgba(var(--rgb-light-accent), 0.8);
-          box-shadow: 10px 7px 30px -1px rgba(var(--rgb-light-accent), 0.8);
+  box-shadow: 10px 7px 30px -1px rgba(var(--rgb-light-accent), 0.8);
   background-color: var(--clr-light-accent);
 }
 
-.leftsidebar > .navigation > .active > i {
+.leftsidebar>.navigation>.active>i {
   color: var(--clr-accent) !important;
 }
 
-.leftsidebar > .about {
+.leftsidebar>.about {
   margin-top: 3rem;
 }
 
-.leftsidebar > .about h6 {
+.leftsidebar>.about h6 {
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.1rem;
@@ -1261,13 +1279,13 @@ img {
   margin: 2rem 0 1rem 0;
 }
 
-.leftsidebar > .about p {
+.leftsidebar>.about p {
   line-height: 1.5rem;
   font-size: 0.9rem;
   margin-top: 1rem;
 }
 
-.leftsidebar > .about .techs a {
+.leftsidebar>.about .techs a {
   display: table;
   color: var(--clr-black);
   margin: 0.5rem 0.5em;
@@ -1277,7 +1295,7 @@ img {
   position: relative;
 }
 
-.leftsidebar > .about .techs a::after {
+.leftsidebar>.about .techs a::after {
   content: "";
   display: block;
   height: 1px;
@@ -1290,36 +1308,36 @@ img {
   transition: width ease-in-out 250ms, background-color ease-in-out 250ms;
 }
 
-.leftsidebar > .about .techs a:hover {
+.leftsidebar>.about .techs a:hover {
   color: var(--clr-black);
 }
 
-.leftsidebar > .about .techs a:hover::after {
+.leftsidebar>.about .techs a:hover::after {
   background-color: var(--clr-black);
   width: 100%;
 }
 
-.leftsidebar > .about .techs a .python {
+.leftsidebar>.about .techs a .python {
   color: #646464;
 }
 
-.leftsidebar > .about .techs a .reactjs {
+.leftsidebar>.about .techs a .reactjs {
   color: #61dbfb;
 }
 
-.leftsidebar > .about .techs a .sql {
+.leftsidebar>.about .techs a .sql {
   color: #008bb9;
 }
 
-.leftsidebar > .about .techs a .faw {
+.leftsidebar>.about .techs a .faw {
   color: #339af0;
 }
 
-.leftsidebar > .about .techs a .bts {
+.leftsidebar>.about .techs a .bts {
   color: purple;
 }
 
-.leftsidebar > .about .techs a > i {
+.leftsidebar>.about .techs a>i {
   width: 1rem;
   height: 1rem;
   margin-right: 1rem;
@@ -1345,32 +1363,32 @@ img {
   min-height: 100vh;
 }
 
-.timeline > .create-post {
+.timeline>.create-post {
   background-color: var(--clr-white);
   border-radius: 1rem;
   padding: 1rem 1rem 0 1rem;
   margin: 1rem 0 1.5rem 0;
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
-.timeline > .create-post > h6 {
+.timeline>.create-post>h6 {
   margin-bottom: 1rem;
   font-size: 0.85rem;
   font-weight: 500;
 }
 
-.timeline > .create-post > .d-flex > img {
+.timeline>.create-post>.d-flex>img {
   min-width: 2.5rem;
   min-height: 2.5rem;
   max-width: 2.5rem;
   max-height: 2.5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-top: 0.25rem;
 }
 
-.timeline > .create-post > .d-flex > textarea {
+.timeline>.create-post>.d-flex>textarea {
   width: 100%;
   max-height: 10rem;
   border: none;
@@ -1386,12 +1404,13 @@ img {
   resize: none;
 }
 
-.timeline > .create-post > .d-flex > textarea:focus, .timeline > .create-post > .d-flex > textarea:hover {
+.timeline>.create-post>.d-flex>textarea:focus,
+.timeline>.create-post>.d-flex>textarea:hover {
   outline: none;
   background-color: rgba(var(--rgb-grey), 0.15);
 }
 
-.timeline > .create-post > .d-flex > button {
+.timeline>.create-post>.d-flex>button {
   background-color: transparent;
   border: none;
   padding: 0;
@@ -1404,7 +1423,7 @@ img {
   transition: background-color ease-in-out 250ms, color ease-in-out 250ms;
 }
 
-.timeline > .create-post > .d-flex > button > i {
+.timeline>.create-post>.d-flex>button>i {
   width: inherit;
   height: inherit;
   display: -ms-grid;
@@ -1412,13 +1431,14 @@ img {
   place-content: center;
 }
 
-.timeline > .create-post > .d-flex > button:focus, .timeline > .create-post > .d-flex > button:hover {
+.timeline>.create-post>.d-flex>button:focus,
+.timeline>.create-post>.d-flex>button:hover {
   color: var(--clr-black);
   background-color: rgba(var(--rgb-grey), 0.2);
   outline: none;
 }
 
-.timeline > .create-post > .submit-btn {
+.timeline>.create-post>.submit-btn {
   margin: 0.75rem 0 0 2.85rem;
   padding: 0.25rem;
   max-height: 0rem;
@@ -1428,12 +1448,12 @@ img {
   transition: max-height ease-out 350ms, opacity ease-out 350ms;
 }
 
-.timeline > .create-post > .submit-btn button {
+.timeline>.create-post>.submit-btn button {
   margin-bottom: 1rem;
   border-radius: 0.3rem;
 }
 
-.timeline > .create-post > .submit-btn span {
+.timeline>.create-post>.submit-btn span {
   vertical-align: top;
   margin: 0 1rem;
   font-weight: 600;
@@ -1441,73 +1461,73 @@ img {
   letter-spacing: 0.02rem;
 }
 
-.timeline > .create-post .show-btn {
+.timeline>.create-post .show-btn {
   opacity: 1;
   max-height: 3.5rem;
 }
 
 .timeline .post {
   -webkit-animation: 0.5s ease-out 0s 1 slideInFromRight forwards;
-          animation: 0.5s ease-out 0s 1 slideInFromRight forwards;
+  animation: 0.5s ease-out 0s 1 slideInFromRight forwards;
 }
 
-.timeline .post > .userbar {
+.timeline .post>.userbar {
   border-radius: 0.8rem;
 }
 
-.timeline .post > .userbar img {
+.timeline .post>.userbar img {
   min-width: 2.5rem;
   min-height: 2.5rem;
   max-width: 2.5rem;
   max-height: 2.5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 0.75rem;
 }
 
-.timeline .post > .userbar div {
+.timeline .post>.userbar div {
   width: 100%;
   vertical-align: middle;
 }
 
-.timeline .post > .userbar div span,
-.timeline .post > .userbar div h6 {
+.timeline .post>.userbar div span,
+.timeline .post>.userbar div h6 {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   display: block;
 }
 
-.timeline .post > .userbar div h6 {
+.timeline .post>.userbar div h6 {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--clr-black);
   margin-top: 0.25rem;
 }
 
-.timeline .post > .userbar div h6 a {
+.timeline .post>.userbar div h6 a {
   color: var(--clr-black);
 }
 
-.timeline .post > .userbar div h6 a:hover {
+.timeline .post>.userbar div h6 a:hover {
   text-decoration: underline;
 }
 
-.timeline .post > .userbar div span {
+.timeline .post>.userbar div span {
   font-size: 0.8rem;
   color: var(--clr-grey);
   margin-top: 0.25rem;
   line-height: 1rem;
 }
 
-.timeline .post > .userbar .more-options {
+.timeline .post>.userbar .more-options {
   color: var(--clr-grey);
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
 }
 
-.timeline .post > .userbar .more-options .post-actions {
+.timeline .post>.userbar .more-options .post-actions {
   background-color: transparent;
   border: none;
   color: inherit;
@@ -1521,12 +1541,13 @@ img {
   transition: background-color ease-out 250ms;
 }
 
-.timeline .post > .userbar .more-options .post-actions:hover, .timeline .post > .userbar .more-options .post-actions:focus {
+.timeline .post>.userbar .more-options .post-actions:hover,
+.timeline .post>.userbar .more-options .post-actions:focus {
   color: var(--clr-black);
   background-color: rgba(var(--rgb-grey), 0.2);
 }
 
-.timeline .post > .userbar .more-options > i {
+.timeline .post>.userbar .more-options>i {
   height: 1rem;
   width: 1rem;
 }
@@ -1555,14 +1576,14 @@ img {
   white-space: break-spaces;
 }
 
-.timeline .post .url > div {
+.timeline .post .url>div {
   border: 1px solid rgba(var(--rgb-grey), 0.2);
   padding: 0.5rem;
   border-radius: 0.5rem;
   margin-top: 0.75rem;
 }
 
-.timeline .post .url > div .utitle {
+.timeline .post .url>div .utitle {
   font-weight: bold;
   color: rgba(var(--rgb-text), 0.85);
   font-size: 0.85rem;
@@ -1570,13 +1591,13 @@ img {
   margin-bottom: 0.25rem;
 }
 
-.timeline .post .url > div .utitle i {
+.timeline .post .url>div .utitle i {
   font-size: 0.7rem;
   margin-right: 0.1rem;
   vertical-align: middle;
 }
 
-.timeline .post .url > div .udescription {
+.timeline .post .url>div .udescription {
   font-size: 0.8rem;
   color: var(--clr-grey);
   line-height: 1.2rem;
@@ -1585,7 +1606,7 @@ img {
   text-overflow: ellipsis;
 }
 
-.timeline .post .url > div .uurl {
+.timeline .post .url>div .uurl {
   font-size: 0.8rem;
   color: var(--clr-grey);
   line-height: 1.2rem;
@@ -1594,38 +1615,41 @@ img {
   text-overflow: ellipsis;
 }
 
-.timeline .post .url:hover, .timeline .post .url:focus {
+.timeline .post .url:hover,
+.timeline .post .url:focus {
   text-decoration: none !important;
 }
 
-.timeline .post .url:hover > div, .timeline .post .url:focus > div {
+.timeline .post .url:hover>div,
+.timeline .post .url:focus>div {
   background-color: rgba(var(--rgb-grey), 0.05);
 }
 
-.timeline .post .url:hover .utitle, .timeline .post .url:focus .utitle {
+.timeline .post .url:hover .utitle,
+.timeline .post .url:focus .utitle {
   text-decoration: underline;
 }
 
-.timeline .post > .post-picture {
+.timeline .post>.post-picture {
   background-color: rgba(var(--rgb-grey), 0.05);
   min-height: 10rem;
   max-height: 35rem;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   margin-top: 0.5rem;
 }
 
-.timeline .post > .post-actions {
+.timeline .post>.post-actions {
   margin-top: 1rem;
   border-top: 1px rgba(var(--rgb-grey), 0.07) solid;
   padding: 1rem 0 0 0;
 }
 
-.timeline .post > .post-actions button + button {
+.timeline .post>.post-actions button+button {
   margin-left: 1.5rem;
 }
 
-.timeline .post > .post-actions button {
+.timeline .post>.post-actions button {
   background-color: transparent;
   border: none;
   color: var(--clr-text);
@@ -1636,43 +1660,45 @@ img {
   white-space: nowrap;
 }
 
-.timeline .post > .post-actions button > i {
+.timeline .post>.post-actions button>i {
   color: var(--clr-grey);
   margin-right: 0.5rem;
   font-size: 1rem;
 }
 
-.timeline .post > .post-actions button:hover, .timeline .post > .post-actions button:focus {
+.timeline .post>.post-actions button:hover,
+.timeline .post>.post-actions button:focus {
   background-color: rgba(var(--rgb-grey), 0.07);
   color: var(--clr-black);
 }
 
-.timeline .post > .post-actions button:hover > i, .timeline .post > .post-actions button:focus > i {
+.timeline .post>.post-actions button:hover>i,
+.timeline .post>.post-actions button:focus>i {
   color: var(--clr-text);
 }
 
-.timeline .post > .post-actions button:focus {
+.timeline .post>.post-actions button:focus {
   -webkit-box-shadow: 0 0 0 1px rgba(var(--rgb-grey), 0.2);
-          box-shadow: 0 0 0 1px rgba(var(--rgb-grey), 0.2);
+  box-shadow: 0 0 0 1px rgba(var(--rgb-grey), 0.2);
 }
 
-.timeline .post > .post-comment {
+.timeline .post>.post-comment {
   margin-top: 1rem;
   background-color: var(--clr-light-accent-darkened);
   border-radius: 1.3rem;
   padding: 0.2rem;
 }
 
-.timeline .post > .post-comment > div > img {
+.timeline .post>.post-comment>div>img {
   min-width: 2.2rem;
   min-height: 2.2rem;
   max-width: 2.2rem;
   max-height: 2.2rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
-.timeline .post > .post-comment > div > input {
+.timeline .post>.post-comment>div>input {
   border: none;
   width: 100%;
   font-size: 0.9rem;
@@ -1682,7 +1708,7 @@ img {
   padding: 0 0.75rem;
 }
 
-.timeline .post > .post-comment > div > button {
+.timeline .post>.post-comment>div>button {
   background: transparent;
   border: none;
   color: var(--clr-grey);
@@ -1694,12 +1720,13 @@ img {
   transition: font-size ease-out 250ms;
 }
 
-.timeline .post > .post-comment > div > button:focus, .timeline .post > .post-comment > div > button:hover {
+.timeline .post>.post-comment>div>button:focus,
+.timeline .post>.post-comment>div>button:hover {
   color: var(--clr-black);
   background: rgba(var(--rgb-grey), 0.1);
 }
 
-.timeline .post > .post-comment > div > button:active {
+.timeline .post>.post-comment>div>button:active {
   font-size: 1.1rem;
 }
 
@@ -1707,6 +1734,7 @@ img {
   0% {
     opacity: 0.5;
   }
+
   100% {
     opacity: 1;
   }
@@ -1716,6 +1744,7 @@ img {
   0% {
     opacity: 0.5;
   }
+
   100% {
     opacity: 1;
   }
@@ -1733,7 +1762,7 @@ img {
   max-width: 3.5rem;
   max-height: 3.5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 0.75rem;
 }
 
@@ -1778,7 +1807,7 @@ img {
   margin-top: 0.5rem;
   margin-right: 0.75rem;
   -webkit-transform: scale(0.95);
-          transform: scale(0.95);
+  transform: scale(0.95);
   border-radius: 0.5rem;
   padding: 0.25em 0.75em;
 }
@@ -1795,7 +1824,7 @@ img {
   transition: display ease-in-out 200ms;
 }
 
-.parent-comment > div > .comment {
+.parent-comment>div>.comment {
   margin-left: 0 !important;
   border: none !important;
   padding-left: 0 !important;
@@ -1803,7 +1832,7 @@ img {
 }
 
 @media (max-width: 1200px) {
-  .parent-comment > div > .comment {
+  .parent-comment>div>.comment {
     margin-left: 0 !important;
   }
 }
@@ -1822,7 +1851,7 @@ img {
   }
 }
 
-.each-comment .comment > div {
+.each-comment .comment>div {
   width: 100%;
 }
 
@@ -1835,21 +1864,22 @@ img {
   padding: 0.5rem 0.75rem;
 }
 
-.each-comment .comment .content > a {
+.each-comment .comment .content>a {
   color: rgba(var(--rgb-text), 0.75);
 }
 
-.each-comment .comment .content > a > h6 {
+.each-comment .comment .content>a>h6 {
   font-weight: 500;
   font-size: 0.8rem;
 }
 
-.each-comment .comment .content > a:hover, .each-comment .comment .content > a:focus {
+.each-comment .comment .content>a:hover,
+.each-comment .comment .content>a:focus {
   color: var(--clr-black);
   text-decoration: underline;
 }
 
-.each-comment .comment .content > p {
+.each-comment .comment .content>p {
   margin-top: 0.25rem;
   font-size: 0.9rem;
   line-height: 1.325rem;
@@ -1864,7 +1894,7 @@ img {
   display: inline-block;
 }
 
-.each-comment .comment .comment-options > button,
+.each-comment .comment .comment-options>button,
 .each-comment .comment .comment-options .comment-actions {
   font-size: 0.8rem;
   background: transparent;
@@ -1875,36 +1905,38 @@ img {
   padding: 0.25rem 0.5rem;
 }
 
-.each-comment .comment .comment-options > button > i,
-.each-comment .comment .comment-options .comment-actions > i {
+.each-comment .comment .comment-options>button>i,
+.each-comment .comment .comment-options .comment-actions>i {
   color: var(--clr-grey);
   margin-right: 0.25rem;
 }
 
-.each-comment .comment .comment-options > button:hover, .each-comment .comment .comment-options > button:focus,
+.each-comment .comment .comment-options>button:hover,
+.each-comment .comment .comment-options>button:focus,
 .each-comment .comment .comment-options .comment-actions:hover,
 .each-comment .comment .comment-options .comment-actions:focus {
   background-color: rgba(var(--rgb-grey), 0.07);
   color: var(--clr-black);
 }
 
-.each-comment .comment .comment-options > button:hover > i, .each-comment .comment .comment-options > button:focus > i,
-.each-comment .comment .comment-options .comment-actions:hover > i,
-.each-comment .comment .comment-options .comment-actions:focus > i {
+.each-comment .comment .comment-options>button:hover>i,
+.each-comment .comment .comment-options>button:focus>i,
+.each-comment .comment .comment-options .comment-actions:hover>i,
+.each-comment .comment .comment-options .comment-actions:focus>i {
   color: var(--clr-text);
 }
 
-.each-comment .comment .comment-options > button:focus,
+.each-comment .comment .comment-options>button:focus,
 .each-comment .comment .comment-options .comment-actions:focus {
   -webkit-box-shadow: 0 0 0 1px rgba(var(--rgb-grey), 0.2);
-          box-shadow: 0 0 0 1px rgba(var(--rgb-grey), 0.2);
+  box-shadow: 0 0 0 1px rgba(var(--rgb-grey), 0.2);
 }
 
 .each-comment .comment .comment-options .comment-actions {
   margin-left: 0.5rem;
 }
 
-.each-comment .comment .comment-options .comment-actions > i {
+.each-comment .comment .comment-options .comment-actions>i {
   margin: 0;
   vertical-align: middle;
 }
@@ -1926,7 +1958,7 @@ img {
   padding: 0.2rem;
 }
 
-.each-comment .comment .post-comment > div > input {
+.each-comment .comment .post-comment>div>input {
   border: none;
   width: 100%;
   font-size: 0.9rem;
@@ -1936,7 +1968,7 @@ img {
   padding: 0 0.75rem;
 }
 
-.each-comment .comment .post-comment > div > button {
+.each-comment .comment .post-comment>div>button {
   background: transparent;
   border: none;
   color: var(--clr-grey);
@@ -1948,12 +1980,13 @@ img {
   transition: font-size ease-out 250ms;
 }
 
-.each-comment .comment .post-comment > div > button:focus, .each-comment .comment .post-comment > div > button:hover {
+.each-comment .comment .post-comment>div>button:focus,
+.each-comment .comment .post-comment>div>button:hover {
   color: var(--clr-black);
   background: rgba(var(--rgb-grey), 0.1);
 }
 
-.each-comment .comment .post-comment > div > button:active {
+.each-comment .comment .post-comment>div>button:active {
   font-size: 1.1rem;
 }
 
@@ -1961,7 +1994,7 @@ img {
   width: 2rem;
   height: 2rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   min-width: 2rem;
   min-height: 2rem;
   margin-top: 0.075rem;
@@ -1970,10 +2003,10 @@ img {
 .rightsidebar {
   padding: 0 0 0 1rem;
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
-.rightsidebar > .card > h6 {
+.rightsidebar>.card>h6 {
   margin-bottom: 1rem;
   margin-top: 0.25rem;
   font-size: 0.9rem;
@@ -1987,10 +2020,10 @@ img {
 
 .friends .timeline .card {
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
-.friends .timeline .card > h6 {
+.friends .timeline .card>h6 {
   font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.03rem;
@@ -2007,7 +2040,7 @@ img {
   width: 5rem;
   height: 5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 1rem;
 }
 
@@ -2039,7 +2072,7 @@ img {
 
 .profile-page .timeline .profile-user {
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
 .profile-page .timeline .profile-user .cover-image {
@@ -2049,7 +2082,7 @@ img {
   background: var(--clr-light-accent);
   border-radius: 0.5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .profile-page .timeline .profile-user .edit {
@@ -2065,7 +2098,8 @@ img {
   font-size: .7rem;
 }
 
-.profile-page .timeline .profile-user .edit:hover, .profile-page .timeline .profile-user .edit:focus {
+.profile-page .timeline .profile-user .edit:hover,
+.profile-page .timeline .profile-user .edit:focus {
   background: rgba(var(--rgb-light-accent), 0.8);
 }
 
@@ -2079,7 +2113,7 @@ img {
   min-width: 7.5rem;
   min-height: 7.5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border: 0.2rem var(--clr-white) solid;
   background-color: var(--clr-light-accent);
 }
@@ -2108,7 +2142,7 @@ img {
   color: var(--clr-text);
 }
 
-.profile-page .timeline .profile-user .user-details p + p {
+.profile-page .timeline .profile-user .user-details p+p {
   color: rgba(var(--rgb-text), 0.7);
   font-size: .85rem;
   margin-top: 0;
@@ -2148,6 +2182,7 @@ img {
   .profile-page .timeline .profile-user .d-flex {
     margin-left: 0;
   }
+
   .profile-page .timeline .profile-user .user-details {
     margin: 3rem 0 0 0.5rem;
   }
@@ -2158,7 +2193,7 @@ img {
   padding: 0.5rem 0 0.25rem 0;
   border-bottom: 1px solid var(--clr-light-accent);
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
 .profile-page .timeline .recent-activity .what {
@@ -2185,10 +2220,10 @@ img {
 
 .friend-suggestions {
   -webkit-animation: fadeInOut 500ms ease;
-          animation: fadeInOut 500ms ease;
+  animation: fadeInOut 500ms ease;
 }
 
-.find-friends .user + .user {
+.find-friends .user+.user {
   border-top: 1px solid var(--clr-light-accent-darkened);
   padding-top: 1.5rem;
 }
@@ -2232,7 +2267,7 @@ img {
   }
 }
 
-h6 > span {
+h6>span {
   font-size: 0.8rem;
   color: rgba(var(--rgb-text), 0.8);
 }
@@ -2258,19 +2293,48 @@ h6 > span {
     background-color: var(--clr-light-accent);
     background-image: none;
   }
+
   .container {
     padding: 0;
   }
+
   .leftsidebar,
   .rightsidebar,
   .home .intro-panel p {
     display: none;
   }
-  .timeline .post .post-actions button + button {
+
+  .timeline .post .post-actions button+button {
     margin-left: .5rem;
   }
-  .timeline .post .post-actions button > i {
+
+  .timeline .post .post-actions button>i {
     margin-right: 0.35rem;
   }
 }
+
 /*# sourceMappingURL=styles.css.map */
+
+
+.selectWrapper {
+  border-radius: 25px;
+  display: inline-block;
+  overflow: hidden;
+  /* background: #cccccc; */
+  border: 1px solid #cccccc;
+}
+
+.selectBox {
+  font-size: 0.8rem;
+  width: 120px;
+  height: 20px;
+  border: 0px;
+  outline: none;
+}
+
+.files_to_be_uploaded {
+  font-size: 12px;
+  /* Adjust this value to make the font smaller or larger */
+  color: gray;
+  /* This will make the font color gray */
+}

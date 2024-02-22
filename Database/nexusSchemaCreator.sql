@@ -92,7 +92,7 @@ CREATE TABLE `post` (
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
   `text_content` longtext NOT NULL,
-  `date_sent` date NOT NULL,
+  `date_sent` datetime NOT NULL,
   `upvote` int DEFAULT '0',
   `response_id` int DEFAULT NULL,
   PRIMARY KEY (`idposts`),
