@@ -25,24 +25,24 @@ def upload(idstudent_profile, course_id):
         else:
             return jsonify({"message": "Can not have empty text content"})
 
-        file_key = None
+        file_keys = []
         if request.files:
             print(
                 f"User {idstudent_profile} attached a file with the post for {course_id}"
             )
-            file_to_upload = request.files["post_file"]
-            new_filename = (
-                uuid.uuid4().hex
-                + "."
-                + file_to_upload.filename.rsplit(".", 1)[1].lower()
-            )
+            for file_to_upload in request.files.getlist("post_files"):
+                new_filename = (
+                    uuid.uuid4().hex
+                    + "."
+                    + file_to_upload.filename.rsplit(".", 1)[1].lower()
+                )
 
-            if (type := request.form["type"]) != "":
-                file_key = f"{type.lower()}/{course_id}/{new_filename}"
-                print("s3 upload response: ", s3_client.upload_file(file_obj=file_to_upload, key=file_key))
-            else:
-                return jsonify({"message": "Error: undefined post type"})
-
+                if (type := request.form["type"]) != "":
+                    s3_key = f"{type.lower()}/{course_id}/{new_filename}"
+                    print("s3 upload response: ", s3_client.upload_file(file_obj=file_to_upload, key=s3_key))
+                    file_keys.append(s3_key)
+                else:
+                    return jsonify({"message": "Error: undefined post type"})
         date_sent = datetime.fromisoformat(request.form.get("date_sent").replace("Z", "+00:00"))
         date_sent = date_sent.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -59,7 +59,7 @@ def upload(idstudent_profile, course_id):
         db.session.add(post_to_upload)
         db.session.commit()
 
-        if file_key:
+        for file_key in file_keys:
             uploaded_file = notes_and_more(
                 idposts=post_to_upload.idposts,
                 idstudent_profile=idstudent_profile,
@@ -69,7 +69,7 @@ def upload(idstudent_profile, course_id):
             )
             db.session.add(uploaded_file)
             db.session.commit()
-        
+
         response = jsonify({
             "message": "success",
             # "uploaded_post": post_to_upload

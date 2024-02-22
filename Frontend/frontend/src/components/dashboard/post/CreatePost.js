@@ -9,7 +9,7 @@ export default function CreatePost({ user, newPost }) {
     const [postText, setPostText] = useState("");
     const [courses, setCourses] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState("");
-    const [postFile, setPostFile] = useState(null);
+    const [postFiles, setPostFiles] = useState([]);
     const [postFileName, setPostFileName] = useState("");
 
 
@@ -37,8 +37,7 @@ export default function CreatePost({ user, newPost }) {
     };
 
     const handlePostImageChange = (event) => {
-        setPostFile(event.target.files[0]);
-        setPostFileName(event.target.files[0].name);
+        setPostFiles(event.target.files);
     };
 
     useEffect(() => {
@@ -60,12 +59,14 @@ export default function CreatePost({ user, newPost }) {
         formData.append('idclass_profile', selectedCourse);
         formData.append('text_content', postText);
         formData.append('date_sent', new Date().toISOString());
-        console.log("time right now is: " + new Date().toISOString());
         formData.append('upvotes', 0);
         formData.append('response_id', 0);
-        if (postFile) {
-            formData.append('type', "posts");
-            formData.append('post_file', postFile);
+        formData.append('type', "posts");
+        if (postFiles) {
+            for (let i = 0; i < postFiles.length; i++) {
+                formData.append('post_files', postFiles[i]);
+                console.log(postFiles[i]);
+            }
         }
 
         axios.post(`${BACKEND_SERVER_DOMAIN}/api/${user_id}/feed_post/${selectedCourse}`, formData, {
@@ -101,10 +102,10 @@ export default function CreatePost({ user, newPost }) {
             <div className="submit-btn" ref={showBtn}>
                 <button className="btn btn-primary btn-sm" type="submit" ref={btnRef} onClick={handleSubmit}>Submit</button>
             </div>
-            <input type="file" accept="image/*" name="post_file" ref={postPictureBtnRef} className="d-none" onChange={handlePostImageChange} />
-            {postFileName &&
+            <input type="file" accept="image/*" name="post_file" ref={postPictureBtnRef} className="d-none" onChange={handlePostImageChange} multiple />
+            {postFiles.length > 0 &&
                 <div className="files_to_be_uploaded">
-                    <p>Files to be uploaded: {<br />}{postFileName}</p>
+                    <p>Files to be uploaded: {<br />}{Array.from(postFiles).map((file, index) => <span key={index}>{file.name}<br /></span>)}</p>
                 </div>
             }
         </section>
