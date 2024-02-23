@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Switch>
         <Route path='/courses' exact component={Courses} />
-        <Route path='/dashboard' exact component={Dashboard} />
+        <Route path='/dashboard/:id?' exact component={Dashboard} />
         <Route path='/login' exact component={SignIn} />
         <Route path='/' exact component={Index} />
         <Route path='/u/:slug' exact component={Profile} />

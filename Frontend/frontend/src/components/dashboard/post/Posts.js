@@ -7,18 +7,28 @@ import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 
 const user_id = 1; // Replace with your actual user ID
 
-function Posts() {
+function Posts(props) {
     const [posts, setPosts] = useState([]); // initialize posts state
-
     useEffect(() => {
-        axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/${user_id}`) // replace 'endpoint' with your actual endpoint
-            .then((response) => {
-                console.log(response);
-                setPosts(response.data); // update posts state with the data from the response
-            })
-            .catch((error) => {
-                console.error(`Error fetching data: ${error}`);
-            });
+        if (props.course_id) {
+            axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/${user_id}/${props.course_id}`)
+                .then((response) => {
+                    console.log(response);
+                    setPosts(response.data);
+                })
+                .catch((error) => {
+                    console.error(`Error fetching data: ${error}`);
+                });
+        } else {
+            axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/${user_id}`)
+                .then((response) => {
+                    console.log(response);
+                    setPosts(response.data);
+                })
+                .catch((error) => {
+                    console.error(`Error fetching data: ${error}`);
+                });
+        }
     }, []); // empty dependency array means this effect will only run once (like componentDidMount in classes)
 
     console.log(posts);

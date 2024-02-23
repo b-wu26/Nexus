@@ -79,10 +79,16 @@ def upload(idstudent_profile, course_id):
         return response, 200
 
 # load feed for a user, display posts from all courses they are enrolled in
-@post_endpoints.route("/api/feed/<user_id>", methods=["GET"])
-def feed(user_id):
-    courses = schedule.get_courses_by_student_id(user_id)
-    courses = [ course.idclass_profile for course in courses ]
+@post_endpoints.route("/api/feed/<user_id>/<course_id>", methods=["GET"])
+@post_endpoints.route("/api/feed/<user_id>", defaults={'course_id': None}, methods=["GET"])
+def feed(user_id, course_id):
+
+    courses = []
+    if course_id:
+        courses = [course_id]
+    else:
+        courses = schedule.get_courses_by_student_id(user_id)
+        courses = [ course.idclass_profile for course in courses ]
 
     post_list = post.get_posts_by_class_id_ordered_most_recent(courses)
     posts = create_posts(post_list)

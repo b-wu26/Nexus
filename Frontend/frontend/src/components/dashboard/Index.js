@@ -9,28 +9,29 @@ import CreatePost from "./post/CreatePost";
 import Posts from "./post/Posts";
 import { addPost } from "../../redux/actions"
 
-function Dashboard() {
+function Dashboard(props) {
     const user = useSelector((state) => state.user);
+    const course_id = props.match.params.id;
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
-    },[])
+    }, [])
 
     return (
         <section className="dashboard">
             <Helmet>
                 <title>Dashboard</title>
             </Helmet>
-            <Navbar/>
+            <Navbar />
             <div className="navbar-spacer"></div>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-3 col-12">
-                        <LeftSidebar active={1}/>
+                        <LeftSidebar active={1} />
                     </div>
                     <div className="col-lg-6 col-12 timeline">
-                        <CreatePost />
-                        <Posts />
+                        <CreatePost course_id={course_id} />
+                        <Posts course_id={course_id} />
                     </div>
                     <div className="col-lg-3 col-12">
                         <RightSidebar />

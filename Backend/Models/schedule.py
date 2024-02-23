@@ -26,3 +26,4 @@ class schedule(db.Model):
 
     def get_courses_by_student_id(idstudent_profile):
         return schedule.query.filter_by(idstudent_profile=idstudent_profile).all()
+    
