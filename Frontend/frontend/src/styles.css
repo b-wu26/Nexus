@@ -484,6 +484,8 @@ img {
 
 .home .intro-panel {
   margin-bottom: 2rem;
+  display: grid;
+  place-items: center;
 }
 
 .home .intro-panel .d-flex {
@@ -2296,6 +2298,11 @@ h6>span {
 
   .container {
     padding: 0;
+  }
+
+  .centered-content {
+    display: flex;
+    align-items: center;
   }
 
   .leftsidebar,

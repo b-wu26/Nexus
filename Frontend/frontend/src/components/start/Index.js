@@ -17,10 +17,8 @@ function Index() {
 
     themeApply();
 
-    if (user != {}) {
+    if (user.token !== undefined && user.avatar != null) {
         history.push("/dashboard");
-    } else {
-        history.push("/login");
     }
 
     function secondStep() {
@@ -34,15 +32,15 @@ function Index() {
             </Helmet>
             <div className="container">
                 {isSecondStageSignUp ? (
-                    <div className="col-lg-5 col-md-12 col-sm-12 center">
+                    <div className="col-lg-5 col-md-12 col-sm-12">
                         <img src={logo} className="logo" />
                         <FinishSignUp />
                     </div>
                 ) : (
                     <div className="row g-3">
-                        <div className="col-xl-7 col-lg-6 col-md-12">
+                        <div className="col-xl-7 col-lg-6 col-md-1 center">
                             <div className="intro-panel">
-                                <div className="d-flex">
+                                <div className="d-flex align-content-center justify-content-center">
                                     <img src={logo} className="logo" />
                                 </div>
                                 <h5>

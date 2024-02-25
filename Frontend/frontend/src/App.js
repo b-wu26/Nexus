@@ -18,7 +18,7 @@ function App() {
         <Route path='/courses' exact component={RequireAuth(Courses)} />
         <Route path='/dashboard/:id?' exact component={RequireAuth(Dashboard)} />
         <Route path='/login' exact component={SignIn} />
-        <Route path='/' exact component={RequireAuth(Index)} />
+        <Route path='/' exact component={Index} />
         <Route path='/u/:slug' exact component={RequireAuth(Profile)} />
       </Switch>
     </Router>
