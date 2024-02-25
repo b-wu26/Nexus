@@ -68,7 +68,7 @@ export default function CreatePost({ user, newPost, course_id }) {
         if (postFiles) {
             for (let i = 0; i < postFiles.length; i++) {
                 formData.append('post_files', postFiles[i]);
-                console.log(postFiles[i]);
+                // console.log(postFiles[i]);
             }
         }
 
@@ -107,8 +107,7 @@ export default function CreatePost({ user, newPost, course_id }) {
             <div className="submit-btn" ref={showBtn}>
                 <button className="btn btn-primary btn-sm" type="submit" ref={btnRef} onClick={handleSubmit}>Submit</button>
             </div>
-            <input type="file" accept="image/*" name="post_file" ref={postPictureBtnRef} className="d-none" onChange={handlePostImageChange} multiple />
-            {postFiles.length > 0 &&
+            <input type="file" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt" name="post_file" ref={postPictureBtnRef} className="d-none" onChange={handlePostImageChange} multiple />            {postFiles.length > 0 &&
                 <div className="files_to_be_uploaded">
                     <p>Files to be uploaded: {<br />}{Array.from(postFiles).map((file, index) => <span key={index}>{file.name}<br /></span>)}</p>
                 </div>

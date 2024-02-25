@@ -12,6 +12,7 @@ from models.post import post
 from endpoints.schedule_endpoints import schedule_endpoints
 from endpoints.post_endpoints import post_endpoints
 from endpoints.auth_endpoints import auth_endpoints
+from endpoints.comments_endpoints import comments_endpoints
 
 from client.s3_client import S3Client
 from models import db
@@ -37,6 +38,7 @@ mail = Mail(app)
 app.register_blueprint(schedule_endpoints)
 app.register_blueprint(post_endpoints)
 app.register_blueprint(auth_endpoints)
+app.register_blueprint(comments_endpoints)
 
 socketio = SocketIO(app)
 s3_client = S3Client()
