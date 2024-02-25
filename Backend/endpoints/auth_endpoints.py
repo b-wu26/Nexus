@@ -30,6 +30,7 @@ def login():
                         "waterloo_id" : user.waterloo_id,
                         "first_name" : user.f_name,
                         "last_name" : user.l_name,
+                        "idstudent_profile" : user.idstudent_profile,
                     }}), 200 
             else:
                 return jsonify({"message": "Incorrect password"}), 401 

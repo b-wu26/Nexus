@@ -5,10 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from "../../../redux/actions"
 import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 
-const user_id = 1; // Replace with your actual user ID
 
 function Posts(props) {
     const [posts, setPosts] = useState([]); // initialize posts state
+    const user = useSelector((state) => state.user); // Replace with your actual user ID
+    const user_id = user.idstudent_profile;
+
+    console.log("user_id");
+    console.log(user_id);
     useEffect(() => {
         if (props.course_id) {
             axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/${user_id}/${props.course_id}`)

@@ -23,7 +23,7 @@ class notes_and_more(db.Model):
         return f"<notes_and_more {self.objectid}>"
 
     def __init__(
-        self, idposts, idcomments, idstudent_profile, idclass_profile, date_poster, s3_endpoint
+        self, idposts, idstudent_profile, idclass_profile, date_poster, s3_endpoint, idcomments=None,
     ):
         self.idposts = idposts
         self.idcomments = idcomments

@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 import { getMetadata } from 'page-metadata-parser';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ImageSlider from './ImageSlider';
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const user_id = 1; // Replace with your actual user ID
+
 
 const TimelinePost = ({ post }) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -24,6 +25,8 @@ const TimelinePost = ({ post }) => {
     const [numCommentsToShow, setNumCommentsToShow] = useState(3);
     const [areCommentsShown, setAreCommentsShown] = useState(true);
 
+    const user_state = useSelector((state) => state.user); // Replace with your actual user ID
+    const user_id = user_state.idstudent_profile;
 
     let btnRef = useRef();
 

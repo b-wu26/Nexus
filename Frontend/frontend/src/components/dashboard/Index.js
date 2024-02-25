@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 
 import LeftSidebar from "./LeftSidebar";
@@ -9,8 +9,11 @@ import CreatePost from "./post/CreatePost";
 import Posts from "./post/Posts";
 import { addPost } from "../../redux/actions"
 
+
 function Dashboard(props) {
     const user = useSelector((state) => state.user);
+    // console.log("user_id in index.js");
+    // console.log(user);
     const course_id = props.match.params.id;
 
     useEffect(() => {

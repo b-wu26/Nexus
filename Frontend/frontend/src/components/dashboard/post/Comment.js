@@ -20,7 +20,7 @@ export default function CommentComponent({ comment }) {
                 </div> */}
                 <div>
                     <h6>
-                        Daniel An
+                        {comment.f_name} {comment.l_name}
                     </h6>
                     <span>{comment.date_sent}</span>
                 </div>

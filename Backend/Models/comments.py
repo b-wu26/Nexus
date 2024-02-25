@@ -1,5 +1,6 @@
 from . import db
 from datetime import datetime
+from .student_profile import student_profile
 
 class comments(db.Model):
     idcomments = db.Column(db.Integer, primary_key=True)
@@ -18,8 +19,8 @@ class comments(db.Model):
         self.idposts = idposts
         self.date_sent = date_sent
     
-    def get_comments_by_post_id_sorted(post_id):
-        return comments.query.filter_by(idposts=post_id).order_by(comments.date_sent.asc()).all()
+    def get_comments_by_post_id_sorted_and_join_student_profile(post_id):
+        return db.session.query(comments, student_profile).filter(comments.idposts==post_id).join(student_profile).order_by(comments.date_sent.asc()).all()
     
     def to_dict(self):
         return {

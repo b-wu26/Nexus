@@ -59,7 +59,7 @@ def upload(idstudent_profile, course_id):
         for file_key in file_keys:
             uploaded_file = notes_and_more(
                 idposts=post_to_upload.idposts,
-                idstudent_profile=idstudent_profile,
+                idstudent_profile=idstudent_profile,                
                 idclass_profile=course_id,
                 date_poster=date_sent,
                 s3_endpoint=file_key,
@@ -107,7 +107,22 @@ def create_posts(posts):
         # files with s3_endpoint ending with pdf, docx, or other file types append to files 
         files = [f"https://uw-nexus-contents.s3.us-east-2.amazonaws.com/{attachment.s3_endpoint}" for attachment in attachments if not attachment.s3_endpoint.lower().endswith(('.jpeg', '.jpg', '.png'))]
         
-        post_comments = comments.get_comments_by_post_id_sorted(post.idposts)
+        post_comments = comments.get_comments_by_post_id_sorted_and_join_student_profile(post.idposts)
+
+        print("FSDFDSFSDFSDFD")
+        comment_list = []
+        for comment, profile in post_comments:
+            
+            comment_list.append({
+                "id": comment.idcomments,
+                "comment": comment.comment,
+                "date_sent": comment.date_sent.isoformat(),
+                "idstudent_profile": profile.idstudent_profile,
+                "idposts": comment.idposts,
+                "f_name": profile.f_name,
+                "l_name": profile.l_name
+            })
+
 
         poster_profile = student_profile.get_student_by_id(post.idstudent_profile)
         course = class_profile.get_class_by_id(post.idclass_profile)
@@ -121,7 +136,7 @@ def create_posts(posts):
                 "images" : images,
                 "files" : files
             },
-            "comments" : [comment.to_dict() for comment in post_comments]
+            "comments" : comment_list
         })
 
     return data

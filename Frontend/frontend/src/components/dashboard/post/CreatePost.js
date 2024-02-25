@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
 
-const user_id = 1; // Replace with your actual user ID
+
 
 export default function CreatePost({ user, newPost, course_id }) {
     const [postText, setPostText] = useState("");
@@ -11,6 +12,9 @@ export default function CreatePost({ user, newPost, course_id }) {
     const [selectedCourse, setSelectedCourse] = useState("");
     const [postFiles, setPostFiles] = useState([]);
     const [postFileName, setPostFileName] = useState("");
+
+    const user_state = useSelector((state) => state.user); // Replace with your actual user ID
+    const user_id = user_state.idstudent_profile;
 
     let btnRef = useRef();
     let postPictureBtnRef = useRef();

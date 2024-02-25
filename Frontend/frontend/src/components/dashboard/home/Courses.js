@@ -5,17 +5,19 @@ import CourseListItem from "./CourseListItem";
 import Navbar from "../Navbar";
 import axios from 'axios';
 import { BACKEND_SERVER_DOMAIN } from '../../../settings'
+import { useSelector } from "react-redux";
 
-const user_id = 1; // Replace with your actual user ID
 
 export default function Courses() {
-    const course = [{ name: "ECE 455" },
-    { name: "ECE 458" },
-    { name: "ECE 498A" },
-    { name: "MSCI 331" },
-    { name: "MATH 115" }]
+    // const course = [{ name: "ECE 455" },
+    // { name: "ECE 458" },
+    // { name: "ECE 498A" },
+    // { name: "MSCI 331" },
+    // { name: "MATH 115" }]
 
     const [courses, setCourses] = useState({});
+    const user_state = useSelector((state) => state.user); // Replace with your actual user ID
+    const user_id = user_state.idstudent_profile;
 
     useEffect(() => {
         axios.get(`${BACKEND_SERVER_DOMAIN}/api/enrolled_courses/${user_id}`) // Replace with your actual API URL
