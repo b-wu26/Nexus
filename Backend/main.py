@@ -22,7 +22,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:password@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
 app.config['MAIL_SERVER']='smtp.gmail.com'

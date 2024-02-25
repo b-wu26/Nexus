@@ -1,6 +1,6 @@
 import React from "react";
 import { logoutUser, removeAllPosts } from "../../redux/actions";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-no-text.png";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";

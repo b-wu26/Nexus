@@ -83,7 +83,9 @@ export default function SignIn() {
             </Helmet>
             <div className="container">
                 <div className="col-lg-5 col-md-12 col-sm-12">
-                    <img src={logo} className="logo" />
+                    <div className="d-flex align-content-center justify-content-center"> 
+                        <img src={logo} className="logo"/>
+                    </div>
                     {
                         <div className="card">
                             <h3>Sign in</h3>
