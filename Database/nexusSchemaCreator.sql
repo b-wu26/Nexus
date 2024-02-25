@@ -133,10 +133,14 @@ DROP TABLE IF EXISTS `student_profile`;
 CREATE TABLE `student_profile` (
   `idstudent_profile` INT NOT NULL AUTO_INCREMENT,
   `waterloo_id` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `account_password` varchar(50) DEFAULT NULL,
   `f_name` varchar(50) DEFAULT NULL,
   `l_name` varchar(50) DEFAULT NULL,
   `validated` tinyint DEFAULT '0',
+  `bio` varchar(100) DEFAULT NULL,
+  `term` varchar(50) DEFAULT NULL,
+  `major` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idstudent_profile`),
   UNIQUE KEY `waterloo_id_UNIQUE` (`waterloo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

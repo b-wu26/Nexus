@@ -8,7 +8,7 @@ from models.student_profile import student_profile
 from models.class_profile import class_profile
 from models.message import message as dbmessage
 from models.schedule import schedule
-
+from models.post import post
 from endpoints.schedule_endpoints import schedule_endpoints
 from endpoints.post_endpoints import post_endpoints
 from endpoints.auth_endpoints import auth_endpoints
@@ -22,7 +22,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:password@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -50,6 +50,7 @@ def new_user():
             new_user = student_profile(
                 idstudent_profile=eval(request.form["idstudent_profile"]),
                 waterloo_id=request.form["waterloo_id"],
+                email=request.form["email"],
                 account_password=request.form["account_password"],
                 f_name=request.form["f_name"],
                 l_name=request.form["l_name"],
@@ -84,6 +85,73 @@ def courses(faculty):
 
         return jsonify({"courses": response})
     
+@app.route("/api/user_info/<user_id>", methods=["PUT", "GET"])
+def users(user_id):
+    if request.method == "GET":
+        user_info = student_profile.get_student_by_id(user_id)
+        if user_info is None:
+            return("Unlucky")
+        user_schedule = db.session.query(schedule, class_profile).select_from(schedule).join(class_profile).filter(schedule.idstudent_profile == user_id, schedule.current_term == 1).all()
+        # print(user_info)
+        classes = []
+        # print(user_schedule)
+        for sch, cla in user_schedule:
+            classes.append({
+                "class_name": cla.class_name,
+                "course_code": cla.course_code,
+                "faculty": cla.faculty,
+                "term": sch.Term_year,
+                "prof": sch.prof,
+            })
+
+        user_posts = db.session.query(post, class_profile).select_from(post).join(class_profile).filter(post.idstudent_profile == user_id).order_by(post.date_sent).limit(2).all()
+
+        posts = []
+
+        for p, cl in user_posts:
+            posts.append({
+                "class_name": cl.class_name,
+                "text_content": p.text_content,
+                "course_code": cl.course_code,
+            })
+        
+
+        data = {"info":{
+            "first": user_info.f_name, 
+            "last": user_info.l_name, 
+            "waterloo_id": user_info.waterloo_id, 
+            "bio": user_info.bio,
+            "term": user_info.term,
+            "major": user_info.major,
+            }, "classes": classes,
+            "posts": posts}
+        # print(data)
+        return data
+    elif request.method == "PUT":
+        #need to account for editing to login informations
+        # print("LFGs")
+        # print(request.form.get("bio"))
+        # print(request.form.to_dict().keys())
+        bio = request.form.get("bio")
+        major = request.form.get("major")
+        term = request.form.get("term")
+        print(type(bio), type(major), type(term))
+        user_req_id = request.form.get("idstudent_profile")
+        assert user_req_id == user_id
+        user_profile = db.session.query(student_profile).filter_by(idstudent_profile = 1).first()
+        user_profile.bio = str(bio)
+        user_profile.major = str(major)
+        user_profile.term = str(term)
+
+        print(user_profile.bio, user_profile.major, user_profile.term)
+        db.session.commit()
+        print(user_profile)
+
+        user_profile_cehck = db.session.query(student_profile).filter_by(idstudent_profile = 1).first()
+
+        print(user_profile_cehck.bio, user_profile_cehck.major, user_profile_cehck.term)
+        return jsonify({"update": "success"}) 
+
 @app.route("/api/<user_id>/signup", methods=["POST"]) 
 def signup(user_id): 
     if request.method == "POST": 
@@ -99,6 +167,7 @@ Thanks!
         new_user = student_profile(
             waterloo_id=request.form["watid"],
             account_password=request.form["password"],
+            email=request.form["email"],
             f_name=request.form["f_name"],
             l_name=request.form["l_name"],
             validated=True,
@@ -107,7 +176,7 @@ Thanks!
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"email": "success"}) 
-    
+   
 @app.route("/verify/<watid>") 
 def verify(watid): 
     return redirect(url_for("chat"))
