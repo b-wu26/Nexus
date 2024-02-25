@@ -218,6 +218,16 @@ img {
   box-shadow: 0 0 5px 1px rgba(var(--rgb-grey), 0.05);
 }
 
+.comment-card {
+  background-color: var(--clr-white);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin: 1rem 0 1.5rem 0;
+  border: none;
+  -webkit-box-shadow: 0 0 5px 1px rgba(var(--rgb-grey), 0.05);
+  box-shadow: 0 0 5px 1px rgba(var(--rgb-grey), 0.05);
+}
+
 .card-btn {
   margin: -1rem;
   margin-top: 1rem;
@@ -2344,4 +2354,29 @@ h6>span {
   /* Adjust this value to make the font smaller or larger */
   color: gray;
   /* This will make the font color gray */
+}
+
+.comment-show-more-button {
+  background-color: #007BFF;
+  /* Blue */
+  border: none;
+  color: white;
+  padding: 0px 5px;
+  /* Smaller padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  /* Smaller font size */
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.comment-show-more-butto:hover {
+  background-color: #00BCD4;
+  /* Light Blue */
+  color: white;
+  border: 2px solid #007BFF;
 }

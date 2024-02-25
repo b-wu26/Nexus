@@ -65,19 +65,23 @@ DROP TABLE IF EXISTS `notes_and_more`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notes_and_more` (
   `objectid` int NOT NULL AUTO_INCREMENT,
-  `idposts` int NOT NULL,
+  `idposts` int DEFAULT NULL,
+  `idcomments` int DEFAULT NULL,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
   `date_poster` date NOT NULL,
   `s3_endpoint` longtext NOT NULL,
   PRIMARY KEY (`objectid`),
   KEY `idposts_idx` (`idposts`),
+  KEY `idcomments_idx` (`idcomments`),
   KEY `idstudent_profile_idx` (`idstudent_profile`),
   KEY `idclass_profile3_idx` (`idclass_profile`),
   CONSTRAINT `idposts3` FOREIGN KEY (`idposts`) REFERENCES `post` (`idposts`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `idcomments` FOREIGN KEY (`idcomments`) REFERENCES `comments` (`idcomments`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `idclass_profile3` FOREIGN KEY (`idclass_profile`) REFERENCES `class_profile` (`idclass_profile`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `idstudent_profile3` FOREIGN KEY (`idstudent_profile`) REFERENCES `student_profile` (`idstudent_profile`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,3 +160,20 @@ CREATE TABLE `student_profile` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-07-16 22:45:34
+
+DROP TABLE IF EXISTS `comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `comments` (
+  `idcomments` int NOT NULL AUTO_INCREMENT,
+  `idposts` int NOT NULL,
+  `idstudent_profile` int NOT NULL,
+  `comment` longtext NOT NULL,
+  `date_sent` datetime NOT NULL,
+  PRIMARY KEY (`idcomments`),
+  KEY `idposts4_idx` (`idposts`),
+  KEY `idstudent_profile4_idx` (`idstudent_profile`),
+  CONSTRAINT `idposts4` FOREIGN KEY (`idposts`) REFERENCES `post` (`idposts`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `idstudent_profile4` FOREIGN KEY (`idstudent_profile`) REFERENCES `student_profile` (`idstudent_profile`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;

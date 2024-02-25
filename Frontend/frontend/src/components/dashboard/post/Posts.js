@@ -22,6 +22,8 @@ function Posts(props) {
         } else {
             axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/${user_id}`)
                 .then((response) => {
+
+                    console.log("response from backend");
                     console.log(response);
                     setPosts(response.data);
                 })
