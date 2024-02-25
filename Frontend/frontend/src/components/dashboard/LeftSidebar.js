@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
-export default function LeftSidebar({active=0}) {
-    
+export default function LeftSidebar({ active = 0 }) {
+    const user_state = useSelector((state) => state.user); // Replace with your actual user ID
+
     return (
         <section className="leftsidebar">
             <div className="d-flex user">
@@ -12,7 +14,7 @@ export default function LeftSidebar({active=0}) {
                 />
                 <div>
                     <h6>
-                    @user903849120
+                        {user_state.first_name} {user_state.last_name}
                     </h6>
                     <span>University of Waterloo</span>
                     <span>4th year ECE</span>
