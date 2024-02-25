@@ -17,8 +17,10 @@ function Index() {
 
     themeApply();
 
-    if (user.token !== undefined && user.avatar != null) {
+    if (user != {}) {
         history.push("/dashboard");
+    } else {
+        history.push("/login");
     }
 
     function secondStep() {

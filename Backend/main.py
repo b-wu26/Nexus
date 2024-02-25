@@ -11,17 +11,18 @@ from models.schedule import schedule
 
 from endpoints.schedule_endpoints import schedule_endpoints
 from endpoints.post_endpoints import post_endpoints
+from endpoints.auth_endpoints import auth_endpoints
 
 from client.s3_client import S3Client
 from models import db
 
 from flask import Flask
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "bananapants"
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -35,12 +36,12 @@ mail = Mail(app)
 
 app.register_blueprint(schedule_endpoints)
 app.register_blueprint(post_endpoints)
+app.register_blueprint(auth_endpoints)
 
 socketio = SocketIO(app)
 s3_client = S3Client()
 
 chat_rooms = {}
-
 
 @app.route("/api/new_user", methods=["POST"])
 def new_user():

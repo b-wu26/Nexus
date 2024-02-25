@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 
@@ -13,7 +13,7 @@ function Dashboard(props) {
     const user = useSelector((state) => state.user);
     const course_id = props.match.params.id;
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
 

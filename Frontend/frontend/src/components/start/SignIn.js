@@ -4,6 +4,7 @@ import InputField from "../../utils/InputField";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { setUser } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
@@ -13,6 +14,7 @@ import {themeApply} from '../global/ThemeApply'
 export default function SignIn() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const userState = useSelector((state) => state.user);
 
     themeApply();
     
@@ -43,22 +45,26 @@ export default function SignIn() {
         }
         let config = {
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data",
             },
         };
+        const loginRequest = new FormData();
+        loginRequest.append("email", email);
+        loginRequest.append("password", password); 
         axios
             .post(
-                BACKEND_SERVER_DOMAIN + "/api/user/login/",
-                JSON.stringify({ email: email, password: password }),
+                `${BACKEND_SERVER_DOMAIN}/api/user/login`,
+                loginRequest,
                 config
             )
             .then(function (response) {
-                dispatch(setUser(response.data));
-                if (response.data.avatar != null) {
+                    if (response.status === 200) {
+                    dispatch(setUser(response.data["user"]));
                     history.push("/dashboard");
                 }
             })
             .catch(function (error) {
+                console.log(error) 
                 setAPIResponse(
                     <div className="fw-bold text-danger text-sm pb-2">
                         Unable to sign in, make sure your email and password are correct.
