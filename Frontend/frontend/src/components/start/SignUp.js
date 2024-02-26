@@ -138,7 +138,7 @@ function SignUp({secondStep}) {
                     </div>
                     <div className="col-md-12">
                         <InputField
-                            label="Email"
+                            label="UWaterloo Email"
                             onChange={handleEmail}
                             name="email"
                             type="email"
