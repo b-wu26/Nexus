@@ -1,8 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ImageSlider from './ImageSlider';
 
 
 export default function CommentComponent({ comment }) {
+
+    console.log("comment");
+    console.log(comment);
+
+    const [showAttachments, setShowAttachments] = useState(false);
 
     return (
         <div className="d-flex post card">
@@ -14,10 +20,6 @@ export default function CommentComponent({ comment }) {
                     alt=""
                     style={{ width: '30px', height: '30px' }}
                 />
-                {/* <div>
-                    <h8>Daniel An</h8>
-                    <span>{comment.date_sent}</span>
-                </div> */}
                 <div>
                     <h6>
                         {comment.f_name} {comment.l_name}
@@ -26,6 +28,30 @@ export default function CommentComponent({ comment }) {
                 </div>
             </div>
             <p>{comment.comment}</p>
+            <div style={{ textAlign: 'left', marginTop: '10px', marginBottom: '10px' }}>
+                <button className="btn btn-sm btn-outline-primary attachment-show-more-button"
+                    onClick={() => setShowAttachments(!showAttachments)}>{!showAttachments ? "Show Attachments" : "Hide Attachments"}</button>
+            </div>
+
+
+            {showAttachments && comment.attachments.images.length > 0 &&
+                <div style={{ width: '100%' }} >
+                    <ImageSlider images={comment.attachments.images} />
+                </div>
+            }
+            {showAttachments && comment.attachments.files.length > 0 &&
+                <div style={{ width: '100%', marginTop: '20px' }} >
+                    <p><strong>File Attachments:</strong></p>
+                    {comment.attachments.files.map((file, index) => {
+                        const fileName = file.split("/").pop();
+                        return (
+                            <a key={index} href={file} download>
+                                <i className="fas fa-file"></i> {fileName}
+                            </a>
+                        );
+                    })}
+                </div>
+            }
         </div>
     );
 }

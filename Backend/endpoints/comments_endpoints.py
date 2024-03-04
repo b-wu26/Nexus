@@ -5,6 +5,7 @@ from datetime import datetime
 from models import db
 
 from models.comments import comments
+from models.notes_and_more import notes_and_more
 
 from client.s3_client import S3Client
 
@@ -32,16 +33,29 @@ def upload_comment(idstudent_profile, idposts):
                     file_keys.append(s3_key)
                 else:
                     return jsonify({"message": "Error: undefined post type"})
-        print("comment: ", comment)
+
         comment_to_upload = comments(
             comment=comment,
             idstudent_profile=idstudent_profile,
             idposts=idposts,
             date_sent=date_sent
         )
-
         db.session.add(comment_to_upload)
         db.session.commit()
+
+        for file_key in file_keys:
+            print("file_key: ", file_key)
+            uploaded_file = notes_and_more(
+                idcomments=comment_to_upload.idcomments,
+                idstudent_profile=idstudent_profile,                
+                idclass_profile=request.form.get("idclass_profile"),
+                date_poster=date_sent,
+                s3_endpoint=file_key,
+            )
+            db.session.add(uploaded_file)
+            db.session.commit()
+
+        
         return jsonify({"message": "Comment uploaded successfully"})
     else:
         return jsonify({"message": "Error: Invalid request method"})
