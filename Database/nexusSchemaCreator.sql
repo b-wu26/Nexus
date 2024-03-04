@@ -138,7 +138,7 @@ CREATE TABLE `student_profile` (
   `idstudent_profile` INT NOT NULL AUTO_INCREMENT,
   `waterloo_id` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `account_password` varchar(50) DEFAULT NULL,
+  `account_password` varchar(255) DEFAULT NULL,
   `f_name` varchar(50) DEFAULT NULL,
   `l_name` varchar(50) DEFAULT NULL,
   `validated` tinyint DEFAULT '0',
