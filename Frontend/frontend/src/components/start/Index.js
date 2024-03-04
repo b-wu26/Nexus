@@ -32,10 +32,10 @@ function Index() {
             </Helmet>
             <div className="container">
                 {isSecondStageSignUp ? (
-                    <div className="col-lg-5 col-md-12 col-sm-12">
-                        <img src={logo} className="logo" />
-                        <FinishSignUp />
-                    </div>
+                    <div className="d-flex align-items-center justify-content-center">
+                        <img src={logo} className="logo" style={{ width: "300px", height: "300px", margin: "30px"}} />
+                        <h1>Thanks for signing up! If your email is valid, you should be getting an email shortly to verify your account.</h1>
+                    </div> 
                 ) : (
                     <div className="row g-3">
                         <div className="col-xl-7 col-lg-6 col-md-1 center">

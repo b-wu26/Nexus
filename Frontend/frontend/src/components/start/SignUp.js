@@ -7,7 +7,7 @@ import { setUser } from "../../redux/actions";
 import InputField from "../../utils/InputField";
 import { BACKEND_SERVER_DOMAIN } from "../../settings";
 
-function SignUp({secondStep}) {
+function SignUp({ secondStep }) {
     const dispatch = useDispatch();
 
     const [first_name, setFirstName] = useState("");
@@ -19,6 +19,8 @@ function SignUp({secondStep}) {
     const [apiResponse, setAPIResponse] = useState();
 
     const handleFirstName = ({ target }) => {
+        console.log(target.value)
+        console.log(first_name)
         setFirstName(target.value);
     };
     const handleLastName = ({ target }) => {
@@ -38,14 +40,33 @@ function SignUp({secondStep}) {
         }
     };
 
-
     let btnRef = useRef();
     const handleSignUp = () => {
-
         if (!first_name || !last_name || !email || !password) {
             setAPIResponse(
-                <div class="fw-bold text-uppercase text-danger text-sm">
+                <div class="fw-bold text-danger text-sm">
                     Fill all fields.
+                </div>
+            );
+            return;
+        }
+
+        // Email validation
+        const emailRegex = /^[A-Za-z0-9._%+-]+@uwaterloo\.ca$/;
+        if (!emailRegex.test(email)) {
+            setAPIResponse(
+                <div class="fw-bold text-danger text-sm">
+                    Invalid email. Please use a valid @uwaterloo.ca email.
+                </div>
+            );
+            return;
+        }        
+        
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setAPIResponse(
+                <div class="fw-bold text-danger text-sm">
+                    Password should be at least 8 characters long with at least one uppercase, one lowercase, one number, and one special symbol.
                 </div>
             );
             return;
@@ -56,7 +77,7 @@ function SignUp({secondStep}) {
                 btnRef.current.removeAttribute("disabled");
             }
             setAPIResponse(
-                <div class="fw-bold text-uppercase text-danger text-sm">
+                <div class="fw-bold text-danger text-sm">
                     Passwords do not match.
                 </div>
             );
@@ -69,20 +90,20 @@ function SignUp({secondStep}) {
 
         setAPIResponse("");
 
-        let formData = {
-            "first_name":first_name,
-            "last_name":last_name,
-            "email":email,
-            "password":password}
-        
+        const formData = new FormData();
+        formData.append("first_name", first_name);  
+        formData.append("last_name", last_name);    
+        formData.append("email", email);
+        formData.append("password", password);
+
         let config = {
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data",
             },
         };
         axios
             .post(
-                BACKEND_SERVER_DOMAIN + "/api/person/signup/",
+                BACKEND_SERVER_DOMAIN + "/api/user/signup",
                 formData,
                 config
             )

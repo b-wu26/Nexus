@@ -19,27 +19,11 @@ from models import db
 
 from flask import Flask
 from flask_cors import CORS, cross_origin
+from app import create_app
 
-app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000"])
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "bananapants"
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'contact.nexuscustomerservice@gmail.com'
-app.config['MAIL_PASSWORD'] = 'mfqhszaedigbcrmb'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+app = create_app() 
 db.init_app(app=app)
-mail = Mail(app)
-
-app.register_blueprint(schedule_endpoints)
-app.register_blueprint(post_endpoints)
-app.register_blueprint(auth_endpoints)
-app.register_blueprint(comments_endpoints)
-
 socketio = SocketIO(app)
 s3_client = S3Client()
 

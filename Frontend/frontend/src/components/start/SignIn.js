@@ -49,7 +49,7 @@ export default function SignIn() {
             },
         };
         const loginRequest = new FormData();
-        loginRequest.append("email", email);
+        loginRequest.append("email_or_id", email);
         loginRequest.append("password", password); 
         axios
             .post(
@@ -64,10 +64,9 @@ export default function SignIn() {
                 }
             })
             .catch(function (error) {
-                console.log(error) 
                 setAPIResponse(
                     <div className="fw-bold text-danger text-sm pb-2">
-                        Unable to sign in, make sure your email and password are correct.
+                        {error.response.data['message']}
                     </div>
                 );
                 if (btnRef.current) {
@@ -91,7 +90,7 @@ export default function SignIn() {
                             <h3>Sign in</h3>
                             {apiResponse}
                             <InputField
-                                label="Email"
+                                label="UWaterloo Email or ID"
                                 onChange={handleEmail}
                                 name="email"
                                 type="email"
