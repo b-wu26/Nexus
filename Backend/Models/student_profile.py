@@ -5,7 +5,7 @@ class student_profile(db.Model):
     idstudent_profile = db.Column(db.Integer, primary_key=True)
     waterloo_id = db.Column(db.String(50), nullable=False,unique=True)
     email = db.Column(db.String(100), nullable=False, unique=True)
-    account_password = db.Column(db.String(50))
+    account_password = db.Column(db.String(255))
     f_name = db.Column(db.String(50), nullable=False)
     l_name = db.Column(db.String(50), nullable=False)
     validated = db.Column(db.Boolean)
