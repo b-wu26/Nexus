@@ -11,7 +11,7 @@ USE `nexus`;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40103 SET TIME_ZONE='+00:00' 	*/;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -29,8 +29,8 @@ CREATE TABLE `class_profile` (
   `class_name` varchar(200) NOT NULL,
   `course_code` varchar(30) NOT NULL,
   `faculty` varchar(45) NOT NULL,
-  PRIMARY KEY (`idclass_profile`),
-  UNIQUE KEY `course_code_UNIQUE` (`course_code`)
+  `description` varchar(1000) NOT NULL, 
+  PRIMARY KEY (`idclass_profile`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
