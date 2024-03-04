@@ -30,15 +30,6 @@ const TimelinePost = ({ post }) => {
 
     let btnRef = useRef();
 
-    console.log("comments: ");
-    console.log(post.comments);
-
-    // function splicedArray(array, index) {
-    //     let nArr = [...array];
-    //     nArr.splice(0, index + 1);
-    //     return nArr;
-    // }
-
     const commentField = useRef(null);
 
     const clickPostPicture = () => {
@@ -49,12 +40,14 @@ const TimelinePost = ({ post }) => {
         setPostFiles(event.target.files);
     };
 
-    const handleSubmit = (event) => {
+    const handleCommentSubmit = (event) => {
         event.preventDefault(); // Prevent the form from refreshing the page
 
         const formData = new FormData();
         formData.append('comment', commentField.current.value);
         formData.append('date_sent', new Date().toISOString());
+        formData.append('idclass_profile', post.course.id);
+        formData.append('type', "comments");
         if (postFiles) {
             for (let i = 0; i < postFiles.length; i++) {
                 formData.append('post_files', postFiles[i]);
@@ -69,10 +62,10 @@ const TimelinePost = ({ post }) => {
         }).then((response) => {
             console.log(response.data);
             window.location.reload();
-        })
-            .catch((error) => {
-                console.error(`Error creating post: ${error}`);
-            });
+        }).catch((error) => {
+            console.error(`Error creating post: ${error}`);
+        });
+
     };
 
     return (
@@ -211,7 +204,7 @@ const TimelinePost = ({ post }) => {
                             <p>Files to be uploaded: {<br />}{Array.from(postFiles).map((file, index) => <span key={index}>{file.name}<br /></span>)}</p>
                         </div>
                     }
-                    <button onClick={handleSubmit}>
+                    <button onClick={handleCommentSubmit}>
                         <i className="far fa-paper-plane"></i>
                     </button>
 

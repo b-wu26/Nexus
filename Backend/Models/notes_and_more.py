@@ -23,7 +23,7 @@ class notes_and_more(db.Model):
         return f"<notes_and_more {self.objectid}>"
 
     def __init__(
-        self, idposts, idstudent_profile, idclass_profile, date_poster, s3_endpoint, idcomments=None,
+        self, idstudent_profile, idclass_profile, date_poster, s3_endpoint, idcomments=None, idposts=None,
     ):
         self.idposts = idposts
         self.idcomments = idcomments
@@ -34,3 +34,6 @@ class notes_and_more(db.Model):
 
     def get_notes_by_post_id(idposts):
         return notes_and_more.query.filter_by(idposts=idposts).all()
+    
+    def get_notes_by_comment_id(idcomments):
+        return notes_and_more.query.filter_by(idcomments=idcomments).all()
