@@ -13,7 +13,7 @@ from endpoints.schedule_endpoints import schedule_endpoints
 from endpoints.post_endpoints import post_endpoints
 from endpoints.auth_endpoints import auth_endpoints
 from endpoints.comments_endpoints import comments_endpoints
-
+from datetime import date
 from client.s3_client import S3Client
 from models import db
 
@@ -69,7 +69,47 @@ def courses(faculty):
             )
 
         return jsonify({"courses": response})
-    
+
+@app.route("/api/courses/course/<course_id>", methods=["GET"])
+def course(course_id):
+    if request.method == "GET":
+        print(course_id)
+        courses = class_profile.query.filter_by(idclass_profile=course_id)
+        response = []
+        for course in courses:
+            response.append(
+                {
+                    "idclass_profile": course.idclass_profile,
+                    "class_name": course.class_name,
+                    "course_code": course.course_code,
+                    "faculty": course.faculty,
+                }
+            )
+        print(response)
+        return jsonify({"courses": response[0]})
+
+@app.route("/api/user_info/subscribe/<user_id>/<course_id>", methods=["POST"])
+def subscribe(user_id, course_id):
+    if request.method == "POST":
+        today = date.today()
+        term = ""
+        if(today < date(today.year, 5,1)):
+            term = f"Winter_{today.year}"
+        elif(today < date(today.year, 9,1)):
+            term = f"Spring_{today.year}"
+        else:
+            term = f"Fall_{today.year}"
+        new_scheudle = schedule(
+            idstudent_profile=user_id,
+            idclass_profile=course_id,
+            Term_year=term,
+            current_term=True,
+        )
+
+        db.session.add(new_scheudle)
+        db.session.commit()
+        return jsonify({"email": "success"}) 
+
 @app.route("/api/user_info/<user_id>", methods=["PUT", "GET"])
 def users(user_id):
     if request.method == "GET":
@@ -86,7 +126,6 @@ def users(user_id):
                 "course_code": cla.course_code,
                 "faculty": cla.faculty,
                 "term": sch.Term_year,
-                "prof": sch.prof,
             })
 
         user_posts = db.session.query(post, class_profile).select_from(post).join(class_profile).filter(post.idstudent_profile == user_id).order_by(post.date_sent).limit(2).all()

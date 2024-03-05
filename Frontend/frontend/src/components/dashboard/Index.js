@@ -37,7 +37,7 @@ function Dashboard(props) {
                         <Posts course_id={course_id} />
                     </div>
                     <div className="col-lg-3 col-12">
-                        <RightSidebar />
+                        {course_id && <RightSidebar course_id={course_id}/>}
                     </div>
                 </div>
             </div>

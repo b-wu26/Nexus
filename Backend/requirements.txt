@@ -3,6 +3,7 @@ blinker==1.6.2
 boto3==1.28.8
 botocore==1.31.8
 click==8.1.6
+DateTime==5.4
 Flask==2.3.2
 Flask-Cors==4.0.0
 Flask-Mail==0.9.1
