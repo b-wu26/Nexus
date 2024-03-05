@@ -55,11 +55,12 @@ def signup():
         last_name = request.form.get("last_name")
 
         msg = Message(subject="Confirm your Nexus Account", sender="contact.nexuscustomerservice@gmail.com", recipients=[user_email])
-        msg.html = '''<div> <p>Hi there {first_name}, welcome to Nexus! To complete your account signup, please 
-        <a href='localhost:3000/login'>click here.</a></p>. 
+        msg.html = '''
+        Hi there {first_name}, welcome to Nexus! To complete your account signup, please 
+        <a href="http://localhost:3000/login">click here.</a> 
 
-        <p>Thanks!</p>
-        <p>-Nexus Team</p>'''.format(first_name = first_name)
+        \nThanks!
+        \n-Nexus Team'''.format(first_name = first_name)
         mail.send(msg)
 
         new_user = student_profile(

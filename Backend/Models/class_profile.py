@@ -17,6 +17,15 @@ class class_profile(db.Model):
         self.course_code = course_code
         self.faculty = faculty
         self.description = description
+        
+    def as_dict(self): 
+        return {
+            "idclass_profile": self.idclass_profile,
+            "class_name": self.class_name,
+            "course_code": self.course_code,
+            "faculty": self.faculty,
+            "description": self.description
+        }
     
     def get_class_by_id(idclass_profile):
         return class_profile.query.filter_by(idclass_profile=idclass_profile).first()

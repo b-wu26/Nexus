@@ -4,6 +4,7 @@ import Dashboard from './components/dashboard/Index';
 import Courses from './components/dashboard/home/Courses';
 import Profile from './components/dashboard/profile/Profile'
 import RequireAuth from './RequireAuth';
+import CourseSearch from './components/dashboard/home/CourseSearch';
 import {
   Route,
   Switch,
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login' exact component={SignIn} />
         <Route path='/' exact component={Index} />
         <Route path='/u/:slug' exact component={RequireAuth(Profile)} />
+        <Route path='/coursesearch' exact component={RequireAuth(CourseSearch)} />
       </Switch>
     </Router>
   );
