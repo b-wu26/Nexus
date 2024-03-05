@@ -19,9 +19,10 @@ class message(db.Model):
         return f"<message {self.idmessages}>"
 
     def __init__(
-        self, idstudent_profile, idclass_profile, message
+        self, idstudent_profile, idclass_profile, date_sent, message
     ):
         self.idstudent_profile = idstudent_profile
         self.idclass_profile = idclass_profile
+        self.date_sent = date_sent
         self.message = message
         self.upvotes = 0

@@ -34,6 +34,14 @@ CREATE TABLE `class_profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+DROP TABLE IF EXISTS `chat_room`;
+CREATE TABLE `chat_room` (
+  `idroom` int NOT NULL AUTO_INCREMENT,
+  `idclass_profile` int NOT NULL,
+  `last_active` date,
+  PRIMARY KEY (`idroom`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Table structure for table `messages`
 --
@@ -177,3 +185,4 @@ CREATE TABLE `comments` (
   CONSTRAINT `idstudent_profile4` FOREIGN KEY (`idstudent_profile`) REFERENCES `student_profile` (`idstudent_profile`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+

@@ -21,9 +21,11 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from app import create_app
 
+from datetime import datetime
+
 app = create_app() 
 db.init_app(app=app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 s3_client = S3Client()
 
 chat_rooms = {}
@@ -205,107 +207,63 @@ Thanks!
 def verify(watid): 
     return redirect(url_for("chat"))
 
-@app.route("/chat", methods=["POST", "GET"])
-def chat(): 
-    session.clear()
-    if request.method == "POST": 
-        username = request.form.get("username")
-        password = request.form.get("password") 
-        course = request.form.get("course") 
-        
-        #bunch of error checking
-        if not username: 
-            return render_template("chat_home.html", error="Please enter a username.")
-
-        if not password: 
-            return render_template("chat_home.html", error="Please enter a password.")
-        
-        if not course: 
-            return render_template("chat_home.html", error="Please select a course.")
-
-        user_info = db.session.query(student_profile).filter_by(waterloo_id=username).first()
-        course_info = db.session.query(class_profile).filter_by(course_code=course).first() 
-
-        if user_info is None or user_info.account_password != password: 
-            return render_template("chat_home.html", error="The username or password is incorrect.")
-        
-        #valid user, connect to room 
-        room = course 
-        if room not in chat_rooms: 
-            messageList = dbmessage.query.join(student_profile, dbmessage.idstudent_profile == student_profile.idstudent_profile).add_columns(student_profile.waterloo_id, dbmessage.message, dbmessage.idclass_profile).filter(dbmessage.idclass_profile == course_info.idclass_profile).all()
-            oldMessages = [] 
-            for message in messageList:
-                oldMessages.append({
-                    "username": message[1],
-                    "message": message[2]
-                })
-            chat_rooms[room] = {"members": 0, "messages": oldMessages} 
-            print(chat_rooms)
-
-        session["room"] = room 
-        session["username"] = username
-        session["user_id"] = user_info.idstudent_profile
-        session["course_id"] = course_info.idclass_profile
-        return redirect(url_for("room"))
-
-    return render_template("chat_home.html", error="")
-
-@app.route("/room") 
-def room(): 
-
-    room = session.get("room")
-    if room is None or session.get("username") is None or room not in chat_rooms:
-       return redirect(url_for("chat"))
+@app.route("/chat/<user_id>/<course_id>")
+def chat(user_id, course_id):
     
-    return render_template("chat_room.html", course=room, messages=chat_rooms[room]["messages"])
+    #valid user, connect to room 
+    room = course_id
+    if room not in chat_rooms: 
+        messageList = dbmessage.query.filter_by(idclass_profile = course_id).all()
+        oldMessages = [] 
+        for message in messageList:
+            print(message)
+            oldMessages.append({
+                "username": message.idstudent_profile,
+                "message": message.message,
+                "date_sent": message.date_sent.isoformat() + "Z"
+            })
+        chat_rooms[room] = {"members": 0, "messages": oldMessages} 
+
+    session["room"] = room
+    session["user_id"] = user_id
+    
+    return render_template("chat_room.html", course=room, messages=chat_rooms[room]["messages"], user_id=user_id)
+
+@socketio.on("join")
+def on_join(data):
+    room = data["data"]
+    join_room(room)
+    chat_rooms[room]["members"] += 1
 
 @socketio.on("message")
 def message(data):
-    room = session.get("room")
-    user_id = session.get("user_id")
-    course_id = session.get("course_id")
-    if room not in chat_rooms:
-        return 
+    room = data["room"]
+    user_id = data["user_id"]
     
+    if room not in chat_rooms:
+        return
+
+    date_sent = datetime.fromisoformat(data["date_sent"][:-1])
+
     content = {
-        "username": session.get("username"),
-        "message": data["data"]
+        "username": user_id,
+        "message": data["data"],
+        "date_sent": data["date_sent"]
     }
     send(content, to=room)
     chat_rooms[room]["messages"].append(content)
 
     new_message = dbmessage(
         idstudent_profile = user_id,
-        idclass_profile = course_id,
-        message = data["data"] 
+        idclass_profile = room,
+        message = data["data"],
+        date_sent = date_sent
     )   
 
     db.session.add(new_message)
     db.session.commit()
 
     print(f"{session.get('username')} said: {data['data']}")
-
-@socketio.on("connect")
-def connect(auth):
-    room = session.get("room")
-    username = session.get("username")
-    if not room or not username:
-        print("here")
-        return
-    if room not in chat_rooms:
-        messageList = dbmessage.query.join(student_profile, dbmessage.idstudent_profile == student_profile.idstudent_profile).add_columns(student_profile.waterloo_id, dbmessage.message, dbmessage.idclass_profile).filter(dbmessage.idclass_profile == session["course_id"]).all()
-        oldMessages = [] 
-        for message in messageList:
-            oldMessages.append({
-                "username": message[1],
-                "message": message[2]
-            })
-        chat_rooms[room] = {"members": 0, "messages": oldMessages} 
-    
-    join_room(room)
-    send({"username": username, "message": "has entered the room"}, to=room)
-    chat_rooms[room]["members"] += 1
-    print(f"{username} joined room {room}")
 
 @socketio.on("disconnect")
 def disconnect():

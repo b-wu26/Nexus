@@ -7,8 +7,8 @@ export default function RightSidebar(props) {
 
     return (
         <section className="rightsidebar">
-            <About course_id={props.course_id}/>
-            <Chat />
+            <About course_id={props.course_id} />
+            <Chat course_id={props.course_id} />
         </section>
     )
 }
