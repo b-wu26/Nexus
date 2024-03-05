@@ -8,7 +8,7 @@ def create_app():
     app = Flask(__name__)
     CORS(app, origins=["http://localhost:3000"])
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:SWAGfc%^&*1234@localhost/nexus"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/nexus"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SECRET_KEY"] = "bananapants"
     app.config['MAIL_SERVER']='smtp.gmail.com'
