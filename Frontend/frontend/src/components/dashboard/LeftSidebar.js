@@ -30,7 +30,7 @@ export default function LeftSidebar({ active = 0 }) {
                 <Link to="/coursesearch" className={(active == 3) ? "active" : ""}>
                     <i className="fa fa-list"></i>Search Courses
                 </Link>
-                <Link to={"/u/aatharin"} className={(active == 4) ? "active" : ""}>
+                <Link to={`/u/${user_state.waterloo_id}`} className={(active == 4) ? "active" : ""}>
                     <i className="fa fa-cog"></i>Settings
                 </Link>
             </div>

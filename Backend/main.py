@@ -88,9 +88,13 @@ def course(course_id):
         print(response)
         return jsonify({"courses": response[0]})
 
-@app.route("/api/user_info/subscribe/<user_id>/<course_id>", methods=["POST"])
+@app.route("/api/user_info/subscribe/<user_id>/<course_id>", methods=["POST", "DELETE"])
 def subscribe(user_id, course_id):
     if request.method == "POST":
+        sched = schedule.query.filter_by(idclass_profile=course_id, idstudent_profile=user_id).first()
+        if(sched):
+            print("This class is already added")
+            return jsonify({"response": "this class is already added"})
         today = date.today()
         term = ""
         if(today < date(today.year, 5,1)):
@@ -108,7 +112,20 @@ def subscribe(user_id, course_id):
 
         db.session.add(new_scheudle)
         db.session.commit()
-        return jsonify({"email": "success"}) 
+        return jsonify({"email": "success"})
+    elif request.method == "DELETE":
+        sched = schedule.query.filter_by(idclass_profile=course_id, idstudent_profile=user_id).first()
+        print(sched)
+        message = ""
+        if(sched):
+            db.session.delete(sched)
+            db.session.commit()
+            message = "Schedule deleted"
+            print(message)
+        else:
+            message = "There is no schedule to be found"
+            print(message)
+        return jsonify({"update": message}) 
 
 @app.route("/api/user_info/<user_id>", methods=["PUT", "GET"])
 def users(user_id):
