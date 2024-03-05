@@ -31,7 +31,6 @@ export default function Courses() {
                     return groups;
                 }, {});
                 setCourses(coursesByFaculty);
-                console.log(coursesByFaculty);
             })
             .catch((error) => {
                 console.error(`Error fetching courses: ${error}`);

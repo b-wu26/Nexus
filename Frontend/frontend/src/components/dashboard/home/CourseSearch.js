@@ -48,9 +48,9 @@ export default function CourseSearch() {
       });
   }
 
-  function resetPage(){ 
-    setSubmitted(false); 
-    setCourses([]); 
+  function resetPage() {
+    setSubmitted(false);
+    setCourses([]);
   }
 
   return (
@@ -63,7 +63,7 @@ export default function CourseSearch() {
             <LeftSidebar active={3} />
           </div>
           <div className="col-lg-6 col-12 timeline">
-            <div className="d-flex justify-content-between align-items-center"> 
+            <div className="d-flex justify-content-between align-items-center">
               <h3 style={{ marginTop: "20px", marginBottom: "20px" }}>
                 Search Courses
               </h3>
@@ -74,7 +74,7 @@ export default function CourseSearch() {
                   className="btn btn-primary btn-signup">
                   Search Again
                 </button>
-              ) }
+              )}
             </div>
             {!submitted ? (
               <div className="col g-3">
@@ -124,13 +124,14 @@ export default function CourseSearch() {
                   (course) => (
                     <div key={course.idclass_profile}>
                       <div className="card">
-                            <CourseListItem
-                              key={course.idclass_profile}
-                              course={{
-                                "course_code": course.faculty + course.course_code,
-                                "class_name": course.class_name,
-                              }}
-                            />
+                        <CourseListItem
+                          key={course.idclass_profile}
+                          course={{
+                            "course_code": course.faculty + course.course_code,
+                            "class_name": course.class_name,
+                            "idclass_profile": course.idclass_profile
+                          }}
+                        />
                       </div>
                     </div>
                   )

@@ -107,7 +107,7 @@ const TimelinePost = ({ post }) => {
                 </div>
             </div>
             <div>
-                <p>{post.course.code} : {post.course.name}</p>
+                <p>{post.course.faculty} {post.course.code} : {post.course.name}</p>
                 <p className="post-content">{post.post_text}</p>
                 {(embedUrls) ? (embedUrls.map((url, index) => (
                     <a className="url" href={url.url} key={index} target="_blank">

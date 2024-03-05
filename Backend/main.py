@@ -21,7 +21,6 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from app import create_app
 
-
 app = create_app() 
 db.init_app(app=app)
 socketio = SocketIO(app)

@@ -50,7 +50,7 @@ export default function Navbar() {
                         >
                             <div className="row w-100">
                                 <div className="col-lg-8 col-12">
-                                    <form className="d-flex">
+                                    {/* <form className="d-flex">
                                         <input
                                             type="search"
                                             placeholder="Search"
@@ -59,7 +59,7 @@ export default function Navbar() {
                                         <button type="submit" disabled="disabled">
                                             <i className="fas fa-search"></i>
                                         </button>
-                                    </form>
+                                    </form> */}
                                 </div>
                                 <div className="col-lg-4 col-12">
                                     <ul className="navbar-nav">

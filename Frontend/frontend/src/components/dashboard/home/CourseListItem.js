@@ -8,7 +8,7 @@ export default function CourseListItem({ course }) {
         <Link to={`/dashboard/${course.idclass_profile}`}>
             <div className="friendlistitem d-flex">
                 <div>
-                    <h6>{course.course_code}: {course.class_name}</h6>
+                    <h6>{course.faculty} {course.course_code}: {course.class_name}</h6>
                 </div>
             </div>
         </Link>

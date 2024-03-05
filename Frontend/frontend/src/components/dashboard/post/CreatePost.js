@@ -76,17 +76,37 @@ export default function CreatePost({ user, newPost, course_id }) {
             }
         }
 
-        axios.post(`${BACKEND_SERVER_DOMAIN}/api/${user_id}/feed_post/${selectedCourse}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then((response) => {
-            console.log(response.data);
-            window.location.reload();
-        })
-            .catch((error) => {
-                console.error(`Error creating post: ${error}`);
-            });
+        if (course_id) {
+            axios.post(`${BACKEND_SERVER_DOMAIN}/api/${user_id}/feed_post/${course_id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((response) => {
+                console.log(response.data);
+                newPost(response.data);
+                setPostText("");
+                setPostFiles([]);
+                setPostFileName("");
+                showBtn.current.classList.remove("show-btn");
+            })
+                .catch((error) => {
+                    console.error(`Error creating post: ${error}`);
+                });
+            return;
+        } else {
+            axios.post(`${BACKEND_SERVER_DOMAIN}/api/${user_id}/feed_post/${selectedCourse}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((response) => {
+                console.log(response.data);
+                window.location.reload();
+            })
+                .catch((error) => {
+                    console.error(`Error creating post: ${error}`);
+                });
+        }
+
     };
 
 
