@@ -12,7 +12,7 @@ class schedule(db.Model):
     current_term = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
-        return f"<schedule {self.idclass_profile}, {self.idclass_profile}, {self.Term_year}, {self.prof}>"
+        return f"<schedule {self.idclass_profile}, {self.idclass_profile}, {self.Term_year}>"
 
     def __init__(
         self, idstudent_profile, idclass_profile, Term_year, current_term

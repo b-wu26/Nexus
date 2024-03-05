@@ -4,7 +4,7 @@ import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 import { useSelector } from 'react-redux';
 
 export default function About(props) {
-    console.log("About", props.course_id)
+    // console.log("About", props.course_id)
     return (
         <div>
             <h6 className="mt-3">About course</h6>
@@ -72,12 +72,35 @@ export function CourseDescription(props) {
         console.log(formData);
     }
 
+    const deleteCourse = () =>{
+        console.log("ATTEMPTING DELETE")
+        const formData = new FormData();
+        formData.append('idstudent_profile', user_id);
+        formData.append('idclass_profile', course_id);
+        
+        // for (const pair of formData.entries()) {
+        //     console.log(pair[0], pair[1]);
+        // }
+        
+        axios.delete(`${BACKEND_SERVER_DOMAIN}/api/user_info/subscribe/${user_id}/${course_id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((response) => {
+            console.log(response.data);
+            window.location.reload();
+        }).catch((error) => {
+            console.error(`Error creating post: ${error}`);
+        });
+    }
+
+
     if(!courseInfo) {
         return null;
     }
 
     const name = courseInfo.courses ? `${courseInfo.courses.class_name} ` : "Course name";
-    console.log("class profile",courseInfo)
+    // console.log("class profile",courseInfo)
     return (
         <div className="d-flex user">
             <img
@@ -92,6 +115,7 @@ export function CourseDescription(props) {
                 <span>{term}</span>
                 <div className="d-flex">
                     <button 
+                        ref={acceptBtn}
                         onClick={addCourse}
                         className="btn btn-sm btn-outline-primary"
                     >
@@ -99,6 +123,7 @@ export function CourseDescription(props) {
                     </button> 
                     <button
                         ref={declineBtn}
+                        onClick={deleteCourse}
                         className="btn btn-sm btn-outline-danger"
                     >
                         Leave
