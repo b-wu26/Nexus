@@ -18,13 +18,27 @@ export default function Chat(props) {
 
 export function Room(props) {
     const user_id = useSelector((state) => state.user).idstudent_profile;
+    const [lastActive, setLastActive] = useState('');
+
+    useEffect(() => {
+        axios.get(`${BACKEND_SERVER_DOMAIN}/api/courses/course/${props.course_id}`)
+            .then((response) => {
+                console.log(response.data);
+                setLastActive(response.data.courses.lastActive);
+            })
+            .catch((error) => {
+                setLastActive('Unknown');
+                console.error(`Error fetching last active: ${error}`);
+            });
+    }, []);
+
     return (
         <div className="d-flex user">
             <div>
                 <h6>
                     Chat room
                 </h6>
-                <span>Last active: 2 days ago</span>
+                <span>Last active: {lastActive}</span>
                 <button
                     className="btn btn-sm btn-outline-primary"
                     onClick={() => {

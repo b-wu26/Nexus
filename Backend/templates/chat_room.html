@@ -29,7 +29,7 @@
               <strong>${name}</strong>: ${msg}
           </span>
           <span class="muted">
-              ${new Date(date_sent).toLocaleString()}
+              ${new Date(date_sent * 1000).toLocaleString()}
           </span>
       </div>
       `;
@@ -43,7 +43,7 @@
   const sendMessage = () => {
     const message = document.getElementById("message");
     if (message.value == "") return;
-    socketio.emit("message", { data: message.value, room: course, user_id: user_id, date_sent: new Date().toISOString() });
+    socketio.emit("message", { data: message.value, room: course, user_id: user_id, date_sent: new Date().getTime() / 1000 });
     message.value = "";
   };
 </script>

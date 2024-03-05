@@ -38,6 +38,9 @@ export function CourseDescription(props) {
     } else {
         term = `Fall ${year}`
     }
+
+    const [enrolled, setEnrolled] = React.useState(null);
+
     React.useEffect(() => {
         window.scrollTo(0, 0);
         axios.get(`${BACKEND_SERVER_DOMAIN}/api/courses/course/${course_id}`) // Replace with your actual API URL
@@ -48,6 +51,16 @@ export function CourseDescription(props) {
                 console.error(`Error fetching courses: ${error}`);
             });
 
+    }, [])
+
+    React.useEffect(() => {
+        axios.get(`${BACKEND_SERVER_DOMAIN}/api/user_info/subscribe/${user_id}/${course_id}`)
+            .then((response) => {
+                setEnrolled(response.data["response"] === "subscribed");
+            })
+            .catch((error) => {
+                console.error(`Error fetching courses: ${error}`);
+            });
     }, [])
 
     const addCourse = () => {
@@ -70,6 +83,7 @@ export function CourseDescription(props) {
             console.error(`Error creating post: ${error}`);
         });
         console.log(formData);
+        setEnrolled(true);
     }
 
     const deleteCourse = () => {
@@ -92,6 +106,7 @@ export function CourseDescription(props) {
         }).catch((error) => {
             console.error(`Error creating post: ${error}`);
         });
+        setEnrolled(false);
     }
 
 
@@ -114,26 +129,21 @@ export function CourseDescription(props) {
                 </h6>
                 <span>{term}</span>
                 <div className="d-flex">
-                    <button
-                        ref={acceptBtn}
-                        onClick={addCourse}
-                        className="btn btn-sm btn-outline-primary"
-                    >
-                        Add
-                    </button>
-                    <button
-                        ref={declineBtn}
-                        onClick={deleteCourse}
-                        className="btn btn-sm btn-outline-danger"
-                    >
-                        Leave
-                    </button>
-                    {/* <button
-                        ref={inviteBtn}
-                        className="btn btn-sm btn-outline-info"
-                    >
-                        Share
-                    </button> */}
+                    {enrolled ? (
+                        <button
+                            onClick={deleteCourse}
+                            className="btn btn-sm btn-outline-danger"
+                        >
+                            Leave
+                        </button>
+                    ) : (
+                        <button
+                            onClick={addCourse}
+                            className="btn btn-sm btn-outline-primary"
+                        >
+                            Add
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

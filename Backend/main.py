@@ -22,6 +22,7 @@ from flask_cors import CORS, cross_origin
 from app import create_app
 
 from datetime import datetime
+import timeago
 
 app = create_app() 
 db.init_app(app=app)
@@ -79,18 +80,25 @@ def course(course_id):
         courses = class_profile.query.filter_by(idclass_profile=course_id)
         response = []
         for course in courses:
+            lastActive = 'Unknown'
+            lastMsg = dbmessage.query.filter_by(idclass_profile = course_id).order_by(dbmessage.date_sent.desc()).first()
+            if lastMsg:
+
+                lastActive = timeago.format(lastMsg.date_sent.timestamp(), datetime.now().timestamp())
+
             response.append(
                 {
                     "idclass_profile": course.idclass_profile,
                     "class_name": course.class_name,
                     "course_code": course.course_code,
                     "faculty": course.faculty,
+                    "lastActive": str(lastActive)
                 }
             )
         print(response)
         return jsonify({"courses": response[0]})
 
-@app.route("/api/user_info/subscribe/<user_id>/<course_id>", methods=["POST", "DELETE"])
+@app.route("/api/user_info/subscribe/<user_id>/<course_id>", methods=["POST", "DELETE", "GET"])
 def subscribe(user_id, course_id):
     if request.method == "POST":
         sched = schedule.query.filter_by(idclass_profile=course_id, idstudent_profile=user_id).first()
@@ -127,7 +135,13 @@ def subscribe(user_id, course_id):
         else:
             message = "There is no schedule to be found"
             print(message)
-        return jsonify({"update": message}) 
+        return jsonify({"update": message})
+    elif request.method == "GET":
+        sched = schedule.query.filter_by(idclass_profile=course_id, idstudent_profile=user_id).first()
+        if(sched):
+            return jsonify({"response": "subscribed"})
+        else:
+            return jsonify({"response": "not subscribed"})
 
 @app.route("/api/user_info/<user_id>", methods=["PUT", "GET"])
 def users(user_id):
@@ -230,14 +244,13 @@ def chat(user_id, course_id):
     #valid user, connect to room 
     room = course_id
     if room not in chat_rooms: 
-        messageList = dbmessage.query.filter_by(idclass_profile = course_id).all()
+        messageList = dbmessage.query.filter_by(idclass_profile = course_id).order_by(dbmessage.date_sent.asc()).all()
         oldMessages = [] 
         for message in messageList:
-            print(message)
             oldMessages.append({
                 "username": message.idstudent_profile,
                 "message": message.message,
-                "date_sent": message.date_sent.isoformat() + "Z"
+                "date_sent": int(datetime(message.date_sent.year, message.date_sent.month, message.date_sent.day).timestamp())
             })
         chat_rooms[room] = {"members": 0, "messages": oldMessages} 
 
@@ -260,7 +273,8 @@ def message(data):
     if room not in chat_rooms:
         return
 
-    date_sent = datetime.fromisoformat(data["date_sent"][:-1])
+    date_sent = datetime.fromtimestamp(data["date_sent"])
+    print(date_sent)
 
     content = {
         "username": user_id,

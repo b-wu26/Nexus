@@ -54,7 +54,7 @@ export default function Courses() {
                         {Object.entries(courses).map(([faculty, courses]) => (
                             <div key={faculty}>
                                 <h6 className="mt-3">{faculty}</h6>
-                                <div class="card">
+                                <div className="card">
                                     <div className="friends-list">
                                         {courses.map((course) => (
                                             <CourseListItem key={course.idclass_profile} course={course} />

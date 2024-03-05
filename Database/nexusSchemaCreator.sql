@@ -34,14 +34,6 @@ CREATE TABLE `class_profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `chat_room`;
-CREATE TABLE `chat_room` (
-  `idroom` int NOT NULL AUTO_INCREMENT,
-  `idclass_profile` int NOT NULL,
-  `last_active` date,
-  PRIMARY KEY (`idroom`),
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Table structure for table `messages`
 --
@@ -53,7 +45,7 @@ CREATE TABLE `message` (
   `idmessages` int NOT NULL AUTO_INCREMENT,
   `idstudent_profile` int NOT NULL,
   `idclass_profile` int NOT NULL,
-  `date_sent` date NOT NULL,
+  `date_sent` datetime NOT NULL,
   `upvotes` int DEFAULT '0',
   `message` longtext NOT NULL,
   PRIMARY KEY (`idmessages`),
