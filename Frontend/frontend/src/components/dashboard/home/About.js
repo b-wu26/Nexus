@@ -9,7 +9,7 @@ export default function About(props) {
         <div>
             <h6 className="mt-3">About course</h6>
             <div className="friend-req card">
-                <CourseDescription course_id={props.course_id}/>
+                <CourseDescription course_id={props.course_id} />
             </div>
         </div>
     );
@@ -31,9 +31,9 @@ export function CourseDescription(props) {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     let term = ""
-    if(month<5) {
+    if (month < 5) {
         term = `Winter ${year}`
-    } else if(month < 9) {
+    } else if (month < 9) {
         term = `Spring ${year}`
     } else {
         term = `Fall ${year}`
@@ -41,24 +41,24 @@ export function CourseDescription(props) {
     React.useEffect(() => {
         window.scrollTo(0, 0);
         axios.get(`${BACKEND_SERVER_DOMAIN}/api/courses/course/${course_id}`) // Replace with your actual API URL
-        .then((response) => {
-            setInfo(response.data);
-        })
-        .catch((error) => {
-            console.error(`Error fetching courses: ${error}`);
-        });
+            .then((response) => {
+                setInfo(response.data);
+            })
+            .catch((error) => {
+                console.error(`Error fetching courses: ${error}`);
+            });
 
-    },[])
+    }, [])
 
     const addCourse = () => {
         const formData = new FormData();
         formData.append('idstudent_profile', user_id);
         formData.append('idclass_profile', course_id);
-        
+
         for (const pair of formData.entries()) {
             console.log(pair[0], pair[1]);
         }
-        
+
         axios.post(`${BACKEND_SERVER_DOMAIN}/api/user_info/subscribe/${user_id}/${course_id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -72,16 +72,16 @@ export function CourseDescription(props) {
         console.log(formData);
     }
 
-    const deleteCourse = () =>{
+    const deleteCourse = () => {
         console.log("ATTEMPTING DELETE")
         const formData = new FormData();
         formData.append('idstudent_profile', user_id);
         formData.append('idclass_profile', course_id);
-        
+
         // for (const pair of formData.entries()) {
         //     console.log(pair[0], pair[1]);
         // }
-        
+
         axios.delete(`${BACKEND_SERVER_DOMAIN}/api/user_info/subscribe/${user_id}/${course_id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -95,7 +95,7 @@ export function CourseDescription(props) {
     }
 
 
-    if(!courseInfo) {
+    if (!courseInfo) {
         return null;
     }
 
@@ -114,13 +114,13 @@ export function CourseDescription(props) {
                 </h6>
                 <span>{term}</span>
                 <div className="d-flex">
-                    <button 
+                    <button
                         ref={acceptBtn}
                         onClick={addCourse}
                         className="btn btn-sm btn-outline-primary"
                     >
                         Add
-                    </button> 
+                    </button>
                     <button
                         ref={declineBtn}
                         onClick={deleteCourse}
@@ -128,12 +128,12 @@ export function CourseDescription(props) {
                     >
                         Leave
                     </button>
-                    <button
+                    {/* <button
                         ref={inviteBtn}
                         className="btn btn-sm btn-outline-info"
                     >
                         Share
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
