@@ -240,6 +240,8 @@ def verify(watid):
 
 @app.route("/chat/<user_id>/<course_id>")
 def chat(user_id, course_id):
+    classProfile = class_profile.query.filter_by(idclass_profile = course_id).first()
+    courseName = classProfile.faculty + ' ' + classProfile.course_code
     
     #valid user, connect to room 
     room = course_id
@@ -257,7 +259,7 @@ def chat(user_id, course_id):
     session["room"] = room
     session["user_id"] = user_id
     
-    return render_template("chat_room.html", course=room, messages=chat_rooms[room]["messages"], user_id=user_id)
+    return render_template("chat_room.html", course=room, messages=chat_rooms[room]["messages"], user_id=user_id, courseName=courseName)
 
 @socketio.on("join")
 def on_join(data):

@@ -119,10 +119,13 @@ export default function Profile() {
             </Helmet>
             <Navbar />
             <InfoPopup trigger={buttonPopup} setTrigger={setButtonPopup}>
-                <div id="centerDiv">
+                <div>
                     <h3>Edit Personal Info</h3>
+                    <br></br>
                     <input type="text" id="bio" placeholder="About me"></input>
+                    <br></br>
                     <input type="text" id="major" placeholder='Major'></input>
+                    <br></br>
                     <select name="term" id="term">
                         <option value="value" selected>Select Term</option>
                         <option value="1A">1A</option>
