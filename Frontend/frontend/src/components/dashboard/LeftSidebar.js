@@ -1,9 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import axios from "axios";
+import { BACKEND_SERVER_DOMAIN } from '../../settings'
 
 export default function LeftSidebar({ active = 0 }) {
     const user_state = useSelector((state) => state.user); // Replace with your actual user ID
+    const [info, setInfo] = React.useState([]);
+    const user_id = user_state.idstudent_profile;
+    let year = "Waterloo Student"
+    let bio = "University of Waterloo"
+
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+        axios.get(`${BACKEND_SERVER_DOMAIN}/api/user_info/${user_id}`) // Replace with your actual API URL
+            .then((response) => {
+                setInfo(response.data);
+            })
+            .catch((error) => {
+                console.error(`Error fetching courses: ${error}`);
+            });
+    }, [info])
+
+    if(info && info.info){
+        year = `${info.info.term} ${info.info.major} Student`
+        bio = `${info.info.bio}`
+    }
 
     return (
         <section className="leftsidebar">
@@ -16,8 +38,8 @@ export default function LeftSidebar({ active = 0 }) {
                     <h6>
                         {user_state.first_name} {user_state.last_name}
                     </h6>
-                    <span>University of Waterloo</span>
-                    <span>4th year ECE</span>
+                    <span>{bio}</span>
+                    <span>{year}</span>
                 </div>
             </div>
             <div className="navigation">

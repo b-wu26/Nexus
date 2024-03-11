@@ -74,12 +74,12 @@ export default function Profile() {
     const renderClassCard = (card, index) => {
         return (
             <div class="card" key={index}>
-                <div class="card-body">
-                    <h5 class="card-title">{card.course_code}</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">{card.class_name}</h6>
-                    {/* <p class="card-text">{card.prof}</p> */}
-                    {/* <a href="#" class="card-link">Card link</a> TODO LINK TO CLASS LINK */}
-                </div>
+                 <Link to={`/dashboard/${card.idclass_profile}`}>
+                    <div class="card-body">
+                        <h5 class="card-title">{card.course_code}</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">{card.class_name}</h6>
+                    </div>
+                </Link>
             </div>
         )
     }
@@ -87,12 +87,13 @@ export default function Profile() {
     const renderPostCard = (card, index) => {
         return (
             <div class="card" key={index}>
-                <div class="card-body">
-                    <h8 class="card-text">{card.text_content}</h8>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">{card.class_name}</h6>
-                    <h5 class="card-title">{card.course_code}</h5>
-
-                </div>
+                <Link to={`/dashboard/${card.idclass_profile}`}>
+                    <div class="card-body">
+                        <h8 class="card-text">{card.text_content}</h8>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">{card.class_name}</h6>
+                        <h5 class="card-title">{card.course_code}</h5>
+                    </div>
+                </Link>
             </div>
 
         )
