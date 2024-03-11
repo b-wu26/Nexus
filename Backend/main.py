@@ -83,7 +83,7 @@ def course(course_id):
             lastActive = 'Unknown'
             lastMsg = dbmessage.query.filter_by(idclass_profile = course_id).order_by(dbmessage.date_sent.desc()).first()
             if lastMsg:
-
+                print(lastMsg.date_sent)
                 lastActive = timeago.format(lastMsg.date_sent.timestamp(), datetime.now().timestamp())
 
             response.append(
@@ -157,6 +157,7 @@ def users(user_id):
             classes.append({
                 "class_name": cla.class_name,
                 "course_code": cla.course_code,
+                "idclass_profile": cla.idclass_profile,
                 "faculty": cla.faculty,
                 "term": sch.Term_year,
             })
@@ -167,6 +168,7 @@ def users(user_id):
 
         for p, cl in user_posts:
             posts.append({
+                "idclass_profile": cl.idclass_profile,
                 "class_name": cl.class_name,
                 "text_content": p.text_content,
                 "course_code": cl.course_code,
