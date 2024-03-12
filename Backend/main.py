@@ -197,7 +197,7 @@ def users(user_id):
         print(type(bio), type(major), type(term))
         user_req_id = request.form.get("idstudent_profile")
         assert user_req_id == user_id
-        user_profile = db.session.query(student_profile).filter_by(idstudent_profile = 1).first()
+        user_profile = db.session.query(student_profile).filter_by(idstudent_profile = user_req_id).first()
         user_profile.bio = str(bio)
         user_profile.major = str(major)
         user_profile.term = str(term)
@@ -206,9 +206,9 @@ def users(user_id):
         db.session.commit()
         print(user_profile)
 
-        user_profile_cehck = db.session.query(student_profile).filter_by(idstudent_profile = 1).first()
+        user_profile_check = db.session.query(student_profile).filter_by(idstudent_profile = user_req_id).first()
 
-        print(user_profile_cehck.bio, user_profile_cehck.major, user_profile_cehck.term)
+        print(user_profile_check.bio, user_profile_check.major, user_profile_check.term)
         return jsonify({"update": "success"}) 
 
 @app.route("/api/<user_id>/signup", methods=["POST"]) 
