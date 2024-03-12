@@ -12,19 +12,24 @@ export default function LeftSidebar({ active = 0 }) {
     let bio = "University of Waterloo"
 
     React.useEffect(() => {
-        // window.scrollTo(0, 0);
-        // axios.get(`${BACKEND_SERVER_DOMAIN}/api/user_info/${user_id}`) // Replace with your actual API URL
-        //     .then((response) => {
-        //         setInfo(response.data);
-        //     })
-        //     .catch((error) => {
-        //         console.error(`Error fetching courses: ${error}`);
-        //     });
+        axios.get(`${BACKEND_SERVER_DOMAIN}/api/user_info/${user_id}`) // Replace with your actual API URL
+            .then((response) => {
+                if(info && !info.info){
+                    setInfo(response.data);
+                }
+            })
+            .catch((error) => {
+                console.error(`Error fetching courses: ${error}`);
+            });
     }, [info])
 
-    if (info && info.info) {
-        year = `${info.info.term} ${info.info.major} Student`
-        bio = `${info.info.bio}`
+    if(info && info.info){
+        if(info.info.term != null && info.info.major != null){
+            year = `${info.info.term} ${info.info.major} Student`
+        }
+        if(info.info.bio != null){
+            bio = `${info.info.bio}`
+        }
     }
 
     return (
