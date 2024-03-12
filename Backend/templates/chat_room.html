@@ -1,28 +1,63 @@
 {% extends 'base.html' %} {% block content %}
 <div class="message-box" value="{{course}}">
   <h2>Chat Room: {{courseName}}</h2>
-  <div class="messages" id="messages">
-  </div>
+  <div class="messages" id="messages"></div>
   <div class="inputs" value="{{user_id}}">
-    <input type="text" rows="3" placeholder="Enter message" name="message" id="message" />
-    <button class="btn" type="button" name="send" id="send-btn" onClick="sendMessage()">
+    <input
+      type="text"
+      rows="3"
+      placeholder="Enter message"
+      name="message"
+      id="message"
+    />
+    <button
+      class="btn"
+      type="button"
+      name="send"
+      id="send-btn"
+      onClick="sendMessage()"
+    >
       Send
     </button>
   </div>
 </div>
-<script type="text/javascript">
-  var socketio = io.connect('http://127.0.0.1:5000');
 
-  const course = document.getElementsByClassName("message-box")[0].getAttribute("value")
-  const user_id = document.getElementsByClassName("inputs")[0].getAttribute("value")
-  socketio.emit('join', { data: course });
+<!-- Main container  -->
+<div class="container">
+  <!-- Chat inbox section starts -->
+  <div class="chat-page">
+    <div class="msg-inbox">
+      <div class="chats">
+        <div class="msg-page">
+          <!-- Contains the incoming and outgoing messages -->
+          
+        </div>
+      </div>
+
+      <!--  Message bottom section starts -->
+      <div class="msg-bottom"></div>
+
+      <!-- Message bottom section ends. -->
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var socketio = io.connect("http://127.0.0.1:5000");
+
+  const course = document
+    .getElementsByClassName("message-box")[0]
+    .getAttribute("value");
+  const user_id = document
+    .getElementsByClassName("inputs")[0]
+    .getAttribute("value");
+  socketio.emit("join", { data: course });
 
   const messages = document.getElementById("messages");
-  console.log(messages)
+  console.log(messages);
 
   const createMessage = (name, msg, date_sent) => {
-    ;
-    console.log(name, msg, date_sent)
+    console.log(name, msg, date_sent);
     const content = `
       <div class="text">
           <span>
@@ -43,7 +78,12 @@
   const sendMessage = () => {
     const message = document.getElementById("message");
     if (message.value == "") return;
-    socketio.emit("message", { data: message.value, room: course, user_id: user_id, date_sent: new Date().getTime() / 1000 });
+    socketio.emit("message", {
+      data: message.value,
+      room: course,
+      user_id: user_id,
+      date_sent: new Date().getTime() / 1000,
+    });
     message.value = "";
   };
 </script>
