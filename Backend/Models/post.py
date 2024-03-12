@@ -35,3 +35,6 @@ class post(db.Model):
     
     def get_posts_by_class_id_ordered_most_recent(idclass_profile_list):
         return post.query.filter(post.idclass_profile.in_(idclass_profile_list)).order_by(post.date_sent.desc()).all()
+    
+    def get_post_by_id(idposts):
+        return post.query.filter_by(idposts=idposts).first()

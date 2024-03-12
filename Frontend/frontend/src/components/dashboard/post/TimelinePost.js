@@ -8,6 +8,7 @@ import { getMetadata } from 'page-metadata-parser';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ImageSlider from './ImageSlider';
 import { useDispatch, useSelector } from 'react-redux';
+import { Snowflake } from "lucide-react";
 
 
 
@@ -68,6 +69,23 @@ const TimelinePost = ({ post }) => {
 
     };
 
+    const deletePost = (post) => {
+        // Check if the current user is the user who created the post
+        if (user_id === post.poster.id) {
+            axios.delete(`${BACKEND_SERVER_DOMAIN}/api/posts/${post.id}`)
+                .then((response) => {
+                    if (response.data) {
+                        setIsDeleted(true);
+                        window.location.reload();
+                    }
+                })
+                .catch((error) => {
+                    console.error(`Error deleting post: ${error}`);
+                });
+        } else {
+            console.error("You can only delete your own posts.");
+        }
+    };
     return (
         <article className="post card">
             <div className="d-flex userbar">
@@ -99,9 +117,7 @@ const TimelinePost = ({ post }) => {
                             className="dropdown-menu"
                             aria-labelledby={"options" + post.id}
                         >
-                            <>Delete</>
-                            <br />
-                            <>Edit</>
+                            <div onClick={() => deletePost(post)}>Delete</div>
                         </div>
                     </div>
                 </div>
@@ -149,9 +165,9 @@ const TimelinePost = ({ post }) => {
                             : "btn btn-light"
                     }
                 >
-                    <i className="far fa-thumbs-up"></i>
+                    {/* <i className="far fa-thumbs-up"></i>
                     {likesCount > 0 ? likesCount + ' ' : ''}Like
-                    {likesCount > 1 ? "s" : ""}
+                    {likesCount > 1 ? "s" : ""} */}
                 </button>
                 <button>
                     <i className="far fa-share-square"></i>Share

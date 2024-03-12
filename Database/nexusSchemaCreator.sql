@@ -173,7 +173,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`idcomments`),
   KEY `idposts4_idx` (`idposts`),
   KEY `idstudent_profile4_idx` (`idstudent_profile`),
-  CONSTRAINT `idposts4` FOREIGN KEY (`idposts`) REFERENCES `post` (`idposts`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `idposts4` FOREIGN KEY (`idposts`) REFERENCES `post` (`idposts`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `idstudent_profile4` FOREIGN KEY (`idstudent_profile`) REFERENCES `student_profile` (`idstudent_profile`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
