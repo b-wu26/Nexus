@@ -12,6 +12,7 @@ class student_profile(db.Model):
     bio = db.Column(db.String(50), nullable=True)
     term = db.Column(db.String(50), nullable=True)
     major = db.Column(db.String(50), nullable=True)
+    profile_pic = db.Column(db.String(2000), nullable=True)
 
     def __repr__(self):
         return f"<student_profile {self.f_name}>"

@@ -151,6 +151,10 @@ def users(user_id):
             return("Unlucky")
         user_schedule = db.session.query(schedule, class_profile).select_from(schedule).join(class_profile).filter(schedule.idstudent_profile == user_id, schedule.current_term == 1).all()
         # print(user_info)
+
+        S3_PATH_PREFIX = "https://uw-nexus-contents.s3.us-east-2.amazonaws.com/"
+        # images with s3_endpoint ending with jpeg, jpg, png, or other images files append to images
+        profile_pic = f"{S3_PATH_PREFIX}{user_info.profile_pic}" if user_info.profile_pic.lower().endswith(('.jpeg', '.jpg', '.png')) else ""
         classes = []
         # print(user_schedule)
         for sch, cla in user_schedule:
@@ -182,6 +186,7 @@ def users(user_id):
             "bio": user_info.bio,
             "term": user_info.term,
             "major": user_info.major,
+            "profile_pic": profile_pic,
             }, "classes": classes,
             "posts": posts}
         # print(data)
@@ -196,11 +201,27 @@ def users(user_id):
         term = request.form.get("term")
         print(type(bio), type(major), type(term))
         user_req_id = request.form.get("idstudent_profile")
+
+        profile_pic_key = ""
+        if request.files:
+            print(
+                f"User {user_id} attached a profile picture"
+            )
+            for file_to_upload in request.files.getlist("post_files"):
+                
+                s3_key = f"profile_pic/{user_id}/{file_to_upload.filename}"
+                print("s3 upload response: ", s3_client.upload_file(file_obj=file_to_upload, key=s3_key))
+                profile_pic_key = s3_key 
+
+
+
         assert user_req_id == user_id
         user_profile = db.session.query(student_profile).filter_by(idstudent_profile = user_req_id).first()
         user_profile.bio = str(bio)
         user_profile.major = str(major)
         user_profile.term = str(term)
+        if(profile_pic_key != ""):
+            user_profile.profile_pic = profile_pic_key
 
         print(user_profile.bio, user_profile.major, user_profile.term)
         db.session.commit()

@@ -16,6 +16,7 @@ export default function Profile() {
     const [home, setHome] = React.useState("");
     const [work, setWork] = React.useState("")
     const [info, setInfo] = React.useState([]);
+    const [profPic, setProfPic] = React.useState([]);
     const [buttonPopup, setButtonPopup] = React.useState(false)
 
     const user = useSelector((state) => state.user); // Replace with your actual user ID
@@ -25,6 +26,7 @@ export default function Profile() {
     let realCoverPictureBtnRef = React.useRef();
     let fakeProfilePictureBtnRef = React.useRef();
     let realProfilePictureBtnRef = React.useRef();
+    let postPictureBtnRef = React.useRef();
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
@@ -37,7 +39,15 @@ export default function Profile() {
             });
     }, [slug])
 
-    const submit = () => {
+    const handlePostImageChange = (event) => {
+        setProfPic(event.target.files);
+    };
+
+    const clickPostPicture = () => {
+        postPictureBtnRef.current.click();
+    }
+
+    const handleSubmit = () => {
         setButtonPopup(false)
 
         //reference handleSubmit in CreatePost.js
@@ -55,6 +65,11 @@ export default function Profile() {
 
         for (const pair of formData.entries()) {
             console.log(pair[0], pair[1]);
+        }
+        if (profPic) {
+            for (let i = 0; i < profPic.length; i++) {
+                formData.append('post_files', profPic[i]);
+            }
         }
 
         axios.put(`${BACKEND_SERVER_DOMAIN}/api/user_info/${user_id}`, formData, {
@@ -139,7 +154,14 @@ export default function Profile() {
                         <option value="4B">4B</option>
                         <option value="Grad">Post-Grad</option>
                     </select>
-                    <button className='submit-btn' onClick={submit}>
+                    <br></br>
+                    <button onClick={clickPostPicture}><i className="far fa-file-image"></i></button>
+                    <input type="file" accept="image/*" name="post_file" ref={postPictureBtnRef} className="d-none" onChange={handlePostImageChange} />            {profPic.length > 0 &&
+                        <div className="files_to_be_uploaded">
+                            <p>Files to be uploaded: {<br />}{Array.from(profPic).map((file, index) => <span key={index}>{file.name}<br /></span>)}</p>
+                        </div>
+                    }
+                    <button className='submit-btn' onClick={handleSubmit}>
                         Submit
                     </button>
                 </div>

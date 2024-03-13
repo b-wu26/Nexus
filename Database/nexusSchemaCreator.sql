@@ -29,7 +29,7 @@ CREATE TABLE `class_profile` (
   `class_name` varchar(200) NOT NULL,
   `course_code` varchar(30) NOT NULL,
   `faculty` varchar(45) NOT NULL,
-  `description` varchar(1000) NOT NULL, 
+  `description` varchar(2000) NOT NULL, 
   PRIMARY KEY (`idclass_profile`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -145,6 +145,7 @@ CREATE TABLE `student_profile` (
   `bio` varchar(100) DEFAULT NULL,
   `term` varchar(50) DEFAULT NULL,
   `major` varchar(50) DEFAULT NULL,
+  `profile_pic` longtext DEFAULT NULL,
   PRIMARY KEY (`idstudent_profile`),
   UNIQUE KEY `waterloo_id_UNIQUE` (`waterloo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
