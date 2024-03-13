@@ -83,11 +83,7 @@ export default function CreatePost({ user, newPost, course_id }) {
                 }
             }).then((response) => {
                 console.log(response.data);
-                newPost(response.data);
-                setPostText("");
-                setPostFiles([]);
-                setPostFileName("");
-                showBtn.current.classList.remove("show-btn");
+                window.location.reload();
             })
                 .catch((error) => {
                     console.error(`Error creating post: ${error}`);

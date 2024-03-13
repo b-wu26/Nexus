@@ -5,6 +5,7 @@ import CourseListItem from "./CourseListItem";
 import Navbar from "../Navbar";
 import axios from "axios";
 import { BACKEND_SERVER_DOMAIN } from "../../../settings";
+import { set } from "lodash";
 
 export default function CourseSearch() {
   const [course_name, setCourseName] = useState("");
@@ -12,6 +13,161 @@ export default function CourseSearch() {
   const [faculty, setFaculty] = useState("ECE");
   const [submitted, setSubmitted] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [foundCourses, setFoundCourses] = useState(false);
+
+  var faculties = [
+    "ECE",
+    "ACC",
+    "ACINTY",
+    "ACTSC",
+    "AE",
+    "AFM",
+    "AMATH",
+    "ANTH",
+    "APPLS",
+    "ARABIC",
+    "ARBUS",
+    "ARCH",
+    "ARTS",
+    "ASL",
+    "AVIA",
+    "BASE",
+    "BE",
+    "BET",
+    "BIOL",
+    "BLKST",
+    "BME",
+    "BUS",
+    "CDNST",
+    "CFM",
+    "CHE",
+    "CHEM",
+    "CHINA",
+    "CI",
+    "CIVE",
+    "CLAS",
+    "CM",
+    "CMW",
+    "CO",
+    "COGSCI",
+    "COMM",
+    "COMMST",
+    "COOP",
+    "CROAT",
+    "CS",
+    "CT",
+    "DAC",
+    "DATSC",
+    "DEI",
+    "DM",
+    "DUTCH",
+    "EARTH",
+    "EASIA",
+    "ECDEV",
+    "ECON",
+    "EMLS",
+    "ENBUS",
+    "ENGL",
+    "ENVE",
+    "ENVS",
+    "ERS",
+    "FCIT",
+    "FINE",
+    "FR",
+    "GBDA",
+    "GEMCC",
+    "GENE",
+    "GEOE",
+    "GEOG",
+    "GER",
+    "GERON",
+    "GGOV",
+    "GRK",
+    "GS",
+    "GSJ",
+    "HEALTH",
+    "HHUM",
+    "HIST",
+    "HLTH",
+    "HRM",
+    "HRTS",
+    "HSG",
+    "HUMSC",
+    "INDENT",
+    "INDEV",
+    "INDG",
+    "INTEG",
+    "INTST",
+    "ITAL",
+    "ITALST",
+    "JAPAN",
+    "JS",
+    "KIN",
+    "KOREA",
+    "LAT",
+    "LS",
+    "MATBUS",
+    "MATH",
+    "ME",
+    "MEDVL",
+    "MENN",
+    "MGMT",
+    "MNS",
+    "MOHAWK",
+    "MSCI",
+    "MTE",
+    "MTHEL",
+    "MUSIC",
+    "NANO",
+    "NE",
+    "OPTOM",
+    "PACS",
+    "PD",
+    "PDARCH",
+    "PDPHRM",
+    "PHARM",
+    "PHIL",
+    "PHYS",
+    "PLAN",
+    "PMATH",
+    "PORT",
+    "PS",
+    "PSCI",
+    "PSYCH",
+    "QIC",
+    "REC",
+    "REES",
+    "RS",
+    "RUSS",
+    "SCBUS",
+    "SCI",
+    "SDS",
+    "SE",
+    "SFM",
+    "SI",
+    "SMF",
+    "SOC",
+    "SOCWK",
+    "SPAN",
+    "STAT",
+    "STV",
+    "SUSM",
+    "SWK",
+    "SWREN",
+    "SYDE",
+    "TAX",
+    "THPERF",
+    "TN",
+    "TOUR",
+    "TS",
+    "UN",
+    "UNIV",
+    "VCULT",
+    "WATER",
+    "WIL",
+    "WKRPT",
+    "WS",
+  ];
 
   function handleCourseNameChange(e) {
     setCourseName(e.target.value);
@@ -40,17 +196,28 @@ export default function CourseSearch() {
     axios
       .post(`${BACKEND_SERVER_DOMAIN}/api/search_courses`, data, config)
       .then(function (response) {
-        setCourses(response.data);
-        setSubmitted(true);
+        if('error' in response.data) {
+          setFoundCourses(false);
+          setSubmitted(true);
+        }
+        else{
+          setCourses(response.data);
+          setSubmitted(true);
+          setFoundCourses(true);
+        }
       })
       .catch(function (error) {
         console.log(error.response.data);
+        setFoundCourses(false);
       });
   }
 
   function resetPage() {
     setSubmitted(false);
     setCourses([]);
+    setCourseLevel("1");
+    setCourseName("");
+    setFaculty("ECE");
   }
 
   return (
@@ -71,7 +238,8 @@ export default function CourseSearch() {
                 <button
                   type="submit"
                   onClick={resetPage}
-                  className="btn btn-primary btn-signup">
+                  className="btn btn-primary btn-signup"
+                >
                   Search Again
                 </button>
               )}
@@ -81,9 +249,11 @@ export default function CourseSearch() {
                 <div className="d-flex flex-column">
                   <label className="form-label">Faculty</label>
                   <select onChange={handleFacultyChange}>
-                    <option value="ECE">ECE</option>
-                    <option value="CS">CS</option>
-                    <option value="SYDE">SYDE</option>
+                    {faculties.map((faculty) => (
+                      <option key={faculty} value={faculty}>
+                        {faculty}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="d-flex flex-column mt-3">
@@ -120,23 +290,24 @@ export default function CourseSearch() {
               </div>
             ) : (
               <div>
-                {courses.map(
-                  (course) => (
-                    <div key={course.idclass_profile}>
-                      <div className="card">
-                        <CourseListItem
-                          key={course.idclass_profile}
-                          course={{
-                            "course_code": course.faculty + course.course_code,
-                            "class_name": course.class_name,
-                            "idclass_profile": course.idclass_profile
-                          }}
-                        />
-                      </div>
+                {!foundCourses && 
+                <h4>
+                  No courses found for the given criteria. Please try again.
+                </h4>}
+                {courses.map((course) => (
+                  <div key={course.idclass_profile}>
+                    <div className="card">
+                      <CourseListItem
+                        key={course.idclass_profile}
+                        course={{
+                          course_code: course.faculty + course.course_code,
+                          class_name: course.class_name,
+                          idclass_profile: course.idclass_profile,
+                        }}
+                      />
                     </div>
-                  )
-                )}
-
+                  </div>
+                ))}
               </div>
             )}
           </div>
