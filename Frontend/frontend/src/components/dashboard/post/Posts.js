@@ -8,6 +8,7 @@ import { BACKEND_SERVER_DOMAIN } from '../../../settings'
 
 function Posts(props) {
     const [posts, setPosts] = useState([]); // initialize posts state
+    const [isEmpty, setIsEmpty] = useState(true);  
     const user = useSelector((state) => state.user); // Replace with your actual user ID
     const user_id = user.idstudent_profile;
 
@@ -19,6 +20,11 @@ function Posts(props) {
                 .then((response) => {
                     console.log(response);
                     setPosts(response.data);
+                    if (response.data.length > 0) {
+                        setIsEmpty(false);
+                    } else {
+                        setIsEmpty(true);
+                    }
                 })
                 .catch((error) => {
                     console.error(`Error fetching data: ${error}`);
@@ -26,10 +32,14 @@ function Posts(props) {
         } else {
             axios.get(`${BACKEND_SERVER_DOMAIN}/api/feed/${user_id}`)
                 .then((response) => {
-
                     console.log("response from backend");
                     console.log(response);
                     setPosts(response.data);
+                                        if (response.data.length > 0) {
+                        setIsEmpty(false);
+                    } else {
+                        setIsEmpty(true);
+                    }
                 })
                 .catch((error) => {
                     console.error(`Error fetching data: ${error}`);
@@ -40,6 +50,7 @@ function Posts(props) {
     console.log(posts);
     return (
         <section className="timeline-posts">
+            {isEmpty && <h4>Your timeline is empty - get started by adding a post of your own!</h4>}
             {posts.map((post) => (
                 <TimelinePost post={post} />
             ))}
