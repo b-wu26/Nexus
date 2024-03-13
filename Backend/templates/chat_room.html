@@ -1,42 +1,43 @@
 {% extends 'base.html' %} {% block content %}
-<div class="message-box" value="{{course}}">
-  <h2>Chat Room: {{courseName}}</h2>
-  <div class="messages" id="messages"></div>
-  <div class="inputs" value="{{user_id}}">
-    <input
-      type="text"
-      rows="3"
-      placeholder="Enter message"
-      name="message"
-      id="message"
-    />
-    <button
-      class="btn"
-      type="button"
-      name="send"
-      id="send-btn"
-      onClick="sendMessage()"
-    >
-      Send
-    </button>
-  </div>
-</div>
-
 <!-- Main container  -->
 <div class="container">
+  <div class="msg-header">
+    <div class="container1">
+      <div class="active">
+        <p>Welcome to the {{courseName}} chat room!</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Chat inbox section starts -->
-  <div class="chat-page">
-    <div class="msg-inbox">
+  <div class="chat-page" value="{{course}}">
+    <div class="msg-inbox" value="{{user_id}}">
       <div class="chats">
         <div class="msg-page">
           <!-- Contains the incoming and outgoing messages -->
-          
+          <div class="recieved-chats" id="recieved"></div>
+          <div class="outgoing-chats" id="sent"></div>
         </div>
       </div>
 
       <!--  Message bottom section starts -->
-      <div class="msg-bottom"></div>
+      <div class="msg-bottom">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Write message..."
+            name="message"
+            id="message"
+          />
 
+          <span class="input-group-text send-icon">
+            <button id="send-btn" onClick="sendMessage()">
+              <i class="bi bi-send"></i>
+            </button>
+          </span>
+        </div>
+      </div>
       <!-- Message bottom section ends. -->
     </div>
   </div>
@@ -46,29 +47,60 @@
   var socketio = io.connect("http://127.0.0.1:5000");
 
   const course = document
-    .getElementsByClassName("message-box")[0]
+    .getElementsByClassName("chat-page")[0]
     .getAttribute("value");
   const user_id = document
-    .getElementsByClassName("inputs")[0]
+    .getElementsByClassName("msg-inbox")[0]
     .getAttribute("value");
   socketio.emit("join", { data: course });
 
-  const messages = document.getElementById("messages");
+  const messages = document.getElementById("recieved");
   console.log(messages);
 
   const createMessage = (name, msg, date_sent) => {
     console.log(name, msg, date_sent);
+    if (name !== user_id) {
     const content = `
-      <div class="text">
-          <span>
-              <strong>${name}</strong>: ${msg}
-          </span>
-          <span class="muted">
-              ${new Date(date_sent * 1000).toLocaleString()}
-          </span>
+      <div class="recieved-msg">
+        <div class="recieved-msg-inbox">
+          <p style="
+              background: #efefef none repeat scroll 0 0;
+              border-radius: 10px;
+              color: #646464;
+              font-size: 14px;
+              margin-left: 1rem;
+              padding: 1rem;
+              width: 80%;
+              box-shadow: rgb(0 0 0 / 25%) 0px 5px 5px 2px;">${msg}</p>
+              <span class="time">Sent by User ${user_id} at ${new Date(
+            date_sent * 1000
+          ).toLocaleString()}</span>
+        </div>
       </div>
       `;
     messages.innerHTML += content;
+    } else {
+      const content = `<div class="outgoing-msg">
+        <div class="outgoing-chats-msg">
+          <p style="background-color: #3a12ff;
+              background-image: linear-gradient(to right, #80008050, #add8e6);
+              color: #fff;
+              border-radius: 10px;
+              font-size: 14px;
+              color: #fff;
+              padding: 5px 10px 5px 12px;
+              width: 80%;
+              padding: 1rem;
+              box-shadow: rgb(0 0 0 / 25%) 0px 2px 5px 2px;">${msg}</p>
+          <span class="time">Sent by User ${user_id} at ${new Date(
+            date_sent * 1000
+          ).toLocaleString()}</span>
+        </div>
+      </div>
+      `;
+      const messages = document.getElementById("sent");
+      messages.innerHTML += content;
+    }
   };
 
   socketio.on("message", (data) => {
